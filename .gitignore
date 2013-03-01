@@ -1,0 +1,34 @@
+*.bak
+
+#netbeans ignore personal stuff 
+nbproject/private/
+
+
+## generic files to ignore
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+
+
+# idea conf files
+.idea
+*.iml
+*.ipr
+*.iws
+
+# building
+target
+build
+null
+tmp
+temp
+dist
+test-output
+build.log
+
+atlassian-ide-plugin.xml
+spring-training/atlassian-ide-plugin.xml
+*.exe
+*.o
