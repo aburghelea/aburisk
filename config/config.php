@@ -5,5 +5,4 @@
     define ("DATABASE", "aburisk");
     define ("PORT", "3306");
     define ("SOCKET", "/tmp/mysql.sock");
-
 ?>
