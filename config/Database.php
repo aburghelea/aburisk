@@ -2,7 +2,7 @@
 
 require_once("config.php");
 
-class Database
+class Database implements IDatabase
 {
 
     private static $instance = NULL;
