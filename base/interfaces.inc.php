@@ -53,7 +53,7 @@ interface IGameEngine
 {
 
     /*
-     * TODO: de vazult ce e cu variabila asta
+     * TODO: de vazut ce e cu variabila asta
      * private int $idGame;
      */
 
