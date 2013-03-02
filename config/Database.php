@@ -14,12 +14,14 @@ class Database implements IDatabase
         if (self::$instance->connect_error) {
             die('Connect Error (' . self::$instance->connect_errno . ') ' . self::$instance->connect_error);
         }
+
+        return self::$instance;
     }
 
     public static function connect()
     {
         if (!isset(self::$instance)) {
-            Database::create();
+            return Database::create();
         }
         return self::$instance;
     }
