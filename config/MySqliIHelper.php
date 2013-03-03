@@ -11,6 +11,9 @@ class MySqliIHelper
 
     private $db;
 
+    const C_AND = "AND ";
+    const LIKE_CLAUSE = " LIKE ? ";
+
     function __construct($db)
     {
         $this->db = $db;
@@ -44,8 +47,9 @@ class MySqliIHelper
         return $row;
     }
 
-    protected function bind_results($stmt, $row, $results)
+    protected function bind_results($stmt, $row )
     {
+        $results = null;
         while ($stmt->fetch()) {
             $line = array();
             foreach ($row as $key => $val)
@@ -58,13 +62,14 @@ class MySqliIHelper
 
     protected function build_where_clause($arr)
     {
-        $clause = implode(Scaffold::LIKE_CLAUSE . "AND ", array_keys($arr)) . Scaffold::LIKE_CLAUSE;
+        if (is_array($arr))
+            return implode(self::LIKE_CLAUSE . self::C_AND, array_keys($arr)) . self::LIKE_CLAUSE;
 
-        return $clause;
+        return $arr.self::LIKE_CLAUSE;
     }
 
     protected function build_aditional_params($orderby, $direction, $limit)
-    { /* Determining whitch optional params's are usable */
+    {
         if ($orderby != '') {
             if (strcasecmp($direction, 'ASC') != 0 && strcasecmp($direction, 'DESC') != 0)
                 $direction = 'ASC';

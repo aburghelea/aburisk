@@ -10,7 +10,7 @@ class Scaffold extends MySqliIHelper implements IScaffold
     const GET_ROWS_SQL_BY_FIELD = "SELECT * FROM %s WHERE %s = ? %s %s";
     const GET_ROWS_SQL_BY_ARRAY = "SELECT * FROM %s WHERE %s %s %s";
 
-    const LIKE_CLAUSE = " LIKE ? ";
+
 
     public function __construct($table)
     {
@@ -26,22 +26,10 @@ class Scaffold extends MySqliIHelper implements IScaffold
     public function getRowsbyField($field, $value, $orderby = '', $direction = 'ASC', $limit = '', $show = '')
     {
         /* Creating empty results array */
-        $results = array();
-        list($orderby, $limit) = $this->build_aditional_params($orderby, $direction, $limit);
-
-        /* formating query based on column, sorting and limits */
-        $query = sprintf(Scaffold::GET_ROWS_SQL_BY_FIELD, $this->table, $field, $orderby, $limit);
         $format = "s";
-        echo $query . "<br>";
+        $where_clause = $this->build_where_clause($field);
 
-        /* running query */
-        $stmt = $this->execute_prepared($query, $format, $value);
-
-        /* Binding results to column_headers */
-        $row = $this->bind_table_header($stmt);
-
-        /* creating arrays for each row in the database */
-        return $this->bind_results($stmt, $row, $results);
+        return $this->get_rows_from_db($orderby, $direction, $limit, $where_clause, $format, $value);
 
     }
 
@@ -54,25 +42,30 @@ class Scaffold extends MySqliIHelper implements IScaffold
     public function getRowsByArray($arr, $orderby = '', $direction = 'ASC', $limit = '', $show = '')
     {
 
-        $results = array();
-        list($orderby, $limit) = $this->build_aditional_params($orderby, $direction, $limit);
-        $query = sprintf(Scaffold::GET_ROWS_SQL_BY_ARRAY, $this->table, $this->build_where_clause($arr), $orderby, $limit);
-        echo $query . "<br>";
-
         $format = array(str_repeat('s', count($arr)));
         $value = array_values($arr);
+        $where_clause = $this->build_where_clause($arr);
 
+        return $this->get_rows_from_db($orderby, $direction, $limit, $where_clause, $format, $value);
+
+
+    }
+
+    protected  function get_rows_from_db($orderby, $direction, $limit, $where_clause, $format, $value)
+    { /* Determining whitch optional params's are usable */
+        list($orderby, $limit) = $this->build_aditional_params($orderby, $direction, $limit);
+
+        /* formating query based on column, sorting and limits */
+        $query = sprintf(Scaffold::GET_ROWS_SQL_BY_ARRAY, $this->table, $where_clause, $orderby, $limit);
+
+        /* running query */
         $stmt = $this->execute_prepared($query, $format, $value);
 
         /* Binding results to column_headers */
         $row = $this->bind_table_header($stmt);
 
-        return $this->bind_results($stmt, $row, $results);
-
-
+        return $this->bind_results($stmt, $row);
     }
-
-    /*TODO: cea de a doua  metoda getRows*/
 
     public function getCustomRows($query)
     {
@@ -98,10 +91,10 @@ class Scaffold extends MySqliIHelper implements IScaffold
 }
 
 
-$x = new Scaffold('planets_games');
+$x = new Scaffold('planets');
 echo "</br>By Array </br>";
-$arr = array("planet_id" => 1, "owner_id" => 1, "game_id" => 1, "noships" => 3);
-print_r($x->getRowsbyArray($arr, "noships", "desc"));
+$arr = array("containing_galaxy_id" => 1, "id" => 1);
+print_r($x->getRowsbyArray($arr, "id", "desc"));
 echo "</br>By Field </br>";
-print_r($x->getRowsbyField('planet_id', "1","noships","desc"));
+print_r($x->getRowsbyField('containing_galaxy_id', "100","id","desc"));
 ?>
