@@ -8,19 +8,31 @@
  */
 class MySqliIHelper
 {
-
     private $db;
 
     const C_AND = "AND ";
     const C_LIKE = " LIKE ? ";
     const C_SELECT = "SELECT";
 
+    /**
+     * Construct a helper
+     * @param mysqli $db for interaction with the database
+     */
     function __construct($db)
     {
         $this->db = $db;
     }
 
-    protected function execute_prepared($query, $format, $value, $needs_preparation = 'true')
+    /**
+     * Prepare a MySQL query and execute-it. It doesn't fetch the results
+     * it just stores them.
+     * @param string $query  for MySQL Query (it may contain wildcards)
+     * @param string $format  for parameter binding
+     * @param array|string $value  for binding to the wildcards
+     * @param string $needs_preparation indicates if to step over the preparation
+     * @return mysqli_stmt ready for fetching
+     */
+    protected function prepare_and_execute($query, $format, $value, $needs_preparation = 'true')
     {
         $stmt = $this->db->prepare($query);
 
@@ -40,8 +52,14 @@ class MySqliIHelper
         return $stmt;
     }
 
+    /**
+     * Bind the values to the table headers
+     * @param mysqli_stmt $stmt for query execution
+     * @return array (hashtable) for storing a database line
+     */
     protected function bind_table_header($stmt)
     {
+        $row = array();
         $parameters = array();
         $meta = $stmt->result_metadata();
         while ($field = $meta->fetch_field()) {
@@ -51,6 +69,12 @@ class MySqliIHelper
         return $row;
     }
 
+    /**
+     * Bind the results to an hashtable (key = column name, value = line value)
+     * @param mysqli_stmt $stmt from where to fetch the results
+     * @param array $row where to temporary store the result
+     * @return array|null Array of rows or null if they don't exist
+     */
     protected function bind_results($stmt, $row)
     {
         $results = null;
@@ -64,6 +88,12 @@ class MySqliIHelper
         return $results;
     }
 
+    /**
+     * Creates a WHERE SQL clause from an associative array (key = column name,
+     * value = line value)
+     * @param array $arr with the constraints
+     * @return string representing the where clause
+     */
     protected function build_where_clause($arr)
     {
         if (is_array($arr))
@@ -72,7 +102,15 @@ class MySqliIHelper
         return $arr . self::C_LIKE;
     }
 
-    protected function build_aditional_params($orderby, $direction, $limit)
+    /**
+     * Form the trailing parameters
+     * @param string $orderby value
+     * @param string $direction value
+     * @param string $limit value
+     * @param string $show value
+     * @return array with parameters formed for strings
+     */
+    protected function build_aditional_params($orderby = '', $direction = '', $limit = '', $show = '')
     {
         if ($orderby != '') {
             if (strcasecmp($direction, 'ASC') != 0 && strcasecmp($direction, 'DESC') != 0)
@@ -81,12 +119,18 @@ class MySqliIHelper
         }
         if ($limit != '') {
             $limit = 'LIMIT ' . $limit;
-            return array($orderby, $limit);
+        }
+        if ($show != ''){
+            $limit .= ", ".$show." ";
         }
         return array($orderby, $limit);
-        /* TODO: De tinut cont de parametrul $SHOW  */
     }
 
+    /**
+     * Transform an array into arrays if the PHP version requires it
+     * @param $arr
+     * @return array
+     */
     protected function ref_values(&$arr)
     {
         //Reference is required for PHP 5.3+
