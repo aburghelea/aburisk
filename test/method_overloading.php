@@ -31,6 +31,6 @@ class PoliMetods implements IPoliMethods
 }
 
 $obj = new PoliMetods();
-$obj.poli(1);
-$obj.poli(1, 2);
+$obj . poli(1);
+$obj . poli(1, 2);
 ?>

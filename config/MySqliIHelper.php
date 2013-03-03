@@ -12,25 +12,29 @@ class MySqliIHelper
     private $db;
 
     const C_AND = "AND ";
-    const LIKE_CLAUSE = " LIKE ? ";
+    const C_LIKE = " LIKE ? ";
+    const C_SELECT = "SELECT";
 
     function __construct($db)
     {
         $this->db = $db;
     }
 
-    protected function execute_prepared($query, $format, $value)
+    protected function execute_prepared($query, $format, $value, $needs_preparation = 'true')
     {
         $stmt = $this->db->prepare($query);
 
-        if (!is_array($value))
-            $value = array($value);
-        if (!is_array($format))
-            $format = array($format);
+        if ($needs_preparation == 'true') {
+            echo "preparing <br/>";
+            if (!is_array($value))
+                $value = array($value);
+            if (!is_array($format))
+                $format = array($format);
 
-        $params = array_merge($format, $value);
+            $params = array_merge($format, $value);
+            call_user_func_array(array($stmt, 'bind_param'), $this->ref_values($params));
+        }
 
-        call_user_func_array(array($stmt, 'bind_param'), $this->ref_values($params));
         $stmt->execute();
         $stmt->store_result();
         return $stmt;
@@ -47,7 +51,7 @@ class MySqliIHelper
         return $row;
     }
 
-    protected function bind_results($stmt, $row )
+    protected function bind_results($stmt, $row)
     {
         $results = null;
         while ($stmt->fetch()) {
@@ -63,9 +67,9 @@ class MySqliIHelper
     protected function build_where_clause($arr)
     {
         if (is_array($arr))
-            return implode(self::LIKE_CLAUSE . self::C_AND, array_keys($arr)) . self::LIKE_CLAUSE;
+            return implode(self::C_LIKE . self::C_AND, array_keys($arr)) . self::C_LIKE;
 
-        return $arr.self::LIKE_CLAUSE;
+        return $arr . self::C_LIKE;
     }
 
     protected function build_aditional_params($orderby, $direction, $limit)
