@@ -71,6 +71,10 @@ class Scaffold extends MySqliIHelper implements IScaffold
         // TODO: Implement insertRow() method.
     }
 
+    /**
+     * @param string $query custom query
+     * @return array|null query results
+     */
     public function customQuery($query)
     {
         return $this->run($query, null, null, 'false');
@@ -122,9 +126,6 @@ echo "</br>Get Custom Rows</br></br></br>";
 print_r($x->getCustomRows("SELECT * FROM planets WHERE containing_galaxy_id LIKE 3 ORDER BY id desc"));
 echo "</br>";
 print_r($x->getCustomRows("SELECT * FROM planets"));
-echo "</br>";
-print_r($x->customQuery("DESC PLANETS"));
-//echo "</br>";
-//print_r($x->getCustomRows("SELECT * FROM SHIT   "));
-//echo "</br>";
+echo "</br></br></br>Planets DESCRIBE</br>";
+print_r($x->customQuery("DESC planets"));
 ?>
