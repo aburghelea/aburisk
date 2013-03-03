@@ -14,18 +14,16 @@ interface IScaffold
      * extrage intrarile din tabela cu conditia $field = $value; le ordoneaza corespunzator daca parametrii de
      * ordonare au fost trimisi; limiteaza rezultatele daca parametrii $limit si $show sunt setati
      * intoarce un array asociativ sau null daca nu a fost gasita nicio intrare
-    */
-    public function getRows($field, $value, $orderby = '', $direction = 'ASC', $limit = '', $show = '');
+     */
+    public function getRowsByField ($field, $value, $orderby = '', $direction = 'ASC', $limit = '', $show = '');
 
     /*
      *  extrage intrarile din tabela cu conditiile $key => $value, unde $key => $value sunt elemente din $arr;
      * le ordoneaza corespunzator daca parametrii de ordonare au fost trimisi; limiteaza rezultatele daca
      * parametrii $limit si $show sunt setati
      * intoarce un array asociativ sau null daca nu a fost gasita nicio intrare
-     *
-     * TODO: polimorfism
-     * public function getRows($arr, $orderby = '', $direction = 'ASC', $limit = '', $show = '');
      */
+     public function getRowsByArray ($arr, $orderby = '', $direction = 'ASC', $limit = '', $show = '');
 
     /*
      * extrage intrarile din tabela pe baza query-ului trimis ca parametru
