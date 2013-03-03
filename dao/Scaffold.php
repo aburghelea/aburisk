@@ -2,11 +2,10 @@
 
 require_once("../base/IScaffold.inc.php");
 require_once("../config/Database.php");
-
-class Scaffold implements IScaffold
+require_once("../config/MySqliIHelper.php");
+class Scaffold extends MySqliIHelper implements IScaffold
 {
     private $table;
-    private $db;
 
     const GET_ROWS_SQL_BY_FIELD = "SELECT * FROM %s WHERE %s = ? %s %s";
     const GET_ROWS_SQL_BY_ARRAY = "SELECT * FROM %s WHERE %s %s %s";
@@ -15,7 +14,7 @@ class Scaffold implements IScaffold
 
     public function __construct($table)
     {
-        $this->db = Database::connect();
+        parent::__construct(Database::connect());
         $this->table = mysql_real_escape_string($table);
     }
 
@@ -95,82 +94,6 @@ class Scaffold implements IScaffold
         // TODO: Implement customQuery() method.
     }
 
-
-    public function execute_prepared($query, $format, $value)
-    {
-        $stmt = $this->db->prepare($query);
-
-        if (!is_array($value))
-            $value = array($value);
-        if (!is_array($format))
-            $format = array($format);
-
-        $params = array_merge($format, $value);
-
-        call_user_func_array(array($stmt, 'bind_param'), $this->ref_values($params));
-        $stmt->execute();
-        $stmt->store_result();
-        return $stmt;
-    }
-
-    private function bind_table_header($stmt)
-    {
-        $parameters = array();
-        $meta = $stmt->result_metadata();
-        while ($field = $meta->fetch_field()) {
-            $parameters[] = & $row[$field->name];
-        }
-        call_user_func_array(array($stmt, 'bind_result'), $parameters);
-        return $row;
-    }
-
-    private function bind_results($stmt, $row, $results)
-    {
-        while ($stmt->fetch()) {
-            $line = array();
-            foreach ($row as $key => $val)
-                $line[$key] = $val;
-            $results[] = $line;
-        }
-
-        return $results;
-    }
-
-    private function build_where_clause($arr)
-    {
-        $clause = implode(Scaffold::LIKE_CLAUSE . "AND ", array_keys($arr)) . Scaffold::LIKE_CLAUSE;
-
-        return $clause;
-    }
-
-    private function build_aditional_params($orderby, $direction, $limit)
-    { /* Determining whitch optional params's are usable */
-        if ($orderby != '') {
-            if (strcasecmp($direction, 'ASC') != 0 && strcasecmp($direction, 'DESC') != 0)
-                $direction = 'ASC';
-            $orderby = 'ORDER BY ' . $orderby . ' ' . $direction;
-        }
-        if ($limit != '') {
-            $limit = 'LIMIT ' . $limit;
-            return array($orderby, $limit);
-        }
-        return array($orderby, $limit);
-        /* TODO: De tinut cont de parametrul $SHOW  */
-    }
-
-    function ref_values(&$arr)
-    {
-        //Reference is required for PHP 5.3+
-        if (strnatcmp(phpversion(), '5.3') >= 0) {
-            $refs = array();
-            foreach (array_keys($arr) as $key) {
-                $refs[$key] = & $arr[$key];
-            }
-            return $refs;
-        }
-
-        return $arr;
-    }
 
 }
 
