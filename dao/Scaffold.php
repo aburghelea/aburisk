@@ -1,6 +1,6 @@
 <?php
 
-require_once("../base/interfaces.inc.php");
+require_once("../base/IScaffold.inc.php");
 require_once("../config/Database.php");
 
 class Scaffold implements IScaffold

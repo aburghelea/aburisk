@@ -1,6 +1,7 @@
 <?php
 
 require_once("config.php");
+require_once("../base/IDatabase.inc.php");
 
 class Database implements IDatabase
 {
@@ -27,14 +28,5 @@ class Database implements IDatabase
     }
 
 }
-
-//$connection = Database::connect();
-//$query = "SELECT * FROM users where id = 1";
-//$stmt = $connection->prepare($query);
-//$stmt->execute();
-//$stmt->bind_result($id, $username, $email, $password, $played_games, $won_games);
-//$stmt->fetch();
-//$stmt->close();
-//echo $id . "&nbsp" . $username . "&nbsp" . $email . "&nbsp" . $password . "&nbsp" . $played_games . "&nbsp" . $won_games . "</br>";
 
 ?>
