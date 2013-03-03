@@ -7,10 +7,7 @@ class Scaffold extends MySqliIHelper implements IScaffold
 {
     private $table;
 
-    const GET_ROWS_SQL_BY_FIELD = "SELECT * FROM %s WHERE %s = ? %s %s";
-    const GET_ROWS_SQL_BY_ARRAY = "SELECT * FROM %s WHERE %s %s %s";
-
-
+    const GET_ROWS_SQL = "SELECT * FROM %s WHERE %s %s %s";
 
     public function __construct($table)
     {
@@ -47,24 +44,6 @@ class Scaffold extends MySqliIHelper implements IScaffold
         $where_clause = $this->build_where_clause($arr);
 
         return $this->get_rows_from_db($orderby, $direction, $limit, $where_clause, $format, $value);
-
-
-    }
-
-    protected  function get_rows_from_db($orderby, $direction, $limit, $where_clause, $format, $value)
-    { /* Determining whitch optional params's are usable */
-        list($orderby, $limit) = $this->build_aditional_params($orderby, $direction, $limit);
-
-        /* formating query based on column, sorting and limits */
-        $query = sprintf(Scaffold::GET_ROWS_SQL_BY_ARRAY, $this->table, $where_clause, $orderby, $limit);
-
-        /* running query */
-        $stmt = $this->execute_prepared($query, $format, $value);
-
-        /* Binding results to column_headers */
-        $row = $this->bind_table_header($stmt);
-
-        return $this->bind_results($stmt, $row);
     }
 
     public function getCustomRows($query)
@@ -87,6 +66,21 @@ class Scaffold extends MySqliIHelper implements IScaffold
         // TODO: Implement customQuery() method.
     }
 
+    protected  function get_rows_from_db($orderby, $direction, $limit, $where_clause, $format, $value)
+    { /* Determining whitch optional params's are usable */
+        list($orderby, $limit) = $this->build_aditional_params($orderby, $direction, $limit);
+
+        /* formating query based on column, sorting and limits */
+        $query = sprintf(Scaffold::GET_ROWS_SQL, $this->table, $where_clause, $orderby, $limit);
+
+        /* running query */
+        $stmt = $this->execute_prepared($query, $format, $value);
+
+        /* Binding results to column_headers */
+        $row = $this->bind_table_header($stmt);
+
+        return $this->bind_results($stmt, $row);
+    }
 
 }
 
