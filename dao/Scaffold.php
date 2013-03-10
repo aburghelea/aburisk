@@ -9,11 +9,17 @@ class Scaffold extends MySqliIHelper implements IScaffold
     private $table;
 
     const GET_ROWS_SQL = "SELECT * FROM %s WHERE %s %s %s";
+    const INSERT_SQL = "INSERT INTO %s (%s) VALUES (%s)";
 
     public function __construct($table)
     {
         parent::__construct(Database::connect());
-        $this->table = mysql_real_escape_string($table);
+        /*
+         * TODO: de investigat de ec nu merge mysql_real_escape_string
+         * $this->table = mysql_real_escape_string($table);
+         */
+        $this->table = $table;
+        echo "TABLE ".$this->table."<br/>";
     }
 
     /*
@@ -61,14 +67,39 @@ class Scaffold extends MySqliIHelper implements IScaffold
         return null;
     }
 
+    /**
+     * seteaza valorile fiecarui camp $key la $value, unde $key => $value sunt elemente din $arr, pentru
+     * intrarile care au $field = $value
+     */
     public function updateRows($arr, $field, $value)
     {
         // TODO: Implement updateRows() method.
     }
 
+    /**
+     * insereaza in tabela o intrare cu campurile $key la valoarea $value, unde $key => $value sunt elemente
+     * din $arr
+     */
     public function insertRow($arr)
     {
-        // TODO: Implement insertRow() method.
+        $format = array(str_repeat('s', count($arr)));
+        list($columns, $params) = $this->build_insert_paranthesis($arr);
+
+        $query = sprintf(Scaffold::INSERT_SQL, $this->table, $columns, $params);
+
+        $stmt = $this->prepare_and_execute($query, $format, array_values($arr), "true");
+        $stmt->close();
+    }
+
+    /**
+     * @param array $arr Associative array with the insert values
+     * @return array Two strings with the parantheses content of the insert statement
+     */
+    public function build_insert_paranthesis($arr)
+    {
+        $columns = $this->merge_with_period(array_keys($arr));
+        $params = $this->merge_with_period(array_fill(0, count($arr), "?"));
+        return array($columns, $params);
     }
 
     /**
@@ -77,7 +108,7 @@ class Scaffold extends MySqliIHelper implements IScaffold
      */
     public function customQuery($query)
     {
-        return $this->run($query, null, null, 'false');
+        return $this->run_get($query, null, null);
     }
 
     /**
@@ -98,12 +129,18 @@ class Scaffold extends MySqliIHelper implements IScaffold
 
         /* formating query based on column, sorting and limits */
         $query = sprintf(Scaffold::GET_ROWS_SQL, $this->table, $where_clause, $orderby, $limit);
-        echo "<br/> SOME QUERY " . $query . "</br>";
 
-        return $this->run($query, $format, $value);
+        return $this->run_get($query, $format, $value, 'true');
     }
 
-    private function run($query, $format, $value, $prepare = 'true')
+    /**
+     * @param string $query Get Query Template
+     * @param string $format bindable parameter format
+     * @param string $value bindable parameter values
+     * @param string $prepare indicates if the statement should be prepared
+     * @return array|null Array of rows if they exist, or null
+     */
+    private function run_get($query, $format, $value, $prepare = 'false')
     {
         $stmt = $this->prepare_and_execute($query, $format, $value, $prepare);
 
@@ -120,12 +157,16 @@ $x = new Scaffold('planets');
 echo "</br>By Array </br>";
 $arr = array("containing_galaxy_id" => 1, "id" => 1);
 print_r($x->getRowsbyArray($arr, "id", "desc"));
-echo "</br>By Field ".count($x->getRowsbyField('containing_galaxy_id', "3", "id", "desc",1,2))." </br>";
-print_r($x->getRowsbyField('containing_galaxy_id', "3", "id", "desc",1,1));
+echo "</br>By Field " . count($x->getRowsbyField('containing_galaxy_id', "3", "id", "desc", 1, 2)) . " </br>";
+print_r($x->getRowsbyField('containing_galaxy_id', "3", "id", "desc", 1, 1));
 echo "</br>Get Custom Rows</br></br></br>";
 print_r($x->getCustomRows("SELECT * FROM planets WHERE containing_galaxy_id LIKE 3 ORDER BY id desc"));
 echo "</br>";
 print_r($x->getCustomRows("SELECT * FROM planets"));
 echo "</br></br></br>Planets DESCRIBE</br>";
 print_r($x->customQuery("DESC planets"));
+
+$what = array("name" => "Pamant", "containing_galaxy_id" => "1", "image" => "test.jpg");
+$x->insertRow($what);
+//INSERT INTO `aburisk`.`planets` (`id`, `name`, `containing_galaxy_id`, `image`) VALUES (NULL, 'Pamant', '1', 'test.jpg');
 ?>

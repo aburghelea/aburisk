@@ -32,7 +32,7 @@ class MySqliIHelper
      * @param string $needs_preparation indicates if to step over the preparation
      * @return mysqli_stmt ready for fetching
      */
-    protected function prepare_and_execute($query, $format, $value, $needs_preparation = 'true')
+    protected function prepare_and_execute($query, $format = array(), $value = array(), $needs_preparation = 'false')
     {
         $stmt = $this->db->prepare($query);
 
@@ -85,6 +85,7 @@ class MySqliIHelper
             $results[] = $line;
         }
 
+        $stmt->close();
         return $results;
     }
 
@@ -100,6 +101,13 @@ class MySqliIHelper
             return implode(self::C_LIKE . self::C_AND, array_keys($arr)) . self::C_LIKE;
 
         return $arr . self::C_LIKE;
+    }
+
+    protected function merge_with_period($arr) {
+        if (is_array($arr))
+            return implode(", ", $arr);
+
+        return $arr;
     }
 
     /**
