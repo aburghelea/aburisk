@@ -5,6 +5,9 @@
  * Time: 10:48 PM
  * For : PWeb 2013
  */
+
+require_once('../dao/Scaffold.php');
+
 $x = new Scaffold('planets');
 echo "</br>By Array </br>";
 $arr = array("containing_galaxy_id" => 1, "id" => 1);
