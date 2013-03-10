@@ -14,12 +14,7 @@ class Scaffold extends MySqliIHelper implements IScaffold
     public function __construct($table)
     {
         parent::__construct(Database::connect());
-        /*
-         * TODO: de investigat de ec nu merge mysql_real_escape_string
-         * $this->table = mysql_real_escape_string($table);
-         */
-        $this->table = $table;
-        echo "TABLE ".$this->table."<br/>";
+        $this->table = mysqli_real_escape_string($this->db,$table);
     }
 
     /*

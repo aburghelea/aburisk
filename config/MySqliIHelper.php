@@ -8,7 +8,7 @@
  */
 class MySqliIHelper
 {
-    private $db;
+    protected  $db;
 
     const C_AND = "AND ";
     const C_LIKE = " LIKE ? ";
