@@ -4,7 +4,7 @@ interface IScaffold
 {
 
     /* salveaza numele tabelului pentru folosirea ulterioara */
-    public function __construct($table);
+//    public function __construct($table);
 
     /*
      * extrage intrarile din tabela cu conditia $field = $value; le ordoneaza corespunzator daca parametrii de
