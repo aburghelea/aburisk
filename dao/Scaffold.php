@@ -10,11 +10,12 @@ class Scaffold extends MySqliIHelper implements IScaffold
 
     const GET_ROWS_SQL = "SELECT * FROM %s WHERE %s %s %s";
     const INSERT_SQL = "INSERT INTO %s (%s) VALUES (%s)";
+    const UPDATE_SQL = "UPDATE %s SET %s WHERE %s";
 
     public function __construct($table)
     {
         parent::__construct(Database::connect());
-        $this->table = mysqli_real_escape_string($this->db,$table);
+        $this->table = mysqli_real_escape_string($this->db, $table);
     }
 
     /*
@@ -68,7 +69,16 @@ class Scaffold extends MySqliIHelper implements IScaffold
      */
     public function updateRows($arr, $field, $value)
     {
-        // TODO: Implement updateRows() method.
+        $format = array(str_repeat('s', count($arr) + 1));
+        $set_clause = $this->build_set_clause($arr);
+        $where_clause = $this->build_where_clause($field);
+
+        $query = sprintf(Scaffold::UPDATE_SQL, $this->table, $set_clause, $where_clause);
+
+        print_r( $format);
+        print_r(array(array_values($arr), $value));
+        $stmt = $this->prepare_and_execute($query, $format, array_merge(array_values($arr), array($value)), "true");
+        $stmt->close();
     }
 
     /**
@@ -163,5 +173,6 @@ print_r($x->customQuery("DESC planets"));
 
 $what = array("name" => "Pamant", "containing_galaxy_id" => "1", "image" => "test.jpg");
 $x->insertRow($what);
-//INSERT INTO `aburisk`.`planets` (`id`, `name`, `containing_galaxy_id`, `image`) VALUES (NULL, 'Pamant', '1', 'test.jpg');
+$what2 = array("name" => "Chapa Ai", "containing_galaxy_id" => "2", "image" => "testai.jpg");
+$x->updateRows($what2, "id", 26);
 ?>

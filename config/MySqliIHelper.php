@@ -8,8 +8,10 @@
  */
 class MySqliIHelper
 {
-    protected  $db;
+    protected $db;
 
+    const C_EQUAL = "= ? ";
+    const C_PERIOD = ", ";
     const C_AND = "AND ";
     const C_LIKE = " LIKE ? ";
     const C_SELECT = "SELECT";
@@ -102,6 +104,14 @@ class MySqliIHelper
             return implode(self::C_LIKE . self::C_AND, array_keys($arr)) . self::C_LIKE;
 
         return $arr . self::C_LIKE;
+    }
+
+    protected function build_set_clause($arr)
+    {
+        if (is_array($arr))
+            return implode(self::C_EQUAL . self::C_PERIOD, array_keys($arr)) . self::C_EQUAL;
+
+        return $arr . self::C_EQUAL;
     }
 
     /**
