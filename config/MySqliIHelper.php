@@ -26,8 +26,9 @@ class MySqliIHelper
     /**
      * Prepare a MySQL query and execute-it. It doesn't fetch the results
      * it just stores them.
-     * @param string $query  for MySQL Query (it may contain wildcards)
-     * @param string $format  for parameter binding
+     *
+     * @param string $query for MySQL Query (it may contain wildcards)
+     * @param array|string $format  for parameter binding
      * @param array|string $value  for binding to the wildcards
      * @param string $needs_preparation indicates if to step over the preparation
      * @return mysqli_stmt ready for fetching
@@ -103,7 +104,12 @@ class MySqliIHelper
         return $arr . self::C_LIKE;
     }
 
-    protected function merge_with_period($arr) {
+    /**
+     * @param array $arr  of words
+     * @return string The words merged with <i>period</i>
+     */
+    protected function merge_with_period($arr)
+    {
         if (is_array($arr))
             return implode(", ", $arr);
 
@@ -128,8 +134,8 @@ class MySqliIHelper
         if ($limit != '') {
             $limit = 'LIMIT ' . $limit;
         }
-        if ($show != ''){
-            $limit .= ", ".$show." ";
+        if ($show != '') {
+            $limit .= ", " . $show . " ";
         }
         return array($orderby, $limit);
     }
