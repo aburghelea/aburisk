@@ -10,6 +10,7 @@
 require_once("../interface/IGameEngine.inc.php");
 require_once("../dao/Game.php");
 require_once("../dao/User_Game.php");
+require_once("../dao/User.php");
 require_once("GameState.php");
 
 class GameEngine implements IGameEngine
@@ -41,7 +42,7 @@ class GameEngine implements IGameEngine
     }
 
     /**
-     * alătură un jucător jocului curent
+     * Alătură un jucător jocului curent
      * @param $idUser
      * @return int -1 dacă utilizatorul nu există sau dacă este deja alăturat acelui joc, 1 altfel
      */
@@ -50,11 +51,13 @@ class GameEngine implements IGameEngine
 
         $ugDao = new User_Game();
         $user = new User();
-        $user = $user->getRowsByField('id', $idUser);
-        if (empty($user))
+        $users = $user->getRowsByField('id', $idUser);
+
+        if (empty($users))
             return -1;
-        $games = $ugDao->getRowsByField('user_id', $idUser);
-        if (empty($games))
+        echo "Checking users";
+        $games = $ugDao->getRowsByArray(array('user_id'=>$idUser, 'game_id' => $this->game->getId()));
+        if (!empty($games))
             return -1;
 
         $ugDao->insertRow(array('user_id' => $idUser, "game_id" => $this->game->getId()));

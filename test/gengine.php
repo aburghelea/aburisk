@@ -14,4 +14,8 @@ echo $ge->getGame()."\n";
 $ge->changeState(GameState::ATTACK);
 echo $ge->getGame()."\n";
 print_r($ge->getGame()->getRowsByField('id',$ge->getGame()->getId()));
+
+echo $ge->joinGame(3)."\n";
+echo $ge->joinGame(2)."\n";
+echo $ge->joinGame(2)."\n";
 ?>
