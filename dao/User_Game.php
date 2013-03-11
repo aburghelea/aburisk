@@ -27,11 +27,4 @@ class User_Game extends GenericDao
     }
 }
 
-
-
-$ug = new User_Game();
-$ugs = $ug->getRowsByField('user_id', '1');
-foreach ($ugs as $obj) {
-    echo $obj . "\n";
-}
 ?>

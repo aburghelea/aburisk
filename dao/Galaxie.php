@@ -26,9 +26,4 @@ class Galaxie extends GenericDao
 
 }
 
-$galaxie = new Galaxie();
-$galaxies = $galaxie->getRowsByField('id', '1');
-foreach ($galaxies as $gl) {
-    echo $gl . "\n";
-}
 ?>

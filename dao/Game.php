@@ -28,8 +28,4 @@ class Game extends GenericDao
 
 }
 
-$game = new Game();
-$games = $game->getRowsByField('id', '1');
-foreach ($games as $gl) {
-    echo $gl . "\n";
-}
+?>

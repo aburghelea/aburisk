@@ -29,10 +29,4 @@ class Planet extends GenericDao
 
 }
 
-$planeta = new Planet();
-$planete = $planeta->getRowsByField('containing_galaxy_id', '1');
-foreach ($planete as $gl) {
-    echo $gl . "\n<br/>";
-}
-
 ?>

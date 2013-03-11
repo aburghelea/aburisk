@@ -26,10 +26,4 @@ class Planet_Neighbour extends GenericDao
     }
 }
 
-$pn = new Planet_Neighbour();
-$pns = $pn->getRowsByField('first_planet_id',1);
-foreach ($pns as $obj) {
-    echo $obj . "\n<br/>";
-}
-
 ?>
