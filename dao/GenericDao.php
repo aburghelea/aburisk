@@ -32,6 +32,8 @@ abstract class GenericDao implements IScaffold
     public function getRowsByArray($arr, $orderby = '', $direction = 'ASC', $limit = '', $show = '')
     {
         $rows = $this->scaffold->getRowsByArray($arr, $orderby, $direction, $limit, $show);
+
+        return empty($rows) ? null : $this->mapRowsToObject($rows);
     }
 
     public function getCustomRows($query)
