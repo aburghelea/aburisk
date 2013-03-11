@@ -81,8 +81,6 @@ class Scaffold extends MySqliIHelper implements IScaffold
 
         $query = sprintf(Scaffold::UPDATE_SQL, $this->table, $set_clause, $where_clause);
 
-        print_r( $format);
-        print_r(array(array_values($arr), $value));
         $stmt = $this->prepare_and_execute($query, $format, array_merge(array_values($arr), array($value)), "true");
         $stmt->close();
     }

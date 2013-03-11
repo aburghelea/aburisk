@@ -48,7 +48,6 @@ abstract class GenericDao implements IScaffold
 
     public function insertRow($arr)
     {
-        print_r($arr);
         return $this->scaffold->insertRow($arr);
     }
 

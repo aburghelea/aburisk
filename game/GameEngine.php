@@ -40,16 +40,32 @@ class GameEngine implements IGameEngine
         $this->joinGame($idHost);
     }
 
+    /**
+     * alătură un jucător jocului curent
+     * @param $idUser
+     * @return int -1 dacă utilizatorul nu există sau dacă este deja alăturat acelui joc, 1 altfel
+     */
     public function joinGame($idUser)
     {
+
         $ugDao = new User_Game();
+        $user = new User();
+        $user = $user->getRowsByField('id', $idUser);
+        if (empty($user))
+            return -1;
+        $games = $ugDao->getRowsByField('user_id', $idUser);
+        if (empty($games))
+            return -1;
+
         $ugDao->insertRow(array('user_id' => $idUser, "game_id" => $this->game->getId()));
+
+        return 1;
     }
 
     public function changeState($state)
     {
         $this->game->state = $state;
-        $this->game->updateRows(array("state" => $state), 'id', $this->game->id);
+        $this->game->updateRows(array("state" => $state), 'id', $this->game->getId());
     }
 
     public function changeTurn($idUser)
@@ -59,7 +75,8 @@ class GameEngine implements IGameEngine
 
     public function endGame($idUser)
     {
-        // TODO: Implement endGame() method.
+        $this->game->state = $state;
+        $this->game->updateRows(array("state" => $state), 'id', $this->game->getId());
     }
 
     public function claimPlanet($idPlanet, $idUser)

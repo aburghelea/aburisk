@@ -6,7 +6,12 @@
  * For : PWeb 2013
  */
 require_once("../game/GameEngine.php");
+require_once("../game/GameState.php");
 
 $ge = new GameEngine();
 echo $ge->getGame()."\n";
+
+$ge->changeState(GameState::ATTACK);
+echo $ge->getGame()."\n";
+print_r($ge->getGame()->getRowsByField('id',$ge->getGame()->getId()));
 ?>
