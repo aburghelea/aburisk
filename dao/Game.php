@@ -26,6 +26,13 @@ class Game extends GenericDao
         return "Game: " . $this->id . " - " . $this->noplayers . " - " . $this->state . " - " . $this->current_player_id;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+
 }
 
 ?>
