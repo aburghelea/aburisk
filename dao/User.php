@@ -29,6 +29,28 @@ class User extends GenericDao
     {
         return "Planet: " . $this->id . " - " . $this->username . " - " . $this->email . " - " . $this->played_games . " - " . $this->won_games;
     }
+
+    /**
+     * @param string $username Numele de utilizator dorit
+     * @param string $email Emailul dorit
+     * @param string $password Parola dorita
+     * @return int Id-ul inregistrarii daca s-a realizat insertul cu scucces, -1 altfel
+     */
+    public static function register($username, $email, $password)
+    {
+        $user_exists = self::alreadyExists($username, $email);
+
+        if ($user_exists)
+            return -1;
+        $inserter = new User();
+        return $inserter->insertRow(array('username' => $username, 'password' => $password, 'email' => $email));
+    }
+
+    protected static function alreadyExists($username, $email)
+    {
+        $finder = new User();
+        return $finder->getRowsByField('username', $username) || $finder->getRowsByField('email', $email);
+    }
 }
 
 ?>
