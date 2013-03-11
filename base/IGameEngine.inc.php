@@ -1,12 +1,14 @@
 <?php
 
+/**
+ * User: Alexandru George Burghelea
+ * Date: 02.03.2012
+ * Time: 11:56 PM
+ * For : PWeb 2013
+ */
+
 interface IGameEngine
 {
-
-    /*
-     * TODO: de vazut ce e cu variabila asta
-     * private int $idGame;
-     */
 
     /*
      * extrage jocul cu id-ul $idGame din baza de date sau creeaza un joc nou daca $idGame este 0

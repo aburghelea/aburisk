@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * User: Alexandru George Burghelea
+ * Date: 3/2/13
+ * Time: 15:31 PM
+ * For : PWeb 2013
+ */
+
 require_once("config.php");
 require_once("../base/IDatabase.inc.php");
 

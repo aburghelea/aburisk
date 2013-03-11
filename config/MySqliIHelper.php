@@ -1,11 +1,11 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
- * User: iceman
- * Date: 3/3/13
+ * User: Alexandru George Burghelea
+ * Date: 03.03.2013
  * Time: 4:21 PM
- * To change this template use File | Settings | File Templates.
+ * For : PWeb 2013
  */
+
 class MySqliIHelper
 {
     protected $db;

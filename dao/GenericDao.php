@@ -1,11 +1,14 @@
 <?php
+
 /**
  * User: Alexandru George Burghelea
- * Date: 3/10/13
+ * Date: 10.03.2013
  * Time: 11:37 PM
  * For : PWeb 2013
  */
+
 require_once('Scaffold.php');
+
 abstract class GenericDao implements IScaffold
 {
 

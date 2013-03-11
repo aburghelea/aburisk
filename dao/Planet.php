@@ -1,12 +1,14 @@
 <?php
-require_once("GenericDao.php");
+
 /**
- * Created by JetBrains PhpStorm.
- * User: alexandrubu
+ * User: Alexandru George Burghelea
  * Date: 11.03.2013
- * Time: 09:54
- * To change this template use File | Settings | File Templates.
+ * Time: 09:54 AM
+ * For : PWeb 2013
  */
+
+require_once("GenericDao.php");
+
 class Planet extends GenericDao
 {
     protected $id;
