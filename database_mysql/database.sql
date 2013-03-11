@@ -40,7 +40,7 @@ CREATE  TABLE IF NOT EXISTS `aburisk`.`games` (
   CONSTRAINT `fk_games_users1`
     FOREIGN KEY (`current_player_id` )
     REFERENCES `aburisk`.`users` (`id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -72,7 +72,7 @@ CREATE  TABLE IF NOT EXISTS `aburisk`.`planets` (
   CONSTRAINT `fk_planets_galaxies1`
     FOREIGN KEY (`containing_galaxy_id` )
     REFERENCES `aburisk`.`galaxies` (`id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -91,12 +91,12 @@ CREATE  TABLE IF NOT EXISTS `aburisk`.`planets_neighbours` (
   CONSTRAINT `fk_planets_has_planets_planets1`
     FOREIGN KEY (`first_planet_id` )
     REFERENCES `aburisk`.`planets` (`id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_planets_has_planets_planets2`
     FOREIGN KEY (`second_planet_id` )
     REFERENCES `aburisk`.`planets` (`id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -120,17 +120,17 @@ CREATE  TABLE IF NOT EXISTS `aburisk`.`planets_games` (
   CONSTRAINT `fk_planets_games_planets1`
     FOREIGN KEY (`planet_id` )
     REFERENCES `aburisk`.`planets` (`id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_planets_games_users1`
     FOREIGN KEY (`owner_id` )
     REFERENCES `aburisk`.`users` (`id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_planets_games_games1`
     FOREIGN KEY (`game_id` )
     REFERENCES `aburisk`.`games` (`id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -143,18 +143,18 @@ DROP TABLE IF EXISTS `aburisk`.`users_games` ;
 CREATE  TABLE IF NOT EXISTS `aburisk`.`users_games` (
   `user_id` INT NOT NULL ,
   `score` INT NULL DEFAULT 0 ,
-  `games_id` INT NOT NULL ,
+  `game_id` INT NOT NULL ,
   INDEX `fk_users_games_users1_idx` (`user_id` ASC) ,
-  INDEX `fk_users_games_games1_idx` (`games_id` ASC) ,
+  INDEX `fk_users_games_games1_idx` (`game_id` ASC) ,
   CONSTRAINT `fk_users_games_users1`
     FOREIGN KEY (`user_id` )
     REFERENCES `aburisk`.`users` (`id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_users_games_games1`
-    FOREIGN KEY (`games_id` )
+    FOREIGN KEY (`game_id` )
     REFERENCES `aburisk`.`games` (`id` )
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -225,7 +225,7 @@ INSERT INTO `users` (`id`,`username`,`email`,`password`,`played_games`,`won_game
 -- Query: 
 -- Date: 2013-03-01 21:26
 */
-INSERT INTO `users_games` (`user_id`,`score`,`games_id`) VALUES (1,10,1);
+INSERT INTO `users_games` (`user_id`,`score`,`game_id`) VALUES (1,10,1);
 
 /*
 -- Query: 

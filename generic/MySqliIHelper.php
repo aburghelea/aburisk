@@ -38,7 +38,6 @@ class MySqliIHelper
     protected function prepare_and_execute($query, $format = array(), $value = array(), $needs_preparation = 'false')
     {
         $stmt = $this->db->prepare($query);
-
         if ($needs_preparation == 'true') {
             if (!is_array($value))
                 $value = array($value);
@@ -46,6 +45,7 @@ class MySqliIHelper
                 $format = array($format);
 
             $params = array_merge($format, $value);
+
             call_user_func_array(array($stmt, 'bind_param'), $this->ref_values($params));
         }
 

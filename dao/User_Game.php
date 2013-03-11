@@ -13,7 +13,7 @@ class User_Game extends GenericDao
 {
     protected $user_id;
     public $score;
-    protected $games_id;
+    protected $game_id;
 
     function __construct()
     {
@@ -23,7 +23,7 @@ class User_Game extends GenericDao
 
     function __toString()
     {
-        return "User Game: " . $this->user_id . " - " . $this->score . " - " . $this->games_id;
+        return "User Game: " . $this->user_id . " - " . $this->score . " - " . $this->game_id;
     }
 }
 
