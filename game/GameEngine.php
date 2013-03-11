@@ -49,18 +49,18 @@ class GameEngine implements IGameEngine
     public function joinGame($idUser)
     {
 
-        $ugDao = new User_Game();
+        $user_game = new User_Game();
         $user = new User();
         $users = $user->getRowsByField('id', $idUser);
 
         if (empty($users))
             return -1;
         echo "Checking users";
-        $games = $ugDao->getRowsByArray(array('user_id'=>$idUser, 'game_id' => $this->game->getId()));
+        $games = $user_game->getRowsByArray(array('user_id'=>$idUser, 'game_id' => $this->game->getId()));
         if (!empty($games))
             return -1;
 
-        $ugDao->insertRow(array('user_id' => $idUser, "game_id" => $this->game->getId()));
+        $user_game->insertRow(array('user_id' => $idUser, "game_id" => $this->game->getId()));
 
         return 1;
     }
