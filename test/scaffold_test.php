@@ -6,7 +6,7 @@
  * For : PWeb 2013
  */
 
-require_once('../dao/Scaffold.php');
+require_once('../generic/Scaffold.php');
 
 $x = new Scaffold('planets');
 echo "</br>By Array </br>";

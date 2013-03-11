@@ -1,5 +1,5 @@
 <?php
-require_once("../config/Database.php");
+require_once("../database/Database.php");
 
 $connection = Database::connect();
 echo "Connection successful </br>";

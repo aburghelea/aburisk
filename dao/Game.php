@@ -6,7 +6,7 @@
  * For : PWeb 2013
  */
 
-require_once("GenericDao.php");
+require_once("../generic/GenericDao.php");
 
 class Game extends GenericDao
 {

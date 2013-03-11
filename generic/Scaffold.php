@@ -8,8 +8,8 @@
  */
 
 require_once("../interface/IScaffold.inc.php");
-require_once("../config/Database.php");
-require_once("../config/MySqliIHelper.php");
+require_once("../database/Database.php");
+require_once("../generic/MySqliIHelper.php");
 
 class Scaffold extends MySqliIHelper implements IScaffold
 {
