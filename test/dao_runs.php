@@ -48,4 +48,10 @@ $ugs = $ug->getRowsByField('user_id', '1');
 foreach ($ugs as $obj) {
     echo $obj . "\n";
 }
+
+$u = new User();
+$us = $u->getRowsByField('id','1');
+foreach ($us as $obj) {
+    echo $obj . "\n";
+}
 ?>
