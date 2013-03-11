@@ -28,6 +28,8 @@ $ge->joinGame(2);
 $ge->changeTurn(3);
 $ge->changeTurn(2);
 
-$ge->endGame(1);
+echo "Claiming planet ".$ge->claimPlanet(2,1)."\n";
+echo "Claiming planet ".$ge->claimPlanet(2,1)."\n";
+echo "Claiming planet ".$ge->claimPlanet(2,2)."\n";
 
 ?>

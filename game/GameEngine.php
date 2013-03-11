@@ -8,9 +8,10 @@
  */
 
 require_once("../interface/IGameEngine.inc.php");
-require_once("../dao/Game.php");
-require_once("../dao/User_Game.php");
-require_once("../dao/User.php");
+foreach (glob("../dao/*.php") as $filename)
+{
+    require_once($filename);
+}
 require_once("GameState.php");
 
 class GameEngine implements IGameEngine
@@ -113,18 +114,31 @@ class GameEngine implements IGameEngine
         return $user->getId();
     }
 
-    /*
-     * utilizatorul cu identificatorul $idUser încearcă să revendice planeta cu identificatorul $idPlanet
-     * întoarce -1 dacă planeta este deținută de un alt jucător sau dacă utilizatorul sau planeta nu există
-     * întoarce 1 în caz contrar
-     */
     /**
-     * @param $idPlanet
-     * @param $idUser
+     * Revedica o planeta neocupata
+     * @param int $idPlanet planeta dorita
+     * @param int $idUser revendicatorl
+     * @return int 1 daca planeta poate fi ocupata(e libera si datele sunt valide), -1 altfel
      */
     public function claimPlanet($idPlanet, $idUser)
     {
-        // TODO: Implement claimPlanet() method.
+        if (!$this->isUserInThisGame($idUser))
+            return -1;
+        $planet = new Planet();
+        $planet = $planet->getRowsByField('id', $idPlanet);
+
+        if (empty($planet))
+            return -1;
+
+        $planet_in_game = new Planet_Game();
+        $planets = $planet_in_game->getRowsByArray(array('planet_id' => $idPlanet, "game_id" => $this->game->getId()));
+        if (!empty($planets))
+            return -1;
+
+        $planet_in_game->insertRow(array("planet_id" => $idPlanet, "game_id" => $this->game->getId(), "owner_id" => $idUser));
+
+        return 1;
+
     }
 
     public function deployShip($idPlanet, $idUser)
