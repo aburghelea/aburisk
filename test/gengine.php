@@ -23,6 +23,6 @@ echo $ge->joinGame(2)."\n";
 echo "Change turn".$ge->changeTurn(3)."\n";
 echo "Change turn".$ge->changeTurn(2)."\n";
 
-$ge->changeState('TEST');
+$ge->endGame(1);
 
 ?>

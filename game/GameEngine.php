@@ -61,6 +61,7 @@ class GameEngine implements IGameEngine
             return -1;
 
         $user_game->insertRow(array('user_id' => $idUser, "game_id" => $this->game->getId()));
+        //TODO: add to games_played;
 
         return 1;
     }
@@ -77,16 +78,7 @@ class GameEngine implements IGameEngine
 
     public function changeTurn($idUser)
     {
-        $user = new User();
-        $users = $user->getRowsByField('id', $idUser);
-
-        if (empty($users))
-            return -1;
-
-        $user_game = new User_Game();
-        $user_games = $user_game ->getRowsByArray(array("user_id" => $idUser, "game_id" => $this->game->getId()));
-
-        if (empty($user_games))
+        if (!$this->isUserInThisGame($idUser))
             return -1;
 
         $this->game->current_player_id = $idUser;
@@ -97,6 +89,12 @@ class GameEngine implements IGameEngine
 
     public function endGame($idUser)
     {
+        if (!$this->isUserInThisGame($idUser))
+            return false;
+
+        $this->game->updateRows(array("current_player_id" => $idUser, 'state' => GameState::GAME_END), 'id', $this->game->getId());
+        //TODO: add games won to player;
+        return true;
     }
 
     public function claimPlanet($idPlanet, $idUser)
@@ -122,6 +120,18 @@ class GameEngine implements IGameEngine
     public function getGame()
     {
         return $this->game;
+    }
+
+    private function isUserInThisGame($idUser)
+    {
+        $user = new User();
+        $users = $user->getRowsByField('id', $idUser);
+
+
+        $user_game = new User_Game();
+        $user_games = $user_game->getRowsByArray(array("user_id" => $idUser, "game_id" => $this->game->getId()));
+
+        return !empty($users) &&  !empty($user_games);
     }
 
 }
