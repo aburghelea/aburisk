@@ -59,7 +59,6 @@ abstract class GenericDao implements IScaffold
 
             $object=new $classname();
             foreach ($object_row as $prop => $value) {
-                echo $prop." ".$value."\n";
                 $object->{$prop} = $value;
             }
 
