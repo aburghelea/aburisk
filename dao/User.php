@@ -27,7 +27,7 @@ class User extends GenericDao
 
     function __toString()
     {
-        return "Planet: " . $this->id . " - " . $this->username . " - " . $this->email . " - " . $this->played_games . " - " . $this->won_games;
+        return "USER: " . $this->id . " - " . $this->username . " - " . $this->email . " - " . $this->played_games . " - " . $this->won_games. " ** ";
     }
 
     /**
@@ -82,6 +82,13 @@ class User extends GenericDao
         $finder = new User();
         return $finder->getRowsByField('username', $username) || $finder->getRowsByField('email', $email);
     }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
 }
 
 ?>

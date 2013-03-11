@@ -35,7 +35,6 @@ class GameEngine implements IGameEngine
         }
 
         $idGame = $gameDao->insertRow(array('noPlayers' => $noPlayers, 'current_player_id' => $idHost, 'state' => GameState::WAITING_PLAYERS));
-        echo "New id ".$idGame."\n";
         $this->game = current($gameDao->getRowsByField('id', $idGame));
 
         $this->joinGame($idHost);
@@ -56,12 +55,15 @@ class GameEngine implements IGameEngine
         if (empty($users))
             return -1;
 
-        $games = $user_game->getRowsByArray(array('user_id'=>$idUser, 'game_id' => $this->game->getId()));
+        $games = $user_game->getRowsByArray(array('user_id' => $idUser, 'game_id' => $this->game->getId()));
         if (!empty($games))
             return -1;
 
         $user_game->insertRow(array('user_id' => $idUser, "game_id" => $this->game->getId()));
-        //TODO: add to games_played;
+        $user = current($users);
+
+        $user->played_games++;
+        $user->updateRows(array("played_games" => $user->played_games), "id", $idUser);
 
         return 1;
     }
@@ -76,6 +78,11 @@ class GameEngine implements IGameEngine
         $this->game->updateRows(array("state" => $state), 'id', $this->game->getId());
     }
 
+    /**
+     * Cedeaza tura urmatorului jucator
+     * @param int $idUser userul care va muta
+     * @return int 1 daca s-a cedat tura, -1 altfel
+     */
     public function changeTurn($idUser)
     {
         if (!$this->isUserInThisGame($idUser))
@@ -87,14 +94,23 @@ class GameEngine implements IGameEngine
         return $idUser;
     }
 
+    /**
+     * Incheie un joc si proclama un castigator
+     * @param int $idUser userul castigator
+     * @return int id-ul castigatorului daca s-a putut termina jocul, -1 altfel
+     */
     public function endGame($idUser)
     {
         if (!$this->isUserInThisGame($idUser))
-            return false;
+            return -1;
 
         $this->game->updateRows(array("current_player_id" => $idUser, 'state' => GameState::GAME_END), 'id', $this->game->getId());
-        //TODO: add games won to player;
-        return true;
+        $user = new User();
+        $user = current($user->getRowsByField('id', $idUser));
+
+        $user->won_games++;
+        $user->updateRows(array("won_games" => $user->won_games), "id", $idUser);
+        return $user->getId();
     }
 
     public function claimPlanet($idPlanet, $idUser)
@@ -131,7 +147,7 @@ class GameEngine implements IGameEngine
         $user_game = new User_Game();
         $user_games = $user_game->getRowsByArray(array("user_id" => $idUser, "game_id" => $this->game->getId()));
 
-        return !empty($users) &&  !empty($user_games);
+        return !empty($users) && !empty($user_games);
     }
 
 }
