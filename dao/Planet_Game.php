@@ -32,9 +32,9 @@ class Planet_Game extends GenericDao
 
 }
 
-$planeta = new Planet_Game();
-$planete = $planeta->getRowsByField('planet_id', '1');
-foreach ($planete as $gl) {
-    echo $gl . "\n<br/>";
+$pg = new Planet_Game();
+$pgs = $pg->getRowsByField('planet_id', '1');
+foreach ($pgs as $obj) {
+    echo $obj . "\n<br/>";
 }
 ?>
