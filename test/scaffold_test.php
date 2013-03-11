@@ -27,7 +27,8 @@ print_r($x->customQuery("DESC planets"));
 
 echo "Insert test <br/>";
 $what = array("name" => "Pamant", "containing_galaxy_id" => "1", "image" => "test.jpg");
-$x->insertRow($what);
+$rasp = $x->insertRow($what);
+echo "ID_UL INTORS".$rasp."<br/>\n";
 
 echo "Update test <br/>";
 $what2 = array("name" => "Chapa Ai", "containing_galaxy_id" => "2", "image" => "testai.jpg");

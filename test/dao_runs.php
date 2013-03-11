@@ -54,4 +54,10 @@ $us = $u->getRowsByField('id','1');
 foreach ($us as $obj) {
     echo $obj . "\n";
 }
+
+echo "Registering users<br/>";
+echo User::register('iceman', 'gigi@sdasda','1')."</br>\n";
+echo User::register('icesdasman', 'iceman.ftg@gmail.com','1')."</br>\n";
+echo User::register('iceman', 'iceman.ftg@gmail.com','1')."</br>\n";
+echo User::register('aburs', 'abusr.ftg@gmail.com','1')."</br>\n";
 ?>

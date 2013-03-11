@@ -40,7 +40,6 @@ class MySqliIHelper
         $stmt = $this->db->prepare($query);
 
         if ($needs_preparation == 'true') {
-            echo "preparing <br/>";
             if (!is_array($value))
                 $value = array($value);
             if (!is_array($format))

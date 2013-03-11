@@ -63,7 +63,6 @@ class Scaffold extends MySqliIHelper implements IScaffold
     {
         $begining = substr(trim($query), 0, strlen(Scaffold::C_SELECT));
         if (strcasecmp($begining, Scaffold::C_SELECT) == 0) {
-            echo "Will GET BY QUERY<br/>";
             return $this->customQuery($query, null, null, 'false');
         }
 
@@ -101,6 +100,8 @@ class Scaffold extends MySqliIHelper implements IScaffold
 
         $stmt = $this->prepare_and_execute($query, $format, array_values($arr), "true");
         $stmt->close();
+
+        return $this->db->insert_id;
     }
 
     /**
