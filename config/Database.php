@@ -8,7 +8,7 @@
  */
 
 require_once("config.php");
-require_once("../base/IDatabase.inc.php");
+require_once("../interface/IDatabase.inc.php");
 
 /**
  * Singleton for mysqli connection

@@ -7,7 +7,7 @@
  * For : PWeb 2013
  */
 
-require_once("../base/IScaffold.inc.php");
+require_once("../interface/IScaffold.inc.php");
 require_once("../config/Database.php");
 require_once("../config/MySqliIHelper.php");
 
