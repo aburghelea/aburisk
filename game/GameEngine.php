@@ -55,7 +55,7 @@ class GameEngine implements IGameEngine
 
         if (empty($users))
             return -1;
-        echo "Checking users";
+
         $games = $user_game->getRowsByArray(array('user_id'=>$idUser, 'game_id' => $this->game->getId()));
         if (!empty($games))
             return -1;
@@ -65,6 +65,10 @@ class GameEngine implements IGameEngine
         return 1;
     }
 
+    /**
+     * Schimba starea jocului
+     * @param string $state starea in care se schimba
+     */
     public function changeState($state)
     {
         $this->game->state = $state;
@@ -73,13 +77,26 @@ class GameEngine implements IGameEngine
 
     public function changeTurn($idUser)
     {
-        // TODO: Implement changeTurn() method.
+        $user = new User();
+        $users = $user->getRowsByField('id', $idUser);
+
+        if (empty($users))
+            return -1;
+
+        $user_game = new User_Game();
+        $user_games = $user_game ->getRowsByArray(array("user_id" => $idUser, "game_id" => $this->game->getId()));
+
+        if (empty($user_games))
+            return -1;
+
+        $this->game->current_player_id = $idUser;
+        $this->game->updateRows(array("current_player_id" => $idUser), 'id', $this->game->getId());
+
+        return $idUser;
     }
 
     public function endGame($idUser)
     {
-        $this->game->state = $state;
-        $this->game->updateRows(array("state" => $state), 'id', $this->game->getId());
     }
 
     public function claimPlanet($idPlanet, $idUser)

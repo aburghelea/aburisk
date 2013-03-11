@@ -11,11 +11,18 @@ require_once("../game/GameState.php");
 $ge = new GameEngine();
 echo $ge->getGame()."\n";
 
-$ge->changeState(GameState::ATTACK);
 echo $ge->getGame()."\n";
 print_r($ge->getGame()->getRowsByField('id',$ge->getGame()->getId()));
+
+echo "Change turn".$ge->changeTurn(2)."\n";
 
 echo $ge->joinGame(3)."\n";
 echo $ge->joinGame(2)."\n";
 echo $ge->joinGame(2)."\n";
+
+echo "Change turn".$ge->changeTurn(3)."\n";
+echo "Change turn".$ge->changeTurn(2)."\n";
+
+$ge->changeState('TEST');
+
 ?>
