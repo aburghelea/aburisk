@@ -113,6 +113,15 @@ class GameEngine implements IGameEngine
         return $user->getId();
     }
 
+    /*
+     * utilizatorul cu identificatorul $idUser încearcă să revendice planeta cu identificatorul $idPlanet
+     * întoarce -1 dacă planeta este deținută de un alt jucător sau dacă utilizatorul sau planeta nu există
+     * întoarce 1 în caz contrar
+     */
+    /**
+     * @param $idPlanet
+     * @param $idUser
+     */
     public function claimPlanet($idPlanet, $idUser)
     {
         // TODO: Implement claimPlanet() method.
@@ -138,6 +147,11 @@ class GameEngine implements IGameEngine
         return $this->game;
     }
 
+    /**
+     * Verifica daca userul este in joc.
+     * @param int $idUser userul
+     * @return bool true daca userul este in jocul curent, false altfel
+     */
     private function isUserInThisGame($idUser)
     {
         $user = new User();
