@@ -8,10 +8,17 @@
  */
 
 require_once("../interface/IGameEngine.inc.php");
-foreach (glob("../dao/*.php") as $filename)
-{
-    require_once($filename);
-}
+//foreach (glob("../dao/*.php") as $filename)
+//{
+//    require_once($filename);
+//}
+require_once("../dao/Game.php");
+require_once("../dao/User.php");
+require_once("../dao/Galaxie.php");
+require_once("../dao/Planet.php");
+require_once("../dao/Planet_Neighbour.php");
+require_once("../dao/Planet_Game.php");
+require_once("../dao/User_Game.php");
 require_once("GameState.php");
 
 class GameEngine implements IGameEngine
@@ -122,28 +129,28 @@ class GameEngine implements IGameEngine
      */
     public function claimPlanet($idPlanet, $idUser)
     {
-        if (!$this->isUserInThisGame($idUser))
-            return -1;
-        $planet = new Planet();
-        $planet = $planet->getRowsByField('id', $idPlanet);
-
-        if (empty($planet))
+        if ($this->planetIsClaimable($idPlanet, $idUser))
             return -1;
 
         $planet_in_game = new Planet_Game();
-        $planets = $planet_in_game->getRowsByArray(array('planet_id' => $idPlanet, "game_id" => $this->game->getId()));
-        if (!empty($planets))
-            return -1;
-
-        $planet_in_game->insertRow(array("planet_id" => $idPlanet, "game_id" => $this->game->getId(), "owner_id" => $idUser));
+        $planet_in_game->insertRow(array("planet_id" => $idPlanet, "game_id" => $this->game->getId(), "owner_id" => $idUser, "noships" => 1));
 
         return 1;
 
     }
 
+    /* similar cu metoda anterioară, doar că planeta este deja deținută de utilizator */
     public function deployShip($idPlanet, $idUser)
     {
-        // TODO: Implement deployShip() method.
+        $planet = $this->planetIsClaimed($idPlanet, $idUser);
+        if ($this->planetIsClaimed($idPlanet, $idUser) == -1)
+            return -1;
+        $planet_game = new Planet_Game();
+        $pg = current($planet_game->getRowsByField('id',$planet));
+
+        $planet_game->updateRows(array("noships" => 1), 'id', $pg->noships + 1);
+
+        return 1;
     }
 
     public function attack($idPlanet1, $idPlanet2, $noShips, $idUser)
@@ -176,6 +183,36 @@ class GameEngine implements IGameEngine
         $user_games = $user_game->getRowsByArray(array("user_id" => $idUser, "game_id" => $this->game->getId()));
 
         return !empty($users) && !empty($user_games);
+    }
+
+    /**
+     * Checks to see if planet is claimable
+     * @param int $idPlanet desired planet
+     * @param int $idUser claimer
+     * @return bool if is claimable
+     */
+    public function planetIsClaimable($idPlanet, $idUser)
+    {
+        $planet = new Planet();
+        $planet_in_game = new Planet_Game();
+        $planet = $planet->getRowsByField('id', $idPlanet);
+        $planets = $planet_in_game->getRowsByArray(array('planet_id' => $idPlanet, "game_id" => $this->game->getId()));
+
+        return !$this->isUserInThisGame($idUser) || empty($planet) || !empty($planets);
+    }
+
+    public function planetIsClaimed($idPlanet, $idUser)
+    {
+        $planet = new Planet();
+        $planet_in_game = new Planet_Game();
+        $planet = $planet->getRowsByField('id', $idPlanet);
+        $planets = $planet_in_game->getRowsByArray(array('planet_id' => $idPlanet, "game_id" => $this->game->getId(), "owner_id" => $idUser));
+
+        if (!$this->isUserInThisGame($idUser) || empty($planet) || empty($planets))
+            return -1;
+
+        $planet_game = current($planets);
+        return $planet_game->getId();
     }
 
 }

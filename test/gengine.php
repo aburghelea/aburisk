@@ -31,5 +31,9 @@ $ge->changeTurn(2);
 echo "Claiming planet ".$ge->claimPlanet(2,1)."\n";
 echo "Claiming planet ".$ge->claimPlanet(2,1)."\n";
 echo "Claiming planet ".$ge->claimPlanet(2,2)."\n";
+echo "Claiming planet ".$ge->claimPlanet(1,2)."\n";
+echo "Claiming planet ".$ge->claimPlanet(2,2)."\n";
+
+echo $ge->deployShip(2,1);
 
 ?>
