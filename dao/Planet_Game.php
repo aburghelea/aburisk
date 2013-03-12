@@ -12,9 +12,9 @@ require_once('../generic/GenericDao.php');
 class Planet_Game extends GenericDao
 {
     protected $id;
-    protected $planet_id;
-    protected $owner_id;
-    protected $game_id;
+    public $planet_id;
+    public $owner_id;
+    public $game_id;
     public $noships;
     public $x_axis;
     public $y_axis;

@@ -22,18 +22,28 @@ echo $ge->getGame()."\n";
 
 $ge->joinGame(3);
 $ge->joinGame(2);
-$ge->joinGame(2);
 //echo "Change turn".$ge->changeTurn(3)."\n";
 //echo "Change turn".$ge->changeTurn(2)."\n";
 $ge->changeTurn(3);
 $ge->changeTurn(2);
 
-echo "Claiming planet ".$ge->claimPlanet(2,1)."\n";
-echo "Claiming planet ".$ge->claimPlanet(2,1)."\n";
-echo "Claiming planet ".$ge->claimPlanet(2,2)."\n";
 echo "Claiming planet ".$ge->claimPlanet(1,2)."\n";
 echo "Claiming planet ".$ge->claimPlanet(2,2)."\n";
+echo "Claiming planet ".$ge->claimPlanet(3,1)."\n";
+echo "Claiming planet ".$ge->claimPlanet(4,1)."\n";
 
-echo $ge->deployShip(2,1);
+echo $ge->deployShip(2,2);
+echo $ge->deployShip(2,2);
+echo $ge->deployShip(2,2);
+echo $ge->deployShip(2,2);
+
+echo "\n";
+echo "move ";
+print_r($ge->move(3,1,1,2));
+print_r($ge->move(2,1,1,2));
+print_r($ge->move(2,1,1,2));
+print_r($ge->move(2,1,1,2));
+print_r($ge->move(2,1,1,2));
+print_r($ge->move(2,1,1,2));
 
 ?>

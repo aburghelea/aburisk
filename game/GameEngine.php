@@ -139,16 +139,21 @@ class GameEngine implements IGameEngine
 
     }
 
-    /* similar cu metoda anterioară, doar că planeta este deja deținută de utilizator */
+    /**
+     * Plaseaza o nava pe planeta daca ea apartine userului
+     * @param int $idPlanet Planeta pe care se doreste sa se plaseze o nava
+     * @param int $idUser Detinatorul planetei
+     * @return int 1 daca s-a plasat nava, -1 nu
+     */
     public function deployShip($idPlanet, $idUser)
     {
         $planet = $this->planetIsClaimed($idPlanet, $idUser);
         if ($this->planetIsClaimed($idPlanet, $idUser) == -1)
             return -1;
         $planet_game = new Planet_Game();
-        $pg = current($planet_game->getRowsByField('id',$planet));
+        $pg = current($planet_game->getRowsByField('id', $planet));
 
-        $planet_game->updateRows(array("noships" => 1), 'id', $pg->noships + 1);
+        $planet_game->updateRows(array("noships" => $pg->noships + 1), 'id', $pg->getId());
 
         return 1;
     }
@@ -158,9 +163,40 @@ class GameEngine implements IGameEngine
         // TODO: Implement attack() method.
     }
 
+    /**
+     * Muta un numar de name intre doua planete ale aceluiasi user si daca pe planeta sursa
+     * ramane minim o nava
+     * @param int $idPlanet1 source planet
+     * @param int $idPlanet2 destination planet
+     * @param int $noShips number of ships
+     * @param int $idUser planet owner
+     * @return array|int -1 one if argumes are invalid, array with the number of remaining ships on the source planet
+     *                   and the number of ships on the destination planet
+     */
     public function move($idPlanet1, $idPlanet2, $noShips, $idUser)
     {
-        // TODO: Implement move() method.
+
+        $fp = $this->planetIsClaimed($idPlanet1, $idUser);
+        $sp = $this->planetIsClaimed($idPlanet2, $idUser);
+
+        if ($fp < 0 || $sp < 0)
+            return -1;
+        $pg_finder = new Planet_Game();
+
+        $firstPlanet = current($pg_finder->getRowsByField('id', $fp));
+        $secondPlanet = current($pg_finder->getRowsByField('id', $sp));
+
+        if ($firstPlanet->noships - 1 < $noShips) {
+            return -1;
+        }
+
+        $firstPlanet->noships -= $noShips;
+        $secondPlanet->noships += $noShips;
+
+        $pg_finder->updateRows(array("noships"=> $firstPlanet->noships), 'id', $firstPlanet->getId());
+        $pg_finder->updateRows(array("noships"=> $secondPlanet->noships), 'id', $secondPlanet->getId());
+
+        return array($firstPlanet->noships, $secondPlanet->noships);
     }
 
     public function getGame()
@@ -201,6 +237,12 @@ class GameEngine implements IGameEngine
         return !$this->isUserInThisGame($idUser) || empty($planet) || !empty($planets);
     }
 
+    /**
+     * Checks if the planet is claimed
+     * @param int $idPlanet
+     * @param int $idUser
+     * @return int -1 if the planet is unclaimed, the planets_games's id if it's unclaimed
+     */
     public function planetIsClaimed($idPlanet, $idUser)
     {
         $planet = new Planet();
