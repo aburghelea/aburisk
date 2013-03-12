@@ -11,6 +11,7 @@ require_once('../generic/GenericDao.php');
 
 class Planet_Game extends GenericDao
 {
+    protected $id;
     protected $planet_id;
     protected $owner_id;
     protected $game_id;
@@ -28,6 +29,11 @@ class Planet_Game extends GenericDao
     function __toString()
     {
         return "Planet_game: " . $this->planet_id . " - " . $this->owner_id . " - " . $this->game_id . " - " . $this->noships . " - " . $this->x_axis . " - " . $this->y_axis . " - " . $this->radius;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
 }

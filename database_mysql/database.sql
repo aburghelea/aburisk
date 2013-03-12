@@ -107,13 +107,15 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `aburisk`.`planets_games` ;
 
 CREATE  TABLE IF NOT EXISTS `aburisk`.`planets_games` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `planet_id` INT NOT NULL ,
   `owner_id` INT NOT NULL ,
   `game_id` INT NOT NULL ,
   `noships` INT NOT NULL ,
-  `x_axis` INT NOT NULL ,
-  `y_axis` INT NULL DEFAULT NULL ,
-  `radius` INT NULL DEFAULT NULL ,
+  `x_axis` INT NOT NULL DEFAULT 0  ,
+  `y_axis` INT NOT NULL DEFAULT 0 ,
+  `radius` INT NOT NULL DEFAULT 0 ,
+  PRIMARY KEY (`id`),
   INDEX `fk_planets_games_planets1_idx` (`planet_id` ASC) ,
   INDEX `fk_planets_games_users1_idx` (`owner_id` ASC) ,
   INDEX `fk_planets_games_games1_idx` (`game_id` ASC) ,
@@ -220,6 +222,7 @@ INSERT INTO `planets_neighbours` (`first_planet_id`,`second_planet_id`) VALUES (
 -- Date: 2013-03-01 21:25
 */
 INSERT INTO `users` (`id`,`username`,`email`,`password`,`played_games`,`won_games`) VALUES (1,'iceman','iceman.ftg@gmail.com','1',1,1);
+INSERT INTO `users` (`id`,`username`,`email`,`password`,`played_games`,`won_games`) VALUES (2,'iceman2','i2ceman.ftg@gmail.com','1',0,0);
 
 /*
 -- Query: 
