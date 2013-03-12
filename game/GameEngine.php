@@ -20,6 +20,7 @@ require_once("../dao/Planet_Neighbour.php");
 require_once("../dao/Planet_Game.php");
 require_once("../dao/User_Game.php");
 require_once("GameState.php");
+require_once("ShipAttackJudge.php");
 
 class GameEngine implements IGameEngine
 {
@@ -158,9 +159,52 @@ class GameEngine implements IGameEngine
         return 1;
     }
 
+    /**
+     * The user identified by $idUser attacks from planet1, plannet2 with $noShips
+     * @param int $idPlanet1 attacking planet
+     * @param int $idPlanet2 defending planet
+     * @param int $noShips ships to use in attack
+     * @param int $idUser attacking user;
+     * @return array|int If battle was carried -> (ships on first planet, ships on second planet), -1 otherwise
+     */
     public function attack($idPlanet1, $idPlanet2, $noShips, $idUser)
     {
-        // TODO: Implement attack() method.
+        $fp = $this->planetIsClaimed($idPlanet1, $idUser);
+        $sp = $this->planetIsClaimed($idPlanet2, $idUser);
+
+        if ($fp < 0)
+            return -1;
+
+        if ($sp > 0)
+            return -3;
+        $sp = $this->planetIsClaimed($idPlanet2, '%');
+
+        $pg_finder = new Planet_Game();
+
+        $firstPlanet = current($pg_finder->getRowsByField('id', $fp));
+        $secondPlanet = current($pg_finder->getRowsByField('id', $sp));
+
+        $verdict = ShipAttackJudge::judge($firstPlanet->noships, $secondPlanet->noships, $noShips);
+        if ($verdict == -1) {
+            return -2;
+        }
+
+        print_r($verdict);
+        $firstPlanet->noships = $verdict['A'];
+
+        if ($verdict['D'] == 0) {
+            $secondPlanet->noships = $verdict['C'];
+            $secondPlanet->owner_id = $firstPlanet->owner_id;
+        } else {
+            $secondPlanet->noships = $verdict['D'];
+        }
+
+
+        $pg_finder->updateRows(array("noships" => $firstPlanet->noships, 'owner_id' => $firstPlanet->owner_id), 'id', $firstPlanet->getId());
+        $pg_finder->updateRows(array("noships" => $secondPlanet->noships, 'owner_id' => $secondPlanet->owner_id), 'id', $secondPlanet->getId());
+
+        return array($firstPlanet->owner_id, $secondPlanet->owner_id);
+
     }
 
     /**
@@ -193,12 +237,15 @@ class GameEngine implements IGameEngine
         $firstPlanet->noships -= $noShips;
         $secondPlanet->noships += $noShips;
 
-        $pg_finder->updateRows(array("noships"=> $firstPlanet->noships), 'id', $firstPlanet->getId());
-        $pg_finder->updateRows(array("noships"=> $secondPlanet->noships), 'id', $secondPlanet->getId());
+        $pg_finder->updateRows(array("noships" => $firstPlanet->noships), 'id', $firstPlanet->getId());
+        $pg_finder->updateRows(array("noships" => $secondPlanet->noships), 'id', $secondPlanet->getId());
 
         return array($firstPlanet->noships, $secondPlanet->noships);
     }
 
+    /**
+     * @return Game, the current game
+     */
     public function getGame()
     {
         return $this->game;
