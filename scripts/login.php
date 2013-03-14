@@ -5,12 +5,9 @@
  * Time: 3:42 PM
  * For : PWeb 2013
  */
-const S_PASSWORD = 'password';
-const S_USERNAME = 'username';
 
+require_once("script-constants.php");
 include_once("../dao/User.php");
-
-var_dump($_GET);
 
 if (areParamsSet($_GET)) {
     $loginStatus = User::login($_GET[S_USERNAME], $_GET[S_PASSWORD]);

@@ -6,13 +6,8 @@
  * For : PWeb 2013
  */
 
-const S_PASSWORD = 'password';
-const S_EMAIL = 'email';
-const S_USERNAME = 'username';
-
+require_once("script-constants.php");
 require_once("../dao/User.php");
-
-var_dump($_GET);
 
 if (areParamsSet($_GET)) {
     $register = User::register($_GET[S_USERNAME], $_GET[S_EMAIL], $_GET[S_PASSWORD]);
