@@ -23,3 +23,7 @@
     <a href="join-game.php?idGame=114&idUser=2">Join Game 114 2</a>
 </div>
 
+<div>
+    <a href="begin-game.php?idGame=114">Begin Game</a>
+</div>
+
