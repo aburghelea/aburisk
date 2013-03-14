@@ -11,7 +11,7 @@ require_once("config.php");
 require_once("../interface/IDatabase.inc.php");
 
 /**
- * Singleton for mysqli connection
+ * Singleton container for mysqli connection
  */
 class Database implements IDatabase
 {
