@@ -11,5 +11,11 @@
 </div>
 <div>
     <a href="login.php?username=Dasda&password=ssdasd">LOGIN Dasda/ssdasd </a>
-
 </div>
+<div>
+    <a href="logout.php">LOGOUT</a>
+</div>
+<div>
+    <a href="create-game.php?noplayers=2&idHost=1">Create game 2 1</a>
+</div>
+
