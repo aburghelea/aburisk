@@ -27,3 +27,7 @@
     <a href="begin-game.php?idGame=114">Begin Game</a>
 </div>
 
+<div>
+    <a href="claim-planet.php?idGame=114&idUser=1&idPlanet=3">Claim Planet</a>
+</div>
+
