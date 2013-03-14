@@ -19,3 +19,7 @@
     <a href="create-game.php?noplayers=2&idHost=1">Create game 2 1</a>
 </div>
 
+<div>
+    <a href="join-game.php?idGame=114&idUser=2">Join Game 114 2</a>
+</div>
+

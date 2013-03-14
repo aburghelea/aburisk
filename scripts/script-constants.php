@@ -11,4 +11,7 @@ const S_EMAIL = 'email';
 const S_USERNAME = 'username';
 const S_NOPLAYERS = 'noplayers';
 const S_IDHOST = 'idHost';
+const S_IDUSER = 'idUser';
+const S_IDGAME = 'idGame';
+
 ?>
