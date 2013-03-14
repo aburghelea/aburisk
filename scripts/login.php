@@ -7,7 +7,7 @@
  */
 
 require_once("script-constants.php");
-include_once("../dao/User.php");
+require_once("../dao/User.php");
 
 if (areParamsSet($_GET)) {
     $loginStatus = User::login($_GET[S_USERNAME], $_GET[S_PASSWORD]);
