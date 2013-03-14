@@ -31,3 +31,6 @@
     <a href="claim-planet.php?idGame=114&idUser=1&idPlanet=3">Claim Planet</a>
 </div>
 
+<div>
+    <a href="deploy-ship.php?idGame=114&idUser=1&idPlanet=3">Deploy ship</a>
+</div>
