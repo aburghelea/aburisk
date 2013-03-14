@@ -6,16 +6,16 @@
  * For : PWeb 2013
  */
 
-const PASSWORD = 'password';
-const EMAIL = 'email';
-const USERNAME = 'username';
+const S_PASSWORD = 'password';
+const S_EMAIL = 'email';
+const S_USERNAME = 'username';
 
 require_once("../dao/User.php");
 
 var_dump($_GET);
 
 if (areParamsSet($_GET)) {
-    $register = User::register($_GET[USERNAME], $_GET[EMAIL], $_GET[PASSWORD]);
+    $register = User::register($_GET[S_USERNAME], $_GET[S_EMAIL], $_GET[S_PASSWORD]);
     if ($register > 0)
         echo "User with id " . $register . " has been creaded<br/>";
     else
@@ -26,7 +26,7 @@ if (areParamsSet($_GET)) {
 
 function areParamsSet($_GET)
 {
-    if (!isset($_GET[USERNAME]) || !isset($_GET[EMAIL]) || !isset($_GET[PASSWORD])) {
+    if (!isset($_GET[S_USERNAME]) || !isset($_GET[S_EMAIL]) || !isset($_GET[S_PASSWORD])) {
         return false;
     }
 
