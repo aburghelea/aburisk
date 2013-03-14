@@ -14,7 +14,7 @@ require_once("../interface/IGameEngine.inc.php");
 //}
 require_once("../dao/Game.php");
 require_once("../dao/User.php");
-require_once("../dao/Galaxie.php");
+require_once("../dao/Galaxy.php");
 require_once("../dao/Planet.php");
 require_once("../dao/Planet_Neighbour.php");
 require_once("../dao/Planet_Game.php");

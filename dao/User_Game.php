@@ -9,6 +9,9 @@
 
 require_once("../generic/GenericDao.php");
 
+/**
+ * User_Game CRUD/domain
+ */
 class User_Game extends GenericDao
 {
     protected $user_id;

@@ -7,6 +7,9 @@
  * For : PWeb 2013
  */
 
+/**
+ * Planet_Neighbour CRUD/domain
+ */
 require_once("../generic/GenericDao.php");
 
 class Planet_Neighbour extends GenericDao

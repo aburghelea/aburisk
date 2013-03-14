@@ -9,6 +9,9 @@
 
 require_once("../generic/GenericDao.php");
 
+/**
+ * Planet CRUD/domain
+ */
 class Planet extends GenericDao
 {
     protected $id;

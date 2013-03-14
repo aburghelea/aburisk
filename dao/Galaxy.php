@@ -8,7 +8,10 @@
 
 require_once("../generic/GenericDao.php");
 
-class Galaxie extends GenericDao
+/**
+ * Gaxaly CRUD/domain
+ */
+class Galaxy extends GenericDao
 {
     protected $id;
     public $name;
@@ -21,7 +24,7 @@ class Galaxie extends GenericDao
 
     function __toString()
     {
-        return "Galaxie: " . $this->id . " - " . $this->name;
+        return "Galaxy: " . $this->id . " - " . $this->name;
     }
 
 }

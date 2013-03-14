@@ -9,6 +9,9 @@
 
 require_once("../generic/GenericDao.php");
 
+/**
+ * User CRUD/domain
+ */
 class User extends GenericDao
 {
     protected $id;

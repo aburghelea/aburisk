@@ -12,7 +12,7 @@ foreach (glob("../dao/*.php") as $filename)
     require_once($filename);
 }
 
-$gx = new Galaxie();
+$gx = new Galaxy();
 $gxs = $gx->getRowsByField('id', '1');
 foreach ($gxs as $obj) {
     echo $obj . "\n";

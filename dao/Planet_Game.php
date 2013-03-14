@@ -9,6 +9,10 @@
 
 require_once('../generic/GenericDao.php');
 
+/**
+ * Planet_Game CRUD/domain
+ */
+
 class Planet_Game extends GenericDao
 {
     protected $id;
@@ -28,7 +32,13 @@ class Planet_Game extends GenericDao
 
     function __toString()
     {
-        return "Planet_game: " . $this->planet_id . " - " . $this->owner_id . " - " . $this->game_id . " - " . $this->noships . " - " . $this->x_axis . " - " . $this->y_axis . " - " . $this->radius;
+        return "Planet_game: " . $this->planet_id . " - "
+            . $this->owner_id . " - "
+            . $this->game_id . " - "
+            . $this->noships . " - "
+            . $this->x_axis . " - "
+            . $this->y_axis . " - "
+            . $this->radius;
     }
 
     public function getId()
