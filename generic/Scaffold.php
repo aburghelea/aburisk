@@ -25,10 +25,16 @@ class Scaffold extends MySqliIHelper implements IScaffold
         $this->table = mysqli_real_escape_string($this->db, $table);
     }
 
-    /*
-     * extrage intrarile din tabela cu conditia $field = $value; le ordoneaza corespunzator daca parametrii de
-     * ordonare au fost trimisi; limiteaza rezultatele daca parametrii $limit si $show sunt setati
-     * intoarce un array asociativ sau null daca nu a fost gasita nicio intrare
+    /**
+     * Extracts the entries from the database matching the condition $field = $value; it orders them if the
+     * parameters for ordering have been send; it limits the resulst if $limit and $show are set
+     * @param $field
+     * @param $value
+     * @param string $orderby
+     * @param string $direction
+     * @param string $limit
+     * @param string $show
+     * @return array|null an associative array or null if now entry has been found
      */
     public function getRowsbyField($field, $value, $orderby = '', $direction = 'ASC', $limit = '', $show = '')
     {
@@ -40,11 +46,16 @@ class Scaffold extends MySqliIHelper implements IScaffold
 
     }
 
-    /*
-     * extrage intrarile din tabela cu conditiile $key => $value, unde $key => $value sunt elemente din $arr;
-     * le ordoneaza corespunzator daca parametrii de ordonare au fost trimisi; limiteaza rezultatele daca
-     * parametrii $limit si $show sunt setati
-     * intoarce un array asociativ sau null daca nu a fost gasita nicio intrare
+    /**
+     * Extracts the entries from the database matching the conditions $key => $value
+     * where $key => $value are elements from $arr parameters for ordering
+     *  have been send; it limits the resulst if $limit and $show are set
+     * @param $arr
+     * @param string $orderby
+     * @param string $direction
+     * @param string $limit
+     * @param string $show
+     * @return array|null an associative array or null if now entry has been found
      */
     public function getRowsByArray($arr, $orderby = '', $direction = 'ASC', $limit = '', $show = '')
     {
@@ -55,9 +66,10 @@ class Scaffold extends MySqliIHelper implements IScaffold
         return $this->get_rows_from_db($value, $format, $where_clause, $orderby, $direction, $limit, $show);
     }
 
-    /*
-     * extrage intrarile din tabela pe baza query-ului trimis ca parametru
-     * intoarce un array asociativ sau null daca nu a fost gasita nicio intrare
+    /**
+     * Extracts the entries from the database folowing the SQL query sent as parameter
+     * @param $query
+     * @return array|null an associative array or null if now entry has been found
      */
     public function getCustomRows($query)
     {
@@ -70,8 +82,11 @@ class Scaffold extends MySqliIHelper implements IScaffold
     }
 
     /**
-     * seteaza valorile fiecarui camp $key la $value, unde $key => $value sunt elemente din $arr, pentru
-     * intrarile care au $field = $value
+     * Sets the value of each $key to $value , where $key => $value are elements
+     * of $arr, for the entries where $field = $value
+     * @param $arr
+     * @param $field
+     * @param $value
      */
     public function updateRows($arr, $field, $value)
     {
@@ -86,8 +101,10 @@ class Scaffold extends MySqliIHelper implements IScaffold
     }
 
     /**
-     * insereaza in tabela o intrare cu campurile $key la valoarea $value, unde $key => $value sunt elemente
-     * din $arr
+     * Sets the value of each $key to $value , where $key => $value are elements
+     * of $arr
+     * @param $arr
+     * @return mixed
      */
     public function insertRow($arr)
     {

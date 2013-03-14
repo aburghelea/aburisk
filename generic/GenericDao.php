@@ -9,6 +9,10 @@
 
 require_once('Scaffold.php');
 
+/**
+ * Generic CRUD/domain
+ * It has the same structure as IScaffold, but it delegates it's methods to a Scaffold object
+ */
 abstract class GenericDao implements IScaffold
 {
 
@@ -56,6 +60,11 @@ abstract class GenericDao implements IScaffold
         $this->scaffold->customQuery($query);
     }
 
+    /**
+     * Maps an database row to a Domain object
+     * @param $rows array of rows
+     * @return array array of domain objects
+     */
     private function mapRowsToObject($rows)
     {
         $rtn = array();

@@ -27,10 +27,11 @@ class GameEngine implements IGameEngine
     private $game;
 
     /**
-     * Extrage jocul cu id-ul $idGame din baza de date sau creeaza un joc nou daca $idGame este 0
-     * @param int $idGame id-ul jocul care se doreste extras
-     * @param int $noPlayers este numarul de jucatori necesar pentru a incepe jocul
-     * @param int $idHost $idHost este identificatorul utilizatorului care creeaza jocul
+     * Extracts the game with the specified id from the database or creates an
+     * new game if the id 0
+     * @param int $idGame the desired games id
+     * @param int $noPlayers number of necessary players to start the game
+     * @param int $idHost the hosts id
      */
     public function __construct($idGame = 0, $noPlayers = 2, $idHost = 1)
     {
@@ -50,9 +51,9 @@ class GameEngine implements IGameEngine
     }
 
     /**
-     * Alătură un jucător jocului curent
+     * Adds the user to the current game
      * @param $idUser
-     * @return int -1 dacă utilizatorul nu există sau dacă este deja alăturat acelui joc, 1 altfel
+     * @return int -1 if the user doesn't exist or is already in the game, 1 otherwise
      */
     public function joinGame($idUser)
     {
@@ -78,8 +79,8 @@ class GameEngine implements IGameEngine
     }
 
     /**
-     * Schimba starea jocului
-     * @param string $state starea in care se schimba
+     * Changes the state of the game
+     * @param string $state the new state
      */
     public function changeState($state)
     {
@@ -88,9 +89,9 @@ class GameEngine implements IGameEngine
     }
 
     /**
-     * Cedeaza tura urmatorului jucator
-     * @param int $idUser userul care va muta
-     * @return int 1 daca s-a cedat tura, -1 altfel
+     * Changes the user who is going to move
+     * @param int $idUser the new user
+     * @return int 1 turn has been changed, -1 otherwise
      */
     public function changeTurn($idUser)
     {
@@ -104,9 +105,9 @@ class GameEngine implements IGameEngine
     }
 
     /**
-     * Incheie un joc si proclama un castigator
-     * @param int $idUser userul castigator
-     * @return int id-ul castigatorului daca s-a putut termina jocul, -1 altfel
+     * Ends the game and declares the winner
+     * @param int $idUser the winner
+     * @return int the winners id if the operation succeded, -1 otherwise
      */
     public function endGame($idUser)
     {
@@ -123,10 +124,10 @@ class GameEngine implements IGameEngine
     }
 
     /**
-     * Revedica o planeta neocupata
-     * @param int $idPlanet planeta dorita
-     * @param int $idUser revendicatorl
-     * @return int 1 daca planeta poate fi ocupata(e libera si datele sunt valide), -1 altfel
+     * Claims an unocupied planet
+     * @param int $idPlanet desired planet
+     * @param int $idUser claimer
+     * @return int 1 if the planet has been claimed, -1 otherwise
      */
     public function claimPlanet($idPlanet, $idUser)
     {
@@ -141,10 +142,10 @@ class GameEngine implements IGameEngine
     }
 
     /**
-     * Plaseaza o nava pe planeta daca ea apartine userului
-     * @param int $idPlanet Planeta pe care se doreste sa se plaseze o nava
-     * @param int $idUser Detinatorul planetei
-     * @return int 1 daca s-a plasat nava, -1 nu
+     * Places a ship on the desired planet, if the planet belongs to the user
+     * @param int $idPlanet desire planet
+     * @param int $idUser planets owner
+     * @return int 1 if the ship has been deployed, -1 otherwise
      */
     public function deployShip($idPlanet, $idUser)
     {
@@ -208,8 +209,8 @@ class GameEngine implements IGameEngine
     }
 
     /**
-     * Muta un numar de name intre doua planete ale aceluiasi user si daca pe planeta sursa
-     * ramane minim o nava
+     * Moves a number of ships between two planets belonging to the same user if on
+     * the source planet remains a minimum of 1 ship
      * @param int $idPlanet1 source planet
      * @param int $idPlanet2 destination planet
      * @param int $noShips number of ships
@@ -244,7 +245,7 @@ class GameEngine implements IGameEngine
     }
 
     /**
-     * @return Game, the current game
+     * @return Game the current game
      */
     public function getGame()
     {
@@ -252,9 +253,9 @@ class GameEngine implements IGameEngine
     }
 
     /**
-     * Verifica daca userul este in joc.
-     * @param int $idUser userul
-     * @return bool true daca userul este in jocul curent, false altfel
+     * Checks if the users is in the game
+     * @param int $idUser the user
+     * @return bool
      */
     private function isUserInThisGame($idUser)
     {

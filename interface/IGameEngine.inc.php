@@ -10,65 +10,77 @@
 interface IGameEngine
 {
 
-    /*
-     * extrage jocul cu id-ul $idGame din baza de date sau creeaza un joc nou daca $idGame este 0
-     * $noPlayers este numarul de jucatori necesar pentru a incepe jocul
-     *$idHost este identificatorul utilizatorului care creeaza jocul
+    /**
+     * Extracts the game with the specified id from the database or creates an
+     * new game if the id 0
+     * @param int $idGame the desired games id
+     * @param int $noPlayers number of necessary players to start the game
+     * @param int $idHost the hosts id
      */
     public function __construct($idGame = 0, $noPlayers = 0, $idHost = 0);
 
-    /*
-     * alătură un jucător jocului curent
-     * întoarce -1 dacă utilizatorul nu există sau dacă este deja alăturat acelui joc
-     * întoarce 1 în caz contr ar
+    /**
+     * Adds the user to the current game
+     * @param $idUser
+     * @return int -1 if the user doesn't exist or is already in the game, 1 otherwise
      */
     public function joinGame($idUser);
 
-    /* schimba starea jocului */
+    /**
+     * Changes the state of the game
+     * @param string $state the new state
+     */
     public function changeState($state);
 
-    /* schimba identificatorul utilizatorului al carui rand este in joc */
+    /**
+     * Changes the user who is going to move
+     * @param int $idUser the new user
+     * @return int 1 turn has been changed, -1 otherwise
+     */
     public function changeTurn($idUser);
 
-    /* seteaza id-ul jucatorului si trece jocul in starea SFARSIT_JOC */
+    /**
+     * Ends the game and declares the winner
+     * @param int $idUser the winner
+     * @return int the winners id if the operation succeded, -1 otherwise
+     */
     public function endGame($idUser);
 
-
-    /*
-     * utilizatorul cu identificatorul $idUser încearcă să revendice planeta cu identificatorul $idPlanet
-     * întoarce -1 dacă planeta este deținută de un alt jucător sau dacă utilizatorul sau planeta nu există
-     * întoarce 1 în caz contrar
+    /**
+     * Claims an unocupied planet
+     * @param int $idPlanet desired planet
+     * @param int $idUser claimer
+     * @return int 1 if the planet has been claimed, -1 otherwise
      */
     public function claimPlanet($idPlanet, $idUser);
 
-    /* similar cu metoda anterioară, doar că planeta este deja deținută de utilizator */
+    /**
+     * Places a ship on the desired planet, if the planet belongs to the user
+     * @param int $idPlanet desire planet
+     * @param int $idUser planets owner
+     * @return int 1 if the ship has been deployed, -1 otherwise
+     */
     public function deployShip($idPlanet, $idUser);
 
-    /*
-     * utilizatorul cu identificatorul $idUser atacă planeta cu identificatorul $idUser2 trimițând $noShips
-     * nave de pe planeta cu identificatorul $idPlanet1
-     * întoarce -1 dacă planeta cu identificatorul $idPlanet1 nu aparține utilizatorului cu identificatorul
-     * $idUser
-     * întoarce -1 dacă planeta cu identificatorul $idPlanet2 aparține utilizatorului cu identificatorul
-     * $idUser
-     * întoarce -1 dacă pe planeta cu identificatorul $idPlanet1 nu există cel puțin $noShips+1 nave
-     * întoarce un array (x, y), în caz contrar, unde x este numărul de nave rămase pe planeta cu
-     * identificatorul $idPlanet1, iar y este numărul de planete rămase pe planeta cu identificatorul
-     * $idPlanet2
+    /**
+     * The user identified by $idUser attacks from planet1, plannet2 with $noShips
+     * @param int $idPlanet1 attacking planet
+     * @param int $idPlanet2 defending planet
+     * @param int $noShips ships to use in attack
+     * @param int $idUser attacking user;
+     * @return array|int If battle was carried -> (ships on first planet, ships on second planet), -1 otherwise
      */
     public function attack($idPlanet1, $idPlanet2, $noShips, $idUser);
 
-    /*
-     * utilizatorul cu identificatorul $idUser mută pe planeta cu identificatorul $idUser2 $noShips
-     * nave de pe planeta cu identificatorul $idPlanet1
-     * întoarce -1 dacă planeta cu identificatorul $idPlanet1 nu aparține utilizatorului cu identificatorul
-     * $idUser
-     * întoarce -1 dacă planeta cu identificatorul $idPlanet2 nu aparține utilizatorului cu identificatorul
-     * $idUser
-     * întoarce -1 dacă pe planeta cu identificatorul $idPlanet1 nu există cel puțin $noShips+1 nave
-     * întoarce un array (x, y), în caz contrar, unde x este numărul de nave rămase pe planeta cu
-     * identificatorul $idPlanet1, iar y este numărul de planete rămase pe planeta cu identificatorul
-     * $idPlanet2
+    /**
+     * Moves a number of ships between two planets belonging to the same user if on
+     * the source planet remains a minimum of 1 ship
+     * @param int $idPlanet1 source planet
+     * @param int $idPlanet2 destination planet
+     * @param int $noShips number of ships
+     * @param int $idUser planet owner
+     * @return array|int -1 one if argumes are invalid, array with the number of remaining ships on the source planet
+     *                   and the number of ships on the destination planet
      */
     public function move($idPlanet1, $idPlanet2, $noShips, $idUser);
 }
