@@ -32,6 +32,10 @@
 </div>
 
 <div>
+    <a href="claim-planet.php?idGame=114&idUser=1&idPlanet=4">Claim Planet 1 4</a>
+</div>
+
+<div>
     <a href="claim-planet.php?idGame=114&idUser=2&idPlanet=2">Claim Planet 2 2</a>
 </div>
 
@@ -42,4 +46,8 @@
 
 <div>
     <a href="attack.php?idGame=114&idUser=1&idPlanet1=3&idPlanet2=2&noShips=2">Attack 3 2 2</a>
+</div>
+
+<div>
+    <a href="move.php?idGame=114&idUser=1&idPlanet1=3&idPlanet2=4&noShips=2">Move 3 4 2</a>
 </div>
