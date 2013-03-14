@@ -12,16 +12,15 @@ require_once("../game/GameEngine.php");
 if (areParamsSet($_GET)) {
     $gameEngine = new GameEngine($_GET[S_IDGAME]);
     if ($gameEngine->getGame() != null)
-        echo "Claiming planet on game with the id " . $gameEngine->getGame()->getId() . "<br/>";
+        echo "Moving ships on game with id " . $gameEngine->getGame()->getId() . "<br/>";
     else
         echo "Game was not retrieved<br/>";
 
-    $move_status = $gameEngine->move($_GET[S_IDPLANET1],$_GET[S_IDPLANET2], $_GET[S_NOSHIPS], $_GET[S_IDUSER]);
-    if ( !($move_status < 0)){
+    $move_status = $gameEngine->move($_GET[S_IDPLANET1], $_GET[S_IDPLANET2], $_GET[S_NOSHIPS], $_GET[S_IDUSER]);
+    if (!($move_status < 0)) {
         echo "Move successfull<br/>";
         var_dump($move_status);
-    }
-    else
+    } else
         echo "Could not move<br/>";
 
 } else {

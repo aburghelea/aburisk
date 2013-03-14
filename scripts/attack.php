@@ -12,16 +12,15 @@ require_once("../game/GameEngine.php");
 if (areParamsSet($_GET)) {
     $gameEngine = new GameEngine($_GET[S_IDGAME]);
     if ($gameEngine->getGame() != null)
-        echo "Claiming planet on game with the id " . $gameEngine->getGame()->getId() . "<br/>";
+        echo "Attacking a plent on game with the id " . $gameEngine->getGame()->getId() . "<br/>";
     else
         echo "Game was not retrieved<br/>";
 
-    $attack_status = $gameEngine->attack($_GET[S_IDPLANET1],$_GET[S_IDPLANET2], $_GET[S_NOSHIPS], $_GET[S_IDUSER]);
-    if ($attack_status > 0){
+    $attack_status = $gameEngine->attack($_GET[S_IDPLANET1], $_GET[S_IDPLANET2], $_GET[S_NOSHIPS], $_GET[S_IDUSER]);
+    if (!($attack_status < 0)) {
         echo "Attack successfull<br/>";
         var_dump($attack_status);
-    }
-    else
+    } else
         echo "Defeated<br/>";
 
 } else {

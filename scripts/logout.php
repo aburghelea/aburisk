@@ -8,7 +8,7 @@
 require_once("../dao/User.php");
 $logoutStatus = User::logout();
 
-if  ($logoutStatus < 0 )
+if ($logoutStatus < 0)
     echo "NOT IMPLEMENTED YET<br/>";
 
 ?>

@@ -12,7 +12,7 @@ require_once("../game/GameEngine.php");
 if (areParamsSet($_GET)) {
     $gameEngine = new GameEngine($_GET[S_IDGAME]);
     if ($gameEngine->getGame() != null)
-        echo "Retrived game with the id " . $gameEngine->getGame()->getId() . "<br/>";
+        echo "Joining game with the id " . $gameEngine->getGame()->getId() . "<br/>";
     else
         echo "Game was not retrieved<br/>";
 

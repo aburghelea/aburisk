@@ -18,5 +18,4 @@ const S_IDPLANET1 = 'idPlanet1';
 const S_IDPLANET2 = 'idPlanet2';
 const S_NOSHIPS = 'noShips';
 
-
 ?>

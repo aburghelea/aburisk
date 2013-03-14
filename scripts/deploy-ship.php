@@ -12,7 +12,7 @@ require_once("../game/GameEngine.php");
 if (areParamsSet($_GET)) {
     $gameEngine = new GameEngine($_GET[S_IDGAME]);
     if ($gameEngine->getGame() != null)
-        echo "Claiming planet on game with the id " . $gameEngine->getGame()->getId() . "<br/>";
+        echo "Deploying ships on game with the id " . $gameEngine->getGame()->getId() . "<br/>";
     else
         echo "Game was not retrieved<br/>";
 
