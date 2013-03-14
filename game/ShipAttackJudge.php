@@ -11,7 +11,7 @@ class ShipAttackJudge
     /**
      * @param int $attacker_ships number of attacking ships
      * @param int $defender_ships number of defending ships
-     * @param bool $bonus_atack if the attacker is using less ships then possible
+     * @param int $total_atacking number of ships with witch is attacking
      * @return int|array -1 if the attack is not possible, (remaining ships on attack, remaining ships on defence, conquering_ships)
      */
     public static function judge($attacker_ships, $defender_ships, $total_atacking)

@@ -14,5 +14,9 @@ const S_IDHOST = 'idHost';
 const S_IDUSER = 'idUser';
 const S_IDGAME = 'idGame';
 const S_IDPLANET = 'idPlanet';
+const S_IDPLANET1 = 'idPlanet1';
+const S_IDPLANET2 = 'idPlanet2';
+const S_NOSHIPS = 'noShips';
+
 
 ?>
