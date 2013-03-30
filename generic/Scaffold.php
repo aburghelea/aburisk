@@ -7,9 +7,9 @@
  * For : PWeb 2013
  */
 
-require_once("../interface/IScaffold.inc.php");
-require_once("../database/Database.php");
-require_once("../generic/MySqliIHelper.php");
+require_once dirname(__FILE__)."/../interface/IScaffold.inc.php";
+require_once dirname(__FILE__)."/../database/Database.php";
+require_once dirname(__FILE__)."/../generic/MySqliIHelper.php";
 
 class Scaffold extends MySqliIHelper implements IScaffold
 {

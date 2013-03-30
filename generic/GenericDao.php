@@ -7,7 +7,7 @@
  * For : PWeb 2013
  */
 
-require_once('Scaffold.php');
+require_once dirname(__FILE__).'/Scaffold.php';
 
 /**
  * Generic CRUD/domain

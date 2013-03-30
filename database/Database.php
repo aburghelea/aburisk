@@ -7,8 +7,8 @@
  * For : PWeb 2013
  */
 
-require_once("config.php");
-require_once("../interface/IDatabase.inc.php");
+require_once dirname(__FILE__)."/config.php";
+require_once dirname(__FILE__)."/../interface/IDatabase.inc.php";
 
 /**
  * Singleton container for mysqli connection

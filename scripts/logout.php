@@ -5,10 +5,14 @@
  * Time: 9:46 PM
  * For : PWeb 2013
  */
-require_once("../dao/User.php");
-$logoutStatus = User::logout();
+require_once dirname(__FILE__)."/../dao/User.php";
+//$logoutStatus = User::logout();
+//
+//if ($logoutStatus < 0)
+//    echo "NOT IMPLEMENTED YET<br/>";
+if (session_status() == PHP_SESSION_NONE)
+    session_start();
 
-if ($logoutStatus < 0)
-    echo "NOT IMPLEMENTED YET<br/>";
-
+session_unset();
+header('Location: ' . $_SERVER['CONTEXT_PREFIX'] .'');
 ?>

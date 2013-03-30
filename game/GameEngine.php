@@ -7,20 +7,20 @@
  * For : PWeb 2013
  */
 
-require_once("../interface/IGameEngine.inc.php");
+require_once dirname(__FILE__)."/../interface/IGameEngine.inc.php";
 //foreach (glob("../dao/*.php") as $filename)
 //{
-//    require_once($filename);
+//    require_onceonce($filename);
 //}
-require_once("../dao/Game.php");
-require_once("../dao/User.php");
-require_once("../dao/Galaxy.php");
-require_once("../dao/Planet.php");
-require_once("../dao/Planet_Neighbour.php");
-require_once("../dao/Planet_Game.php");
-require_once("../dao/User_Game.php");
-require_once("GameState.php");
-require_once("ShipAttackJudge.php");
+require_once dirname(__FILE__)."/../dao/Game.php";
+require_once dirname(__FILE__)."/../dao/User.php";
+require_once dirname(__FILE__)."/../dao/Galaxy.php";
+require_once dirname(__FILE__)."/../dao/Planet.php";
+require_once dirname(__FILE__)."/../dao/Planet_Neighbour.php";
+require_once dirname(__FILE__)."/../dao/Planet_Game.php";
+require_once dirname(__FILE__)."/../dao/User_Game.php";
+require_once dirname(__FILE__)."/GameState.php";
+require_once dirname(__FILE__)."/ShipAttackJudge.php";
 
 class GameEngine implements IGameEngine
 {

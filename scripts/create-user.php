@@ -6,22 +6,31 @@
  * For : PWeb 2013
  */
 
-require_once("script-constants.php");
-require_once("../dao/User.php");
+require_once dirname(__FILE__) . "/script-constants.php";
+require_once dirname(__FILE__) . "/../dao/User.php";
+if (session_status() == PHP_SESSION_NONE)
+    session_start();
 
-if (areParamsSet($_GET)) {
-    $register = User::register($_GET[S_USERNAME], $_GET[S_EMAIL], $_GET[S_PASSWORD]);
-    if ($register > 0)
-        echo "User with id " . $register . " has been creaded<br/>";
-    else
-        echo "User creation has failed<br/>";
+if (areParamsSet($_POST)) {
+    $register = User::register($_POST[S_USERNAME], $_POST[S_EMAIL], $_POST[S_PASSWORD]);
+    if ($register > 0) {
+        $_SESSION['user_id'] = $register;
+        header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php?registered=true');
+    } else {
+        header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php?registered=1');
+    }
 } else {
-    echo "Use all the necessary params<br/>";
+    header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php?registered=2');
 }
 
-function areParamsSet($_GET)
+
+function areParamsSet()
 {
-    if (!isset($_GET[S_USERNAME]) || !isset($_GET[S_EMAIL]) || !isset($_GET[S_PASSWORD])) {
+    if (!isset($_POST[S_USERNAME]) || !isset($_POST[S_EMAIL]) || !isset($_POST[S_PASSWORD])) {
+        return false;
+    }
+
+    if (!strlen($_POST[S_USERNAME]) || !strlen($_POST[S_EMAIL]) || !strlen($_POST[S_PASSWORD])) {
         return false;
     }
 

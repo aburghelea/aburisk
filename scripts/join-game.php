@@ -6,8 +6,8 @@
  * For : PWeb 2013
  */
 
-require_once("script-constants.php");
-require_once("../game/GameEngine.php");
+require_once dirname(__FILE__)."/script-constants.php";
+require_once dirname(__FILE__)."/../game/GameEngine.php";
 
 if (areParamsSet($_GET)) {
     $gameEngine = new GameEngine($_GET[S_IDGAME]);
