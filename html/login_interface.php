@@ -1,10 +1,10 @@
 <!DOCTYPE HTML>
 <html>
-<?php include_once dirname(__FILE__)."/head.html" ?>
+<?php require_once dirname(__FILE__)."/head.html" ?>
 
 <body onload="init()">
 <div id="wrapper">
-    <?php include_once dirname(__FILE__)."/header.php" ?>
+    <?php require_once dirname(__FILE__)."/header.php" ?>
     <div id="page">
         <div id="content-center">
             <div id="formContainer">
@@ -28,7 +28,7 @@
 
     </div>
 
-    <?php include_once dirname(__FILE__)."/footer.html" ?>
+    <?php require_once dirname(__FILE__)."/footer.html" ?>
 </div>
 </body>
 </html>

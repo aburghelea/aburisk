@@ -36,7 +36,7 @@ function doLogin()
 
 function showLogin()
 {
-    include_once "html/login_interface.php";
+    require_once "html/login_interface.php";
 }
 
 ?>

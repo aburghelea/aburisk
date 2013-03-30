@@ -7,7 +7,7 @@
     <div id="menu">
         <ul>
             <li><a href="/aburisk" accesskey="1" title="">Homepage</a></li>
-            <li><?php include dirname(__FILE__)."/user_info.php"?></li>
+            <li><?php require_once dirname(__FILE__)."/user_info.php"?></li>
 <!--            <li><a href="#" accesskey="1" title="">Login</a></li>-->
         </ul>
     </div>
