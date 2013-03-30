@@ -1,0 +1,13 @@
+<div id="header">
+    <div id="logo">
+        <h1><a href="#">Aburisk</a></h1>
+
+        <p>A game by <a href="http://about.me/alexandru.burghelea" target="_blank">Alexandru Burghelea</a></p>
+    </div>
+    <div id="menu">
+        <ul>
+            <li><a href="#" accesskey="1" title="">Homepage</a></li>
+            <li><a href="#" accesskey="1" title="">Login</a></li>
+        </ul>
+    </div>
+</div>

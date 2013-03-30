@@ -27,6 +27,10 @@ temp
 dist
 test-output
 build.log
+glyph
+theme/index*
+theme/license*
+theme/login*
 
 atlassian-ide-plugin.xml
 spring-training/atlassian-ide-plugin.xml
