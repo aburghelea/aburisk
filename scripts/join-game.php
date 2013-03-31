@@ -9,14 +9,14 @@
 require_once dirname(__FILE__)."/script-constants.php";
 require_once dirname(__FILE__)."/../game/GameEngine.php";
 
-if (areParamsSet($_GET)) {
-    $gameEngine = new GameEngine($_GET[S_IDGAME]);
+if (areParamsSet($_POST)) {
+    $gameEngine = new GameEngine($_POST[S_IDGAME]);
     if ($gameEngine->getGame() != null)
         echo "Joining game with the id " . $gameEngine->getGame()->getId() . "<br/>";
     else
         echo "Game was not retrieved<br/>";
 
-    $join_status = $gameEngine->joinGame($_GET[S_IDUSER]);
+    $join_status = $gameEngine->joinGame($_POST[S_IDUSER]);
     if ($join_status == 1)
         echo "Successfully joined game<br/>";
     else
@@ -24,9 +24,9 @@ if (areParamsSet($_GET)) {
 } else {
     echo "Use all the necessary params<br/>";
 }
-function areParamsSet($_GET)
+function areParamsSet()
 {
-    return isset($_GET[S_IDGAME]) && isset($_GET[S_IDUSER]);
+    return isset($_POST[S_IDGAME]) && isset($_POST[S_IDUSER]);
 }
 
 ?>

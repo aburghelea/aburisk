@@ -16,7 +16,7 @@ class Game extends GenericDao
     protected $id;
     public $noplayers;
     public $state;
-    public $current_player_id;
+    protected  $current_player_id;
 
     function __construct()
     {
@@ -34,7 +34,10 @@ class Game extends GenericDao
         return $this->id;
     }
 
-
+    public function getCurrentPlayerId()
+    {
+        return $this->current_player_id;
+    }
 
 }
 

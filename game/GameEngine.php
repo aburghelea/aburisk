@@ -35,6 +35,7 @@ class GameEngine implements IGameEngine
      */
     public function __construct($idGame = 0, $noPlayers = 2, $idHost = 1)
     {
+        var_dump($idHost);
         $gameDao = new Game();
         if ($idGame > 0) {
             $games = $gameDao->getRowsByField('id', $idGame);
@@ -61,17 +62,19 @@ class GameEngine implements IGameEngine
         $user_game = new User_Game();
         $user = new User();
         $users = $user->getRowsByField('id', $idUser);
-
+        echo "0";
+        var_dump($idUser);
+        var_dump($users);
         if (empty($users))
             return -1;
-
+        echo "1";
         $games = $user_game->getRowsByArray(array('user_id' => $idUser, 'game_id' => $this->game->getId()));
         if (!empty($games))
             return -1;
-
+        echo "2";
         $user_game->insertRow(array('user_id' => $idUser, "game_id" => $this->game->getId()));
         $user = current($users);
-
+        echo "3";
         $user->played_games++;
         $user->updateRows(array("played_games" => $user->played_games), "id", $idUser);
 

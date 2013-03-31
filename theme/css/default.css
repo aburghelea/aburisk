@@ -24,6 +24,7 @@ h2 {
 
 p, ol, ul {
     margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 p {
@@ -70,7 +71,7 @@ hr {
     overflow: hidden;
     width: 1200px;
     /*padding-top: 50px;*/
-    margin: 50px auto;
+    margin: 0px auto;
     background: #FFFFFF;
     box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, .2);
 }
@@ -245,13 +246,13 @@ ul.style1 {
 }
 
 ul.style1 li {
-    padding: 10px 0px 15px 0px;
+    padding: 5px 0px 10px 0px;
     border-top: 1px solid #E6E7DC;
 }
 
 ul.style1 a {
     text-decoration: none;
-    color: #545454;
+    color: #50667f;
 }
 
 ul.style1 a:hover {
@@ -310,12 +311,22 @@ ul.style2 a:hover {
     display: inline-block;
     margin-top: 20px;
     padding: 7px 20px;
-    background: #22222D url(../images/img01.png) repeat;
+    background: #22222D repeat;
     text-decoration: none;
     text-transform: uppercase;
     color: #FFFFFF;
 }
 
+.join-style, .join-style:hover {
+    display: inline-block;
+    margin-right: 20px;
+    padding: 5px 20px;
+    background: #124f31 repeat;
+    text-decoration: none !important;
+    text-transform: uppercase;
+    color: #FFFFFF !important;
+    float: right;
+}
 @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,300,200);
 @import url(http://fonts.googleapis.com/css?family=Lobster);
 
@@ -400,16 +411,7 @@ ul.style2 a:hover {
     text-decoration: none;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
-/*#flipToRegister {*/
-/*background: transparent url(../images/user_add.png) center left no-repeat;*/
-/*background-size: 20px 16px;*/
-/*padding-left: 30px;*/
-/*}*/
-/*#flipToLogin {*/
-/*background: transparent url(../images/login.png) center left no-repeat;*/
-/*background-size: 20px 16px;*/
-/*padding-left: 30px;*/
-/*}*/
+
 input[type=text],input[type=password],input[type=email], input[type=number]{
     /* The text fields */
     font: 15px 'Segoe UI',Arial,sans-serif;
@@ -1080,7 +1082,10 @@ input[type=text],input[type=password],input[type=email], input[type=number]{
     background-position: -456px -144px;
 }
 
-
+.scrolable {
+    height: 330px;
+    overflow-y: auto;
+}
 
 
 

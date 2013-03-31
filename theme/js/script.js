@@ -15,3 +15,16 @@ function init() {
     }
 
 }
+
+function submitForm(element) {
+    while( element )
+    {
+        element = element.parentNode
+        if( element.tagName.toLowerCase() == "form" )
+        {
+            element.submit();
+            return element
+        }
+    }
+    return 0;
+}

@@ -28,6 +28,7 @@ class User_Game extends GenericDao
     {
         return "User Game: " . $this->user_id . " - " . $this->score . " - " . $this->game_id;
     }
+
 }
 
 ?>
