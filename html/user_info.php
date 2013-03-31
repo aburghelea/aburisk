@@ -22,10 +22,10 @@ function profileLink()
     $username = new User();
     $username = $username->getRowsByField('id', $_SESSION['user_id'])[0]->username;
     ?>
-    <a href="/aburisk/profile.php" >[ <?php echo $username ?> ]</a>
+    <a href="/aburisk/profile.php" accesskey="p" >[ <?php echo $username ?> ]</a>
     </li>
     <li>
-    <a href="/aburisk/scripts/logout.php" >Logout</a>
+    <a href="/aburisk/scripts/logout.php"  accesskey="l">Logout</a>
 
 <?php
 }
@@ -33,7 +33,7 @@ function profileLink()
 function loginLink()
 {
     ?>
-    <a href="/aburisk/login.php" >Login</a>
+    <a href="/aburisk/login.php" accesskey="l">Login</a>
 <?php
 }
 
