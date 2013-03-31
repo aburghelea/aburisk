@@ -21,28 +21,61 @@
     </style>
     <image class="background" id="background" width="750" height="421"
            xlink:href="../theme/background/warp1.jpg" preserveAspectRatio="none"/>
+
+    <circle id="cyanc1" class="planet" cx="105" cy="91" r="33" fill="rgb(99, 180, 180)" fill-opacity="0.3" />
     <image id="cyan1" class="planet" x="73" y="59" width="60" height="60" xlink:href="../theme/plantes/cyan1.png"/>
+
+    <circle id="cyanc2" class="planet" cx="85" cy="187" r="43" fill="rgb(99, 180, 180)" fill-opacity="0.3" />
     <image id="cyan2" class="planet" x="43" y="145" width="85" height="85" xlink:href="../theme/plantes/cyan2.png"/>
+
+    <circle id="cyanc3" class="planet" cx="200" cy="44" r="31.5" fill="rgb(99, 180, 180)" fill-opacity="0.3" />
     <image id="cyan3" class="planet" x="170" y="14" width="60" height="60" xlink:href="../theme/plantes/cyan3.png"/>
 
+    <circle id="greenc1" class="planet" cx="80" cy="280.5" r="30" fill="rgb(108, 238, 159)" fill-opacity="0.35" />
     <image id="green1" class="planet" x="53" y="255" width="55" height="55" xlink:href="../theme/plantes/green1.png"/>
+
+    <circle id="greenc2" class="planet" cx="82.5" cy="352.5" r="35" fill="rgb(108, 238, 159)" fill-opacity="0.35" />
     <image id="green2" class="planet" x="50" y="320" width="65" height="65" xlink:href="../theme/plantes/green2.png"/>
+
+    <circle id="greenc3" class="planet" cx="240" cy="325" r="43" fill="rgb(108, 238, 159)" fill-opacity="0.35" />
     <image id="green3" class="planet" x="195" y="280" width="90" height="90" xlink:href="../theme/plantes/green3.png"/>
 
+
+    <circle id="bluec1" class="planet" cx="220" cy="145" r="27" fill="rgb(45, 65, 160)" fill-opacity="0.6" />
     <image id="blue1" class="planet" x="195" y="120" width="50" height="50" xlink:href="../theme/plantes/blue1.png"/>
+
+    <circle id="bluec2" class="planet" cx="195" cy="234" r="28" fill="rgb(45, 65, 160)" fill-opacity="0.6" />
     <image id="blue2" class="planet" x="170" y="210" width="50" height="50" xlink:href="../theme/plantes/blue2.png"/>
+
+    <circle id="bluec3" class="planet" cx="360" cy="75" r="27" fill="rgb(45, 65, 160)" fill-opacity="0.6" />
     <image id="blue3" class="planet" x="335" y="50" width="50" height="50" xlink:href="../theme/plantes/blue3.png"/>
+
+    <circle id="bluec4" class="planet" cx="360" cy="169.5" r="16" fill="rgb(45, 65, 160)" fill-opacity="0.6" />
     <image id="blue4" class="planet" x="345" y="155" width="30" height="30" xlink:href="../theme/plantes/blue4.png"/>
+
+    <circle id="bluec5" class="planet" cx="510" cy="85" r="33" fill="rgb(45, 65, 160)" fill-opacity="0.6" />
     <image id="blue5" class="planet" x="480" y="55" width="60" height="60" xlink:href="../theme/plantes/blue5.png"/>
 
+    <circle id="redc1" class="planet" cx="345" cy="275" r="38" fill="rgb(208, 41, 80)" fill-opacity="0.6" />
     <image id="red1" class="planet" x="310" y="240" width="70" height="70" xlink:href="../theme/plantes/red1.png"/>
+
+    <circle id="redc2" class="planet" cx="385.5" cy="367.5" r="34" fill="rgb(208, 41, 80)" fill-opacity="0.6" />
     <image id="red2" class="planet" x="350" y="330" width="70" height="70" xlink:href="../theme/plantes/red2.png"/>
+
+    <circle id="redc3" class="planet" cx="515" cy="300" r="47" fill="rgb(208, 41, 80)" fill-opacity="0.6" />
     <image id="red3" class="planet" x="470" y="250" width="90" height="90" xlink:href="../theme/plantes/red3.png"/>
+
+    <circle id="redc4" class="planet" cx="585" cy="354" r="27" fill="rgb(208, 41, 80)" fill-opacity="0.6" />
     <image id="red4" class="planet" x="560" y="330" width="50" height="50" xlink:href="../theme/plantes/red4.png"/>
 
+    <circle id="grayc1" class="planet" cx="560" cy="185" r="37" fill="rgb(67, 79, 76)" fill-opacity="0.8" />
     <image id="gray1" class="planet" x="525" y="150" width="70" height="70" xlink:href="../theme/plantes/gray1.png"/>
+
+    <circle id="grayc2" class="planet" cx="629.5" cy="45" r="33" fill="rgb(67, 79, 76)" fill-opacity="0.8" />
     <image id="gray2" class="planet" x="600" y="15" width="60" height="60" xlink:href="../theme/plantes/gray2.png"/>
-    <image id="gray3" class="planet" x="630" y="220" width="55" height="55" xlink:href="../theme/plantes/gray3.png"/>
+
+    <circle id="grayc3" class="planet" cx="658" cy="247" r="30" fill="rgb(67, 79, 76)" fill-opacity="0.8" />
+    <image id="gray3" class="planet" x="630" y="220" width="56" height="56" xlink:href="../theme/plantes/gray3.png"/>
 
 
     <!--<image id="planet6" class="planet" x="230" y="180" width="100" height="100"-->
