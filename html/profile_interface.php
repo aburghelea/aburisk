@@ -32,7 +32,7 @@ if ($user == null ) {
     <?php require_once "header.php" ?>
     <div id="page">
         <div id="content-center" style="width: 300px">
-            <div id="tbox1">
+            <div id="profile">
                 <h1>Profile info</h1>
                 <ul class="style2">
                     <li class="">

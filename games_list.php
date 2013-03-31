@@ -1,0 +1,1 @@
+<?php require_once "html/games_interface.php" ?>
