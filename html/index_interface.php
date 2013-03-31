@@ -8,7 +8,7 @@
     <div id="page">
         <div id="content-center">
             <!----------- ADD HERE ------------>
-
+            HOMEPAGE
         </div>
     </div>
 

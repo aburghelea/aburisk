@@ -111,16 +111,16 @@
     text-decoration: none;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
-#flipToRegister {
-    background: transparent url(../images/user_add.png) center left no-repeat;
-    background-size: 20px 16px;
-    padding-left: 30px;
-}
-#flipToLogin {
-    background: transparent url(../images/login.png) center left no-repeat;
-    background-size: 20px 16px;
-    padding-left: 30px;
-}
+/*#flipToRegister {*/
+    /*background: transparent url(../images/user_add.png) center left no-repeat;*/
+    /*background-size: 20px 16px;*/
+    /*padding-left: 30px;*/
+/*}*/
+/*#flipToLogin {*/
+    /*background: transparent url(../images/login.png) center left no-repeat;*/
+    /*background-size: 20px 16px;*/
+    /*padding-left: 30px;*/
+/*}*/
 input[type=text],input[type=password],input[type=email]{
 	/* The text fields */
 	font: 15px 'Segoe UI',Arial,sans-serif;
