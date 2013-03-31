@@ -1,3 +1,13 @@
+<?php
+if (session_status() == PHP_SESSION_NONE)
+    session_start();
+
+if (!isSet($_SESSION['user_id'])) {
+    header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/index.php');
+    exit();
+}
+?>
+
 <!DOCTYPE HTML>
 <html>
 <?php require_once "head.html" ?>
@@ -18,8 +28,6 @@
                 </ul>
             </div>
 
-<!--            <p><a href="#" class="button-style">Create new game</a>-->
-<!--                <input type="submit" class="button-style" name="submit" value="Create new game"/></p>-->
         </div>
         <div id="sidebar">
             <form id="creategame" name="creategame" method="post" action="scripts/create-game.php">
@@ -33,13 +41,15 @@
                         <p>
                             <input type="number" name="noplayers" id="noplayers"
                                    style="position: inherit" placeholder="Number of players"
-                                    min='2' max='5'
+                                    min='2' max='5' value="2"
                                 />
                         </p>
                     </li>
                 </ul>
                 <div class='hidden'>
-                    <input type='text' name='idHost' value='1' />
+                    <input type='text' name='idHost' value='
+                    <?php echo $_SESSION['user_id']; ?>
+                    ' />
                 </div>
                    <p>
                        <input type=submit  name="submit" style="display: none" value="Submit"/>
