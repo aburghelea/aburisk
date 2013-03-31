@@ -226,6 +226,7 @@ hr {
 	overflow: hidden;
 	margin: 0px 50px;
 	padding: 50px 0px;
+    background-color: #F6F6F6;
 }
 
 #three-column #tbox1 {
@@ -291,7 +292,8 @@ ul.style2 .first {
 }
 
 ul.style2 h3 {
-	padding: 0px 0px 10px 0px;
+	padding: 0px 15px 10px 15px;
+    float: left;
 }
 
 ul.style2 h3 a {
