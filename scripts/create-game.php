@@ -9,8 +9,8 @@
 require_once dirname(__FILE__)."/script-constants.php";
 require_once dirname(__FILE__)."/../game/GameEngine.php";
 
-if (areParamsSet($_GET)) {
-    $gameEngine = new GameEngine(0, $_GET[S_NOPLAYERS], $_GET[S_IDHOST]);
+if (areParamsSet()) {
+    $gameEngine = new GameEngine(0, $_POST[S_NOPLAYERS], $_POST[S_IDHOST]);
     if ($gameEngine->getGame() != null)
         echo "Created a game with the id " . $gameEngine->getGame()->getId() . "<br/>";
     else
@@ -18,9 +18,9 @@ if (areParamsSet($_GET)) {
 } else {
     echo "Use all the necessary params<br/>";
 }
-function areParamsSet($_GET)
+function areParamsSet()
 {
-    return isset($_GET[S_IDHOST]) && isset($_GET[S_NOPLAYERS]);
+    return isset($_POST[S_IDHOST]) && isset($_POST[S_NOPLAYERS]);
 }
 
 ?>

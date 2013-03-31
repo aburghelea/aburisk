@@ -30,6 +30,7 @@
 /*section, footer{*/
 	/*display: block;*/
 /*}*/
+
 /*----------------------------
 	Styling the forms
 -----------------------------*/
@@ -121,7 +122,7 @@
     /*background-size: 20px 16px;*/
     /*padding-left: 30px;*/
 /*}*/
-input[type=text],input[type=password],input[type=email]{
+input[type=text],input[type=password],input[type=email], input[type=number]{
 	/* The text fields */
 	font: 15px 'Segoe UI',Arial,sans-serif;
 	border: none;
@@ -149,7 +150,7 @@ input[type=text],input[type=password],input[type=email]{
 #registerUsername {
     top: 137px;
 }
-input[type=submit]{
+.submit{
 	
 	/* Submit button */
 	
@@ -182,7 +183,7 @@ input[type=submit]{
 		color-stop(1, rgb(106,129,155))
 	);
 }
-input[type=submit]:hover{
+.submit:hover{
 	opacity:1;
 }
 .formTitle {
@@ -194,4 +195,8 @@ input[type=submit]:hover{
     color:#eee;
     outline:none;
     text-align: center;
+}
+
+.hidden {
+    display: none;
 }
