@@ -189,6 +189,7 @@ hr {
     width: 750px;
     margin: 0 auto;
     position: relative;
+    overflow: hidden;
 }
 
 /** SIDEBAR */
