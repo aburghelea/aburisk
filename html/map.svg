@@ -19,7 +19,7 @@
         }
 
         .connection {
-            stroke:rgba(99 ,180,180, 0.8);
+            stroke:rgba(244 ,164,51, 0.4);
              stroke-width:6
 
         }
@@ -27,92 +27,88 @@
         .gray_galaxy {
             fill: rgba(67, 79, 76, 0.8);
         }
+
+        .galaxy_red {
+            fill: rgba(208, 41, 80, 0.6);
+        }
+
+        .galaxy_blue {
+            fill: rgba(45, 65, 160, 0.6);
+        }
+
+        .galaxy_green {
+            fill: rgba(108, 238, 159,0.35);
+        }
+
+        .galaxy_cyan {
+            fill: rgba(99, 180, 180, 0.3);
+        }
       ]]>
     </style>
     <image class="background" id="background" width="750" height="421"
            xlink:href="../theme/background/warp1.jpg" preserveAspectRatio="none"/>
 
-    <polygon points="525,200 636,15 679,269"
-             class="gray_galaxy"/>
+    <polygon points="108,92.5 84.5,205 210,42" class="galaxy_cyan"/>
+    <polygon points="83,284 85.5,352 240.5,328" class="galaxy_green"/>
+    <polygon points="222.5,147 198,234 360,169 510,85 360,70" class="galaxy_blue"/>
+    <polygon points="350,278.5 387,364 578,352 514,303" class="galaxy_red"/>
+    <polygon points="561,190 633,45 658,247" class="gray_galaxy"/>
 
     <!--c1-c2-->
     <line x1="105" y1="91" x2="85" y2="187" class="connection"/>
     <!--c1-c3-->
     <line x1="105" y1="91" x2="200" y2="44" class="connection"/>
-
     <!--g1-c2-->
     <line x1="80" y1="280.5" x2="85" y2="187" class="connection"/>
-
     <!--b2-c2-->
     <line x1="195" y1="234" x2="85" y2="187" class="connection"/>
-
     <!--g1-g2-->
     <line x1="80" y1="280.5" x2="82.5" y2="352.5" class="connection"/>
-
     <!--g1-g3-->
     <line x1="80" y1="280.5" x2="240" y2="325" class="connection"/>
-
     <!--b1-c3-->
     <line x1="220" y1="145" x2="200" y2="44" class="connection"/>
-
     <!--b3-c3-->
     <line x1="360" y1="75" x2="200" y2="44" class="connection"/>
-
     <!--b1-b2-->
     <line x1="220" y1="145" x2="195" y2="234" class="connection"/>
-
     <!--b1-b4-->
     <line x1="220" y1="145" x2="360" y2="169.5" class="connection"/>
-
     <!--b2-b4-->
     <line x1="360" y1="169.5" x2="195" y2="234" class="connection"/>
-
     <!--g3-b2-->
     <line x1="240" y1="325" x2="195" y2="234" class="connection"/>
-
     <!--g3-r1-->
     <line x1="240" y1="325" x2="345" y2="275" class="connection"/>
-
     <!--b3-b4-->
     <line x1="360" y1="75" x2="360" y2="169.5" class="connection"/>
-
     <!--b5-b3-->
     <line x1="510" y1="85" x2="360" y2="75" class="connection"/>
-
     <!--b5-b4-->
     <line x1="510" y1="85" x2="360" y2="169.5" class="connection"/>
-
     <!--b5-x2-->
     <line x1="510" y1="85" x2="629.5" y2="45" class="connection"/>
-
     <!--b4-x1-->
     <line x1="360" y1="169.5" x2="560" y2="185" class="connection"/>
-
     <!--b4-r1-->
     <line x1="360" y1="169.5" x2="345" y2="275" class="connection"/>
-
     <!--r2-r1-->
     <line x1="385.5" y1="367.5" x2="345" y2="275" class="connection"/>
-
     <!--r2-r4-->
     <line x1="385.5" y1="367.5" x2="585" y2="354" class="connection"/>
-
     <!--r3-r4-->
     <line x1="515" y1="300" x2="585" y2="354" class="connection"/>
-
     <!--r3-r1-->
     <line x1="515" y1="300" x2="345" y2="275" class="connection"/>
-
     <!--x2-x1-->
     <line x1="629.5" y1="45" x2="560" y2="185" class="connection"/>
-
     <!--x3-x1-->
     <line x1="658" y1="247" x2="560" y2="185" class="connection"/>
-
     <!--r3-x1-->
     <line x1="515" y1="300" x2="560" y2="185" class="connection"/>
 
-    <circle id="cyanc1" class="planet" cx="105" cy="91" r="33" fill="rgb(99, 180, 180)" fill-opacity="0.3"/>
+
+    <circle id="cyanc1" class="planet" cx="104" cy="91" r="21" fill="rgb(99, 180, 180)" fill-opacity="0.3"/>
     <image id="cyan1" class="planet" x="73" y="59" width="60" height="60" xlink:href="../theme/plantes/cyan1.png"/>
 
     <circle id="cyanc2" class="planet" cx="85" cy="187" r="43" fill="rgb(99, 180, 180)" fill-opacity="0.3"/>
@@ -130,11 +126,10 @@
     <circle id="greenc3" class="planet" cx="240" cy="325" r="43" fill="rgb(108, 238, 159)" fill-opacity="0.35"/>
     <image id="green3" class="planet" x="195" y="280" width="90" height="90" xlink:href="../theme/plantes/green3.png"/>
 
-
     <circle id="bluec1" class="planet" cx="220" cy="145" r="27" fill="rgb(45, 65, 160)" fill-opacity="0.6"/>
     <image id="blue1" class="planet" x="195" y="120" width="50" height="50" xlink:href="../theme/plantes/blue1.png"/>
 
-    <circle id="bluec2" class="planet" cx="195" cy="234" r="28" fill="rgb(45, 65, 160)" fill-opacity="0.6"/>
+    <circle id="bluec2" class="planet" cx="194" cy="233" r="28" fill="rgb(45, 65, 160)" fill-opacity="0.6"/>
     <image id="blue2" class="planet" x="170" y="210" width="50" height="50" xlink:href="../theme/plantes/blue2.png"/>
 
     <circle id="bluec3" class="planet" cx="360" cy="75" r="27" fill="rgb(45, 65, 160)" fill-opacity="0.6"/>
@@ -146,19 +141,19 @@
     <circle id="bluec5" class="planet" cx="510" cy="85" r="33" fill="rgb(45, 65, 160)" fill-opacity="0.6"/>
     <image id="blue5" class="planet" x="480" y="55" width="60" height="60" xlink:href="../theme/plantes/blue5.png"/>
 
-    <circle id="redc1" class="planet" cx="345" cy="275" r="38" fill="rgb(208, 41, 80)" fill-opacity="0.6"/>
+    <circle id="redc1" class="planet galaxy_red" cx="345" cy="275" r="38"/>
     <image id="red1" class="planet" x="310" y="240" width="70" height="70" xlink:href="../theme/plantes/red1.png"/>
 
-    <circle id="redc2" class="planet" cx="385.5" cy="367.5" r="34" fill="rgb(208, 41, 80)" fill-opacity="0.6"/>
+    <circle id="redc2" class="planet galaxy_red" cx="385.5" cy="367.5" r="34"/>
     <image id="red2" class="planet" x="350" y="330" width="70" height="70" xlink:href="../theme/plantes/red2.png"/>
 
-    <circle id="redc3" class="planet" cx="517" cy="298" r="30" fill="rgb(208, 41, 80)" fill-opacity="0.6"/>
+    <circle id="redc3" class="planet galaxy_red" cx="517" cy="298" r="30"/>
     <image id="red3" class="planet" x="470" y="250" width="90" height="90" xlink:href="../theme/plantes/red3.png"/>
 
-    <circle id="redc4" class="planet" cx="585" cy="354" r="27" fill="rgb(208, 41, 80)" fill-opacity="0.6"/>
+    <circle id="redc4" class="planet galaxy_red" cx="585" cy="354" r="27"/>
     <image id="red4" class="planet" x="560" y="330" width="50" height="50" xlink:href="../theme/plantes/red4.png"/>
 
-    <circle id="grayc1" cx="560" cy="190" r="37" class="planet gray_galaxy"/>
+    <circle id="grayc1" cx="560" cy="185" r="35" class="planet gray_galaxy"/>
     <image id="gray1" class="planet" x="525" y="150" width="70" height="70" xlink:href="../theme/plantes/gray1.png"/>
 
     <circle id="grayc2" cx="629.5" cy="45" r="33" class="planet gray_galaxy"/>
