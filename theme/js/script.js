@@ -27,16 +27,21 @@ function submitForm(element) {
     return 0;
 }
 
-
 function initMap(planets, connections) {
-        var map = document.getElementById("map");
+    map = document.getElementById("map");
     var i;
-    var svgroot = map.contentDocument;
-    var svgDoc = map.contentDocument.documentElement;
+    svgroot = map.contentDocument;
+    svgDoc = map.contentDocument.documentElement;
     var galaxies = {};
+
     for (i  in planets) {
+        var circle = createCircle(planets[i]);
+        svgDoc.appendChild(circle);
         var planet = createPlanet(planets[i]);
         svgDoc.appendChild(planet);
+        planet.addEventListener("mouseover", enlargeCircle, false);
+        planet.addEventListener("mouseout", shrinkCircle, false);
+
         if (galaxies[planets[i].containing_galaxy_id] == undefined)
             galaxies[planets[i].containing_galaxy_id] = [];
         var x_pos = planets[i].x_pos + planets[i].diameter / 2;
@@ -44,22 +49,60 @@ function initMap(planets, connections) {
         galaxies[planets[i].containing_galaxy_id].push({x_pos: x_pos, y_pos: y_pos});
     }
 
-    galaxies = sortGalaxyPoints(galaxies);
-    for (i in galaxies) {
-        var polygon = createPolygon(galaxies[i], i);
-        svgDoc.insertBefore(polygon, svgroot.getElementById("galaxies"));
-    }
+    drawGalaxies(galaxies, svgDoc, svgroot);
+    drawConnections(connections, planets, svgDoc, svgroot);
 
-    for (i in connections) {
+}
+
+function drawConnections(connections, planets, svgDoc, svgroot) {
+    for (var i in connections) {
         var firstPlanet = getPlanetById(planets, connections[i].first_planet_id);
         var secondPlanet = getPlanetById(planets, connections[i].second_planet_id);
         var connection = createRoute(firstPlanet, secondPlanet);
 
         svgDoc.insertBefore(connection, svgroot.getElementById("routes"));
     }
+}
+function drawGalaxies(galaxies, svgDoc, svgroot) {
+    galaxies = sortGalaxyPoints(galaxies);
+    for (var i in galaxies) {
+        var polygon = createPolygon(galaxies[i], i);
+        svgDoc.insertBefore(polygon, svgroot.getElementById("galaxies"));
+    }
+}
+
+function enlargeCircle(e) {
+    var planet = e.target;
+    circleId = 'circle_' + planet.getAttribute('id');
+    var circle = svgDoc.getElementById(circleId);
+    console.log(circle);
+    var initialRadius = circle.getAttribute('r');
+//    <animate attributeName="r" from="0" to="100" dur="3s"/>
+    var animate = document.createElementNS("http://www.w3.org/2000/svg", "animate");
+    animate.setAttribute('attributeName', 'r');
+    animate.setAttribute('dur', '3s');
+    animate.setAttribute('fill', 'freeze');
+    animate.setAttribute('from', initialRadius);
+    animate.setAttribute('to', initialRadius * 1.2);
+    circle.appendChild(animate);
+    console.log(animate);
+}
+
+function shrinkCircle(e) {
 
 }
 
+
+function createCircle(planetJSON){
+    var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    circle.setAttribute('class', "galaxy_"+planetJSON.containing_galaxy_id);
+    circle.setAttribute('cx', planetJSON.x_pos + planetJSON.diameter/2);
+    circle.setAttribute('cy', planetJSON.y_pos +  + planetJSON.diameter/2);
+    circle.setAttribute('r', planetJSON.diameter * 1.2 / 2 );
+    circle.setAttribute('id', 'circle_'+planetJSON.id );
+
+    return circle;
+}
 function createPlanet(planetJSON) {
     var planet = document.createElementNS("http://www.w3.org/2000/svg", "image");
     planet.setAttribute('class', "planet");
@@ -67,6 +110,7 @@ function createPlanet(planetJSON) {
     planet.setAttribute('y', planetJSON.y_pos);
     planet.setAttribute('width', planetJSON.diameter);
     planet.setAttribute('height', planetJSON.diameter);
+    planet.setAttribute('id', planetJSON.id );
     planet.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "/aburisk/theme/plantes/" + planetJSON.image);
 
     return planet;
