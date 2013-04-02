@@ -28,13 +28,13 @@ function submitForm(element) {
 }
 
 
-function initMap(planets) {
-    var map = document.getElementById("map");
+function initMap(planets, connections) {
+        var map = document.getElementById("map");
     var i;
     var svgroot = map.contentDocument;
     var svgDoc = map.contentDocument.documentElement;
     var galaxies = {};
-    for (i = 0; i < planets.length; i++) {
+    for (i  in planets) {
         var planet = createPlanet(planets[i]);
         svgDoc.appendChild(planet);
         if (galaxies[planets[i].containing_galaxy_id] == undefined)
@@ -47,13 +47,18 @@ function initMap(planets) {
     galaxies = sortGalaxyPoints(galaxies);
     for (i in galaxies) {
         var polygon = createPolygon(galaxies[i], i);
-        var el = svgroot.getElementById("galaxies");
-        console.log(svgDoc);
-        svgDoc.insertBefore(polygon, el);
+        svgDoc.insertBefore(polygon, svgroot.getElementById("galaxies"));
+    }
+
+    for (i in connections) {
+        var firstPlanet = getPlanetById(planets, connections[i].first_planet_id);
+        var secondPlanet = getPlanetById(planets, connections[i].second_planet_id);
+        var connection = createRoute(firstPlanet, secondPlanet);
+
+        svgDoc.insertBefore(connection, svgroot.getElementById("routes"));
     }
 
 }
-
 
 function createPlanet(planetJSON) {
     var planet = document.createElementNS("http://www.w3.org/2000/svg", "image");
@@ -70,15 +75,25 @@ function createPlanet(planetJSON) {
 function createPolygon(galaxy, cn) {
     var points = "";
     for (var i in galaxy) {
-        points += galaxy[i].x_pos+","+galaxy[i].y_pos+" ";
+        points += galaxy[i].x_pos + "," + galaxy[i].y_pos + " ";
     }
-    var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");;
+    var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
     polygon.setAttribute("points", points);
-    polygon.setAttribute("class", "galaxy_"+cn);
+    polygon.setAttribute("class", "galaxy_" + cn);
 
     return polygon;
 }
 
+function createRoute(first_planet, second_planet) {
+    var polygon = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    polygon.setAttribute("x1", first_planet.x_pos + first_planet.diameter / 2);
+    polygon.setAttribute("y1", first_planet.y_pos + first_planet.diameter / 2);
+    polygon.setAttribute("x2", second_planet.x_pos + second_planet.diameter / 2);
+    polygon.setAttribute("y2", second_planet.y_pos + second_planet.diameter / 2);
+    polygon.setAttribute("class", "connection");
+
+    return polygon;
+}
 function sortGalaxyPoints(galaxies) {
     var i;
     for (i in galaxies) {
@@ -91,8 +106,6 @@ function sortGalaxyPoints(galaxies) {
             return angle_a < angle_b;
         };
         galaxies[i].sort(comparator);
-
-
     }
     return galaxies;
 }
@@ -117,38 +130,11 @@ function getAngle(point_a, point_b) {
     return (Math.atan2(deltaX, deltaY) * 180 / Math.PI + 360) % 360;
 }
 
-/**
- * Function : dump()
- * Arguments: The data - array,hash(associative array),object
- *    The level - OPTIONAL
- * Returns  : The textual representation of the array.
- * This function was inspired by the print_r function of PHP.
- * This will accept some data as the argument and return a
- * text that will be a more readable version of the
- * array/hash/object that is given.
- * Docs: http://www.openjs.com/scripts/others/dump_function_php_print_r.php
- */
-function var_dump(arr, level) {
-    var dumped_text = "";
-    if (!level) level = 0;
-
-    //The padding given at the beginning of the line.
-    var level_padding = "";
-    for (var j = 0; j < level + 1; j++) level_padding += "    ";
-
-    if (typeof(arr) == 'object') { //Array/Hashes/Objects
-        for (var item in arr) {
-            var value = arr[item];
-
-            if (typeof(value) == 'object') { //If it is an array,
-                dumped_text += level_padding + "'" + item + "' ...\n";
-                dumped_text += var_dump(value, level + 1);
-            } else {
-                dumped_text += level_padding + "'" + item + "' => \"" + value + "\"\n";
-            }
-        }
-    } else { //Stings/Chars/Numbers etc.
-        dumped_text = "===>" + arr + "<===(" + typeof(arr) + ")";
+function getPlanetById(planets, id) {
+    for (i in planets) {
+        if (id == planets[i].id)
+            return planets[i];
     }
-    return dumped_text;
+
+    return null;
 }

@@ -14,7 +14,7 @@ require_once dirname(__FILE__)."/../generic/GenericDao.php";
  */
 class Planet extends GenericDao
 {
-    protected $id;
+    public $id;
     public $name;
     public $containing_galaxy_id;
     public $image;

@@ -14,8 +14,8 @@ require_once dirname(__FILE__)."/../generic/GenericDao.php";
 
 class Planet_Neighbour extends GenericDao
 {
-    protected $first_planet_id;
-    protected $second_planet_id;
+    public $first_planet_id;
+    public $second_planet_id;
 
     function __construct()
     {
