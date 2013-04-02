@@ -16,11 +16,14 @@ if (areParamsSet($_POST)) {
     if ($register > 0) {
         $_SESSION['user_id'] = $register;
         header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php?registered=true');
+        exit();
     } else {
         header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php?registered=1');
+        exit();
     }
 } else {
     header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php?registered=2');
+    exit();
 }
 
 

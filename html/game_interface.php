@@ -1,14 +1,18 @@
 <!DOCTYPE HTML>
 <html>
-<?php require_once "head.html" ?>
+<?php require_once "head.html";
+
+require_once dirname(__FILE__) . "/../dao/Planet.php";
+$planetDao = new Planet();
+$planetsJSON = json_encode($planetDao->getRowsByField('"1"', '1'));
+?>
 
 <body>
 <div id="wrapper">
     <?php require_once "header.php" ?>
     <div id="page">
         <div id="content">
-<!--                        <img src="html/map.svg" width="768" height="432" alt="Nice green circle"/>-->
-            <object type="image/svg+xml" width="750" height="421" data="html/map.svg"></object>
+            <object id='map' onload='initMap(<?php echo $planetsJSON?>)' type="image/svg+xml" width="750" height="421" data="html/map.svg"></object>
         </div>
         <div id="sidebar">
             <div id="tbox1">

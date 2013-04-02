@@ -14,7 +14,7 @@ if (!isSet($_SESSION['user_id'])) {
 $gameDao = new Game();
 $userGameDao = new User_Game();
 $userDao = new User();
-$game_list = $gameDao->getRowsByField('state', 'WAITING_PLAYERS');
+$game_list = $gameDao->getRowsByField('state not', 'GAME_END');
 $liClass = "class='first'";
 ?>
 
@@ -35,7 +35,7 @@ $liClass = "class='first'";
                 <ul class="style1 scrolable">
                     <?php
 
-                    foreach ($game_list as $index => $game) {
+                    foreach ((array)$game_list as $index => $game) {
                         $joined = count($userGameDao->getRowsByField('game_id', $game->getId()));
 
 
@@ -51,11 +51,21 @@ $liClass = "class='first'";
                                         <?php echo $hostUser->username ?>
                                     </a>
 
-                                    <form method="post" action="scripts/join-game.php">
-                                        <input type="hidden" name="idGame" value="<?php echo  $game->getId() ?>">
-                                        <input type="hidden" name="idUser" value="<?php echo $_SESSION['user_id'] ?>">
-                                        <a href='#' class="join-style" onclick="submitForm(this)"> JOIN GAME</a>
-                                    </form>
+                                    <?php if ($game->state === 'WAITING_PLAYERS') { ?>
+                                        <form method="post" action="scripts/join-game.php">
+                                            <input type="hidden" name="idGame" value="<?php echo  $game->getId() ?>">
+                                            <input type="hidden" name="idUser"
+                                                   value="<?php echo $_SESSION['user_id'] ?>">
+                                            <a href='#' class="join-style" onclick="submitForm(this)">JOIN GAME</a>
+                                        </form>
+                                    <?php } else { ?>
+                                        <form method="post" action="scripts/watch-game.php">
+                                            <input type="hidden" name="idGame" value="<?php echo  $game->getId() ?>">
+                                            <input type="hidden" name="idUser"
+                                                   value="<?php echo $_SESSION['user_id'] ?>">
+                                            <a href='#' class="join-style" onclick="submitForm(this)"> &nbsp;SPECTATE&nbsp;</a>
+                                        </form>
+                                    <?php } ?>
                                 </h3>
 
                                 <p>

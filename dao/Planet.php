@@ -16,8 +16,13 @@ class Planet extends GenericDao
 {
     protected $id;
     public $name;
-    protected $containing_galaxy_id;
+    public $containing_galaxy_id;
     public $image;
+    public $x_pos;
+    public $y_pos;
+    public $diameter;
+
+
 
     function __construct()
     {
