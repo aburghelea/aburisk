@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 02, 2013 at 01:41 PM
+-- Generation Time: Apr 03, 2013 at 08:40 AM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `planets` (
   `image` varchar(100) NOT NULL,
   `x_pos` int(11) NOT NULL DEFAULT '0',
   `y_pos` int(11) NOT NULL DEFAULT '0',
-  `diameter` int(11) NOT NULL DEFAULT '0',
+  `radius` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_planets_galaxies1_idx` (`containing_galaxy_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
@@ -94,25 +94,25 @@ CREATE TABLE IF NOT EXISTS `planets` (
 -- Dumping data for table `planets`
 --
 
-INSERT INTO `planets` (`id`, `name`, `containing_galaxy_id`, `image`, `x_pos`, `y_pos`, `diameter`) VALUES
-(1, 'Celestis', 1, 'cyan1.png', 73, 59, 60),
-(2, 'Ver Omesh', 1, 'cyan2.png', 43, 145, 85),
-(3, 'Ver Isca', 1, 'cyan3.png', 170, 14, 60),
-(4, 'Abydos', 2, 'green1.png', 53, 255, 55),
-(5, 'Dakara', 2, 'green2.png', 50, 320, 65),
-(6, 'P3X-888', 2, 'green3.png', 195, 280, 90),
-(7, 'Hebridan', 3, 'blue1.png', 195, 120, 50),
-(8, 'Svoriin', 3, 'blue2.png', 170, 210, 50),
-(9, 'Lantea', 3, 'blue3.png', 335, 50, 50),
-(10, 'Doranda', 3, 'blue4.png', 345, 155, 30),
-(11, 'Taranis', 3, 'blue5.png', 480, 55, 60),
-(12, 'Athos', 4, 'red1.png', 310, 240, 70),
-(13, 'Hala', 4, 'red2.png', 350, 330, 70),
-(14, 'Orila', 4, 'red3.png', 470, 250, 90),
-(15, 'Freyr', 4, 'red4.png', 560, 330, 50),
-(16, 'Vanir', 5, 'gray1.png', 525, 150, 70),
-(17, 'Othala', 5, 'gray2.png', 600, 15, 60),
-(18, 'Tauri', 5, 'gray3.png', 630, 220, 56);
+INSERT INTO `planets` (`id`, `name`, `containing_galaxy_id`, `image`, `x_pos`, `y_pos`, `radius`) VALUES
+(1, 'Celestis', 1, 'cyan1.png', 73, 59, 30),
+(2, 'Ver Omesh', 1, 'cyan2.png', 43, 145, 43),
+(3, 'Ver Isca', 1, 'cyan3.png', 170, 14, 30),
+(4, 'Abydos', 2, 'green1.png', 53, 255, 28),
+(5, 'Dakara', 2, 'green2.png', 50, 320, 33),
+(6, 'P3X-888', 2, 'green3.png', 195, 280, 45),
+(7, 'Hebridan', 3, 'blue1.png', 195, 120, 25),
+(8, 'Svoriin', 3, 'blue2.png', 170, 210, 25),
+(9, 'Lantea', 3, 'blue3.png', 335, 50, 25),
+(10, 'Doranda', 3, 'blue4.png', 345, 155, 15),
+(11, 'Taranis', 3, 'blue5.png', 480, 55, 30),
+(12, 'Athos', 4, 'red1.png', 310, 240, 35),
+(13, 'Hala', 4, 'red2.png', 350, 330, 35),
+(14, 'Orila', 4, 'red3.png', 470, 250, 25),
+(15, 'Freyr', 4, 'red4.png', 560, 330, 25),
+(16, 'Vanir', 5, 'gray1.png', 525, 150, 35),
+(17, 'Othala', 5, 'gray2.png', 600, 15, 30),
+(18, 'Tauri', 5, 'gray3.png', 630, 220, 28);
 
 -- --------------------------------------------------------
 

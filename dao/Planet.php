@@ -20,7 +20,7 @@ class Planet extends GenericDao
     public $image;
     public $x_pos;
     public $y_pos;
-    public $diameter;
+    public $radius;
 
 
 

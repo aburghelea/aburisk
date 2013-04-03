@@ -41,22 +41,6 @@
            xlink:href="../theme/background/warp1.jpg" preserveAspectRatio="none"/>
     <div id='galaxies' />
     <div id='routes' />
-    <!--<circle id="cyanc1" class="planet" cx="104" cy="91" r="21" fill="rgb(99, 180, 180)" fill-opacity="0.3"/>-->
-    <!--<circle id="cyanc2" class="planet" cx="85" cy="187" r="43" fill="rgb(99, 180, 180)" fill-opacity="0.3"/>-->
-    <!--<circle id="cyanc3" class="planet" cx="200" cy="44" r="31.5" fill="rgb(99, 180, 180)" fill-opacity="0.3"/>-->
-    <!--<circle id="greenc1" class="planet" cx="80" cy="280.5" r="30" fill="rgb(108, 238, 159)" fill-opacity="0.35"/>-->
-    <!--<circle id="greenc2" class="planet" cx="82.5" cy="352.5" r="35" fill="rgb(108, 238, 159)" fill-opacity="0.35"/>-->
-    <!--<circle id="greenc3" class="planet" cx="240" cy="325" r="43" fill="rgb(108, 238, 159)" fill-opacity="0.35"/>-->
-    <!--<circle id="bluec1" class="planet" cx="220" cy="145" r="27" fill="rgb(45, 65, 160)" fill-opacity="0.6"/>-->
-    <!--<circle id="bluec2" class="planet" cx="194" cy="233" r="28" fill="rgb(45, 65, 160)" fill-opacity="0.6"/>-->
-    <!--<circle id="bluec3" class="planet" cx="360" cy="75" r="27" fill="rgb(45, 65, 160)" fill-opacity="0.6"/>-->
-    <!--<circle id="bluec4" class="planet" cx="360" cy="169.5" r="16" fill="rgb(45, 65, 160)" fill-opacity="0.6"/>-->
-    <!--<circle id="bluec5" class="planet" cx="510" cy="85" r="33" fill="rgb(45, 65, 160)" fill-opacity="0.6"/>-->
-    <!--<circle id="redc1" class="planet galaxy_red" cx="345" cy="275" r="38"/>-->
-    <!--<circle id="redc2" class="planet galaxy_red" cx="385.5" cy="367.5" r="34"/>-->
-    <!--<circle id="redc3" class="planet galaxy_red" cx="517" cy="298" r="30"/>-->
-    <!--<circle id="redc4" class="planet galaxy_red" cx="585" cy="354" r="27"/>-->
-    <!--<circle id="grayc1" cx="560" cy="185" r="35" class="planet gray_galaxy"/>-->
-    <!--<circle id="grayc2" cx="629.5" cy="45" r="33" class="planet gray_galaxy"/>-->
-    <!--<circle id="grayc3" cx="658" cy="247" r="30" class="planet gray_galaxy"/>-->
+    <div id='atmospheres' />
+    <div id='planets' />
 </svg>
