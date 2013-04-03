@@ -3,7 +3,7 @@ function init() {
     var formContainer = document.getElementById('formContainer');
     var containers = document.getElementsByClassName('flipLink');
     for (var i = 0; i < containers.length; i++) {
-        containers[i].addEventListener('click', function (e) {
+        containers[i].addEventListener('click', function () {
 
             if (formContainer.classList.contains('flipped')) {
                 formContainer.classList.remove('flipped');
@@ -29,7 +29,13 @@ function submitForm(element) {
 ABURISK = {};
 ABURISK.map = function () {
 
-    var mapContainer, svgRoot, svgDocument;
+    var svgRoot,
+        svgDocument,
+        galaxiesDelimiter,
+        atmospheresDelimiter,
+        planetsDelimiter,
+        routesDelimiter;
+
 
     var getAngle = function (point_a, point_b) {
         var deltaX = point_a.x_pos - point_b.x_pos;
@@ -49,7 +55,7 @@ ABURISK.map = function () {
     };
 
     var getCenterOfPlanets = function (points) {
-        var x_pos = 0, y_pos = 0, radius = Number.MIN_VALUE;
+        var x_pos = 0, y_pos = 0;
         for (var i = 0; i < points.length; i++) {
             x_pos += points[i].x_pos;
             y_pos += points[i].y_pos;
@@ -73,9 +79,10 @@ ABURISK.map = function () {
     var sortPlanetsCounterClockWise = function (galaxies) {
         var i;
         for (i in galaxies) {
-
-            var center = getCenterOfPlanets(galaxies[i]);
-            galaxies[i].sort(pointComparator(center));
+            if (galaxies.hasOwnProperty(i)) {
+                var center = getCenterOfPlanets(galaxies[i]);
+                galaxies[i].sort(pointComparator(center));
+            }
         }
         return galaxies;
     };
@@ -91,7 +98,7 @@ ABURISK.map = function () {
         return polygon;
     };
 
-    var enlargeAtmosphere= function enlargeAtmosphere(e) {
+    var enlargeAtmosphere = function enlargeAtmosphere(e) {
         id = 'circle_' + e.target.getAttribute('id');
         var circle = svgDocument.getElementById(id);
         var radius = circle.getAttribute('r');
@@ -132,7 +139,8 @@ ABURISK.map = function () {
     var createPolygon = function (galaxy, cn) {
         var points = "";
         for (var i in galaxy) {
-            points += galaxy[i].x_pos + "," + galaxy[i].y_pos + " ";
+            if (galaxy.hasOwnProperty(i))
+                points += galaxy[i].x_pos + "," + galaxy[i].y_pos + " ";
         }
         var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
         polygon.setAttribute("points", points);
@@ -143,41 +151,37 @@ ABURISK.map = function () {
 
     return {
         init: function (planets, connections) {
-            mapContainer = document.getElementById("map");
-            svgRoot = mapContainer.contentDocument;
+            svgRoot = document.getElementById("map").contentDocument;
             svgDocument = svgRoot.documentElement;
-            var galaxies = this.drawPlanetsAndComputeGalaxyes(planets);
-            this.drawGalaxies(galaxies);
-            this.drawConnections(connections, planets);
+            galaxiesDelimiter = svgRoot.getElementById("galaxies");
+            atmospheresDelimiter = svgDocument.getElementById('atmospheres');
+            planetsDelimiter = svgDocument.getElementById('planets');
+            routesDelimiter = svgRoot.getElementById("routes");
 
+            this.drawPlanets(planets);
+            this.drawGalaxies(planets);
+            this.drawConnections(connections, planets);
         },
 
-        drawPlanetsAndComputeGalaxyes: function (planets) {
+        drawPlanets: function (planets) {
             var i, galaxies = {};
-            const atmospheresDelimiter = svgDocument.getElementById('atmospheres');
-            const planetsDelimiter = svgDocument.getElementById('planets');
 
             for (i = 0; i < planets.length; i += 1) {
                 var atmosphere = createAtmosphere(planets[i]);
                 var planet = createPlanet(planets[i]);
                 svgDocument.insertBefore(atmosphere, atmospheresDelimiter);
                 svgDocument.appendChild(planet, planetsDelimiter);
-                planet.addEventListener("mouseover", this.enlargeAtmosphere, false);
-                planet.addEventListener("mouseout", this.shrinkAtmoshpere, false);
+                planet.addEventListener("mouseover", enlargeAtmosphere, false);
+                planet.addEventListener("mouseout", shrinkAtmoshpere, false);
 
-                if (galaxies[planets[i].containing_galaxy_id] == undefined)
-                    galaxies[planets[i].containing_galaxy_id] = [];
-                var x_pos = planets[i].x_pos + planets[i].radius;
-                var y_pos = planets[i].y_pos + planets[i].radius;
-                galaxies[planets[i].containing_galaxy_id].push({x_pos: x_pos, y_pos: y_pos});
             }
 
             return galaxies;
         },
 
         drawConnections: function (connections, planets) {
-            const routesDelimiter = svgRoot.getElementById("routes");
-            for (var i = 0;  i < connections.length; i++) {
+
+            for (var i = 0; i < connections.length; i++) {
                 var firstPlanet = getPlanetById(planets, connections[i].first_planet_id);
                 var secondPlanet = getPlanetById(planets, connections[i].second_planet_id);
                 var connection = createRoute(firstPlanet, secondPlanet);
@@ -186,13 +190,23 @@ ABURISK.map = function () {
             }
         },
 
-        drawGalaxies: function (galaxies) {
-            const galaxiesDelimiter = svgRoot.getElementById("galaxies");
+        drawGalaxies: function (planets) {
+            var galaxies = {};
+            for (i = 0; i < planets.length; i += 1) {
+                if (galaxies[planets[i].containing_galaxy_id] == undefined)
+                    galaxies[planets[i].containing_galaxy_id] = [];
+                var x_pos = planets[i].x_pos + planets[i].radius;
+                var y_pos = planets[i].y_pos + planets[i].radius;
+                galaxies[planets[i].containing_galaxy_id].push({x_pos: x_pos, y_pos: y_pos});
+            }
+
 
             galaxies = sortPlanetsCounterClockWise(galaxies);
             for (var i in galaxies) {
-                var polygon = createPolygon(galaxies[i], i);
-                svgDocument.insertBefore(polygon, galaxiesDelimiter);
+                if (galaxies.hasOwnProperty(i)) {
+                    var polygon = createPolygon(galaxies[i], i);
+                    svgDocument.insertBefore(polygon, galaxiesDelimiter);
+                }
             }
         }
 
