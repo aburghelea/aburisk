@@ -15,7 +15,7 @@ $connectiosJSON = json_encode($planetNeighboursDao->getRowsByField('"1"', '1'));
     <?php require_once "header.php" ?>
     <div id="page">
         <div id="content">
-            <object id='map' onload='ABURISK.map.initMap(<?php echo $planetsJSON?>,<?php echo $connectiosJSON?> )' type="image/svg+xml" width="750" height="421" data="html/map.svg"></object>
+            <object id='map' onload='ABURISK.map.init(<?php echo $planetsJSON?>,<?php echo $connectiosJSON?> )' type="image/svg+xml" width="750" height="421" data="html/map.svg"></object>
         </div>
         <div id="sidebar">
             <div id="tbox1">

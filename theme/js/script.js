@@ -38,8 +38,111 @@ ABURISK.map = function () {
         return (Math.atan2(deltaX, deltaY) * 180 / Math.PI + 360) % 360;
     };
 
+    var getPlanetById = function (planets, id) {
+        var i;
+        for (i = 0; i < planets.length; i++) {
+            if (id == planets[i].id)
+                return planets[i];
+        }
+
+        return null;
+    };
+
+    var getCenterOfPlanets = function (points) {
+        var x_pos = 0, y_pos = 0, radius = Number.MIN_VALUE;
+        for (var i = 0; i < points.length; i++) {
+            x_pos += points[i].x_pos;
+            y_pos += points[i].y_pos;
+        }
+
+        x_pos /= points.length;
+        y_pos /= points.length;
+
+        return {x_pos: x_pos, y_pos: y_pos};
+    };
+
+    var pointComparator = function (center) {
+        var _center = center;
+        return function (a, b) {
+            var angle_a = getAngle(a, _center),
+                angle_b = getAngle(b, _center);
+            return angle_a < angle_b;
+        }
+    };
+
+    var sortPlanetsCounterClockWise = function (galaxies) {
+        var i;
+        for (i in galaxies) {
+
+            var center = getCenterOfPlanets(galaxies[i]);
+            galaxies[i].sort(pointComparator(center));
+        }
+        return galaxies;
+    };
+
+    var createRoute = function (first_planet, second_planet) {
+        var polygon = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        polygon.setAttribute("x1", first_planet.x_pos + first_planet.radius);
+        polygon.setAttribute("y1", first_planet.y_pos + first_planet.radius);
+        polygon.setAttribute("x2", second_planet.x_pos + second_planet.radius);
+        polygon.setAttribute("y2", second_planet.y_pos + second_planet.radius);
+        polygon.setAttribute("class", "connection");
+
+        return polygon;
+    };
+
+    var enlargeAtmosphere= function enlargeAtmosphere(e) {
+        id = 'circle_' + e.target.getAttribute('id');
+        var circle = svgDocument.getElementById(id);
+        var radius = circle.getAttribute('r');
+        circle.setAttribute('r', Number(radius) + 5);
+    };
+
+    var shrinkAtmoshpere = function shrinkAtmoshpere(e) {
+        id = 'circle_' + e.target.getAttribute('id');
+        var circle = svgDocument.getElementById(id);
+        var radius = circle.getAttribute('r');
+        circle.setAttribute('r', Number(radius) - 5);
+    };
+
+    var createAtmosphere = function (planetJSON) {
+        var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        circle.setAttribute('class', "galaxy_" + planetJSON.containing_galaxy_id);
+        circle.setAttribute('cx', planetJSON.x_pos + planetJSON.radius);
+        circle.setAttribute('cy', planetJSON.y_pos + +planetJSON.radius);
+        circle.setAttribute('r', planetJSON.radius * 1.2);
+        circle.setAttribute('id', 'circle_' + planetJSON.id);
+
+        return circle;
+    };
+
+    var createPlanet = function (planetJSON) {
+        var planet = document.createElementNS("http://www.w3.org/2000/svg", "image");
+        planet.setAttribute('class', "planet");
+        planet.setAttribute('x', planetJSON.x_pos);
+        planet.setAttribute('y', planetJSON.y_pos);
+        planet.setAttribute('width', planetJSON.radius * 2);
+        planet.setAttribute('height', planetJSON.radius * 2);
+        planet.setAttribute('id', planetJSON.id);
+        planet.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "/aburisk/theme/plantes/" + planetJSON.image);
+
+        return planet;
+    };
+
+    var createPolygon = function (galaxy, cn) {
+        var points = "";
+        for (var i in galaxy) {
+            points += galaxy[i].x_pos + "," + galaxy[i].y_pos + " ";
+        }
+        var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+        polygon.setAttribute("points", points);
+        polygon.setAttribute("class", "galaxy_" + cn);
+
+        return polygon;
+    };
+
     return {
-        initMap: function (planets, connections) {
+        init: function (planets, connections) {
             mapContainer = document.getElementById("map");
             svgRoot = mapContainer.contentDocument;
             svgDocument = svgRoot.documentElement;
@@ -55,12 +158,12 @@ ABURISK.map = function () {
             const planetsDelimiter = svgDocument.getElementById('planets');
 
             for (i = 0; i < planets.length; i += 1) {
-                var atmosphere = this.createCircle(planets[i]);
-                var planet = this.createPlanet(planets[i]);
+                var atmosphere = createAtmosphere(planets[i]);
+                var planet = createPlanet(planets[i]);
                 svgDocument.insertBefore(atmosphere, atmospheresDelimiter);
                 svgDocument.appendChild(planet, planetsDelimiter);
-                planet.addEventListener("mouseover", this.enlargeCircle, false);
-                planet.addEventListener("mouseout", this.shrinkCircle, false);
+                planet.addEventListener("mouseover", this.enlargeAtmosphere, false);
+                planet.addEventListener("mouseout", this.shrinkAtmoshpere, false);
 
                 if (galaxies[planets[i].containing_galaxy_id] == undefined)
                     galaxies[planets[i].containing_galaxy_id] = [];
@@ -74,11 +177,10 @@ ABURISK.map = function () {
 
         drawConnections: function (connections, planets) {
             const routesDelimiter = svgRoot.getElementById("routes");
-
-            for (var i in connections) {
-                var firstPlanet = this.getPlanetById(planets, connections[i].first_planet_id);
-                var secondPlanet = this.getPlanetById(planets, connections[i].second_planet_id);
-                var connection = this.createRoute(firstPlanet, secondPlanet);
+            for (var i = 0;  i < connections.length; i++) {
+                var firstPlanet = getPlanetById(planets, connections[i].first_planet_id);
+                var secondPlanet = getPlanetById(planets, connections[i].second_planet_id);
+                var connection = createRoute(firstPlanet, secondPlanet);
 
                 svgDocument.insertBefore(connection, routesDelimiter);
             }
@@ -87,116 +189,14 @@ ABURISK.map = function () {
         drawGalaxies: function (galaxies) {
             const galaxiesDelimiter = svgRoot.getElementById("galaxies");
 
-            galaxies = this.sortGalaxyPoints(galaxies);
+            galaxies = sortPlanetsCounterClockWise(galaxies);
             for (var i in galaxies) {
-                var polygon = this.createPolygon(galaxies[i], i);
+                var polygon = createPolygon(galaxies[i], i);
                 svgDocument.insertBefore(polygon, galaxiesDelimiter);
             }
-        },
-
-        enlargeCircle: function enlargeCircle(e) {
-            id = 'circle_' + e.target.getAttribute('id');
-            var circle = svgDocument.getElementById(id);
-            var radius = circle.getAttribute('r');
-            circle.setAttribute('r', Number(radius) + 5);
-        },
-
-        shrinkCircle: function shrinkCircle(e) {
-            id = 'circle_' + e.target.getAttribute('id');
-            var circle = svgDocument.getElementById(id);
-            var radius = circle.getAttribute('r');
-            circle.setAttribute('r', Number(radius) - 5);
-        },
-
-        createCircle: function (planetJSON) {
-            var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            circle.setAttribute('class', "galaxy_" + planetJSON.containing_galaxy_id);
-            circle.setAttribute('cx', planetJSON.x_pos + planetJSON.radius);
-            circle.setAttribute('cy', planetJSON.y_pos + +planetJSON.radius);
-            circle.setAttribute('r', planetJSON.radius * 1.2);
-            circle.setAttribute('id', 'circle_' + planetJSON.id);
-
-            return circle;
-        },
-
-        createPlanet: function (planetJSON) {
-            var planet = document.createElementNS("http://www.w3.org/2000/svg", "image");
-            planet.setAttribute('class', "planet");
-            planet.setAttribute('x', planetJSON.x_pos);
-            planet.setAttribute('y', planetJSON.y_pos);
-            planet.setAttribute('width', planetJSON.radius * 2);
-            planet.setAttribute('height', planetJSON.radius * 2);
-            planet.setAttribute('id', planetJSON.id);
-            planet.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "/aburisk/theme/plantes/" + planetJSON.image);
-
-            return planet;
-        },
-
-        createPolygon: function (galaxy, cn) {
-            var points = "";
-            for (var i in galaxy) {
-                points += galaxy[i].x_pos + "," + galaxy[i].y_pos + " ";
-            }
-            var polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-            polygon.setAttribute("points", points);
-            polygon.setAttribute("class", "galaxy_" + cn);
-
-            return polygon;
-        },
-
-        createRoute: function (first_planet, second_planet) {
-            var polygon = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            polygon.setAttribute("x1", first_planet.x_pos + first_planet.radius);
-            polygon.setAttribute("y1", first_planet.y_pos + first_planet.radius);
-            polygon.setAttribute("x2", second_planet.x_pos + second_planet.radius);
-            polygon.setAttribute("y2", second_planet.y_pos + second_planet.radius);
-            polygon.setAttribute("class", "connection");
-
-            return polygon;
-        },
-
-        pointComparator: function (center) {
-            var _center = center;
-            return function (a, b) {
-                var angle_a = getAngle(a, _center),
-                    angle_b = getAngle(b, _center);
-                return angle_a < angle_b;
-            }
-        },
-
-        sortGalaxyPoints: function (galaxies) {
-            var i;
-            for (i in galaxies) {
-
-                var center = this.getCenter(galaxies[i]);
-                galaxies[i].sort(this.pointComparator(center));
-            }
-            return galaxies;
-        },
-
-        getCenter: function (points) {
-            var x_pos = 0, y_pos = 0, radius = Number.MIN_VALUE;
-            for (var i = 0; i < points.length; i++) {
-                x_pos += points[i].x_pos;
-                y_pos += points[i].y_pos;
-            }
-
-            x_pos /= points.length;
-            y_pos /= points.length;
-
-            return {x_pos: x_pos, y_pos: y_pos};
-        },
-
-        getPlanetById: function (planets, id) {
-            var i;
-            for (i = 0; i < planets.length; i++) {
-                if (id == planets[i].id)
-                    return planets[i];
-            }
-
-            return null;
         }
+
+
     }
 
-}
-    ();
+}();
