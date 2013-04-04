@@ -1,42 +1,10 @@
 <?xml version="1.0" standalone="no"?>
+<?xml-stylesheet href="../theme/css/map.css" rel="stylesheet" type="text/css"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
         "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg id="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
      preserveAspectRatio="none" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xsi:schemaLocation="http://www.w3.org/2000/xlink ">
-    <style type="text/css">
-        <![CDATA[
-        .planet {
-            cursor: pointer;
-        }
-        .background{
-            position:fixed;
-            top:0;
-            left:0;
-            height:100%;
-            width:100%;
-        }
-        .connection {
-            stroke:rgba(244 ,164,51, 0.15);
-             stroke-width:6
-        }
-        .galaxy_5 {
-            fill: rgba(67, 79, 76, 0.8);
-        }
-        .galaxy_4 {
-            fill: rgba(208, 41, 80, 0.6);
-        }
-        .galaxy_3 {
-            fill: rgba(45, 65, 160, 0.6);
-        }
-        .galaxy_2 {
-            fill: rgba(108, 238, 159,0.35);
-        }
-        .galaxy_1 {
-            fill: rgba(99, 180, 180, 0.3);
-        }
-      ]]>
-    </style>
     <image class="background" id="background" width="750" height="421"
            xlink:href="../theme/background/warp.jpg" preserveAspectRatio="none"/>
     <div id='galaxies' />
