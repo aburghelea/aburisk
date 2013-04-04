@@ -38,7 +38,7 @@
       ]]>
     </style>
     <image class="background" id="background" width="750" height="421"
-           xlink:href="../theme/background/warp1.jpg" preserveAspectRatio="none"/>
+           xlink:href="../theme/background/warp.jpg" preserveAspectRatio="none"/>
     <div id='galaxies' />
     <div id='routes' />
     <div id='atmospheres' />
