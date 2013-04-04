@@ -29,6 +29,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `galaxies`
 --
 
+DROP DATABASE IF EXISTS `aburisk` ;
+CREATE DATABASE IF NOT EXISTS `aburisk` DEFAULT CHARACTER SET utf8 ;
+
+DROP SCHEMA IF EXISTS `aburisk` ;
+CREATE SCHEMA IF NOT EXISTS `aburisk` DEFAULT CHARACTER SET utf8 ;
+USE `aburisk` ;
+
+
 CREATE TABLE IF NOT EXISTS `galaxies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL DEFAULT 'Milky Way',
