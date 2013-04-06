@@ -13,10 +13,12 @@ require_once dirname(__FILE__) . "/../generic/GenericDao.php";
  */
 class Game extends GenericDao
 {
+    const gamesUserCanJoin = "select * from games where state not like 'GAME_END'  and id not in (select game_id from users_games where user_id = %s)";
+
     public $id;
     public $noplayers;
     public $state;
-    public  $current_player_id;
+    public $current_player_id;
 
     function __construct()
     {
@@ -37,6 +39,13 @@ class Game extends GenericDao
     public function getCurrentPlayerId()
     {
         return $this->current_player_id;
+    }
+
+    function getGamesUserCanPlay($uid)
+    {
+        $gameDao = new Game();
+
+        return $gameDao->getCustomRows(sprintf(self::gamesUserCanJoin, $uid));
     }
 
 }

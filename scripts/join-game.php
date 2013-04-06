@@ -8,6 +8,7 @@
 
 require_once dirname(__FILE__)."/script-constants.php";
 require_once dirname(__FILE__)."/../game/GameEngine.php";
+require_once dirname(__FILE__)."/../session/GameManager.php";
 
 if (areParamsSet($_POST)) {
     $gameEngine = new GameEngine($_POST[S_IDGAME]);
@@ -19,6 +20,7 @@ if (areParamsSet($_POST)) {
     $join_status = $gameEngine->joinGame($_POST[S_IDUSER]);
     if ($join_status == 1) {
         echo "Successfully joined game<br/>";
+        GameManager::setGame($_POST[S_IDUSER]);
         header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/game.php');
         exit();
     }
