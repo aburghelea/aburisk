@@ -8,7 +8,7 @@
 
 require_once dirname(__FILE__) . "/script-constants.php";
 require_once dirname(__FILE__) . "/../dao/actual/User.php";
-require_once dirname(__FILE__) . "/../auth/AuthManager.php";
+require_once dirname(__FILE__) . "/../session/AuthManager.php";
 
 if (session_status() == PHP_SESSION_NONE)
     session_start();

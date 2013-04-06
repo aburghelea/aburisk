@@ -1,4 +1,4 @@
-<?php require_once dirname(__FILE__) . "/../auth/AuthManager.php" ?>
+<?php require_once dirname(__FILE__) . "/../session/AuthManager.php" ?>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
