@@ -112,8 +112,8 @@ $liClass = "class='first'";
                         </p>
                     </li>
                 </ul>
-                <input type='hidden' name='idHost' value='<?php echo AuthManager::getLoggedInUserId() ?>'/>
-                <a href="javascript:void(0);" class="button-style" onclick="submitForm(this)">
+                <input type=submit  name="submit" style="display: none" value="Submit"/>
+                <a href="javascript:void(0);" class="button-style" onclick="document.creategame.submit.click();">
                     Create New Game
                 </a>
             </form>
