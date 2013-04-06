@@ -1,1 +1,1 @@
-<?php require_once "views/games_interface.php" ?>
+<?php require_once "views/list_interface.php" ?>
