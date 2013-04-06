@@ -5,7 +5,7 @@
  * Time: 9:46 PM
  * For : PWeb 2013
  */
-require_once dirname(__FILE__)."/../dao/User.php";
+require_once dirname(__FILE__) . "/../dao/actual/User.php";
 //$logoutStatus = User::logout();
 //
 //if ($logoutStatus < 0)

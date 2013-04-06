@@ -7,7 +7,7 @@
  * For : PWeb 2013
  */
 
-require_once dirname(__FILE__)."/../generic/GenericDao.php";
+require_once dirname(__FILE__) . "/../generic/GenericDao.php";
 
 /**
  * User_Game CRUD/domain

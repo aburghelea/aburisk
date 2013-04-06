@@ -2,8 +2,8 @@
 <html>
 <?php require_once "head.php";
 
-require_once dirname(__FILE__) . "/../dao/Planet_Neighbour.php";
-require_once dirname(__FILE__) . "/../dao/Planet.php";
+require_once dirname(__FILE__) . "/../dao/actual/Planet_Neighbour.php";
+require_once dirname(__FILE__) . "/../dao/actual/Planet.php";
 $planetDao = new Planet();
 $planetNeighboursDao = new Planet_Neighbour();
 $planetsJSON = json_encode($planetDao->getRowsByField('"1"', '1'));
@@ -16,7 +16,7 @@ $connectiosJSON = json_encode($planetNeighboursDao->getRowsByField('"1"', '1'));
     <?php require_once "header.php" ?>
     <div id="page">
         <div id="content">
-            <object id='map' onload='ABURISK.map.init(<?php echo $planetsJSON?>,<?php echo $connectiosJSON?> )' type="image/svg+xml" width="750" height="421" data="html/map.svg"></object>
+            <object id='map' onload='ABURISK.map.init(<?php echo $planetsJSON?>,<?php echo $connectiosJSON?> )' type="image/svg+xml" width="750" height="421" data="views/map.svg"></object>
         </div>
         <div id="sidebar">
             <div id="tbox1">

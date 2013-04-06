@@ -1,1 +1,1 @@
-<?php require_once "html/index_interface.php" ?>
+<?php require_once "views/index_interface.php" ?>

@@ -1,29 +1,36 @@
 .planet {
     cursor: pointer;
 }
-.background{
-    position:fixed;
-    top:0;
-    left:0;
-    height:100%;
-    width:100%;
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
 }
+
 .connection {
-    stroke:rgba(244 ,164,51, 0.15);
-    stroke-width:6
+    stroke: rgba(244, 164, 51, 0.15);
+    stroke-width: 6
 }
+
 .galaxy_5 {
     fill: rgba(67, 79, 76, 0.8);
 }
+
 .galaxy_4 {
     fill: rgba(208, 41, 80, 0.6);
 }
+
 .galaxy_3 {
     fill: rgba(45, 65, 160, 0.6);
 }
+
 .galaxy_2 {
-    fill: rgba(108, 238, 159,0.35);
+    fill: rgba(108, 238, 159, 0.35);
 }
+
 .galaxy_1 {
     fill: rgba(99, 180, 180, 0.3);
 }

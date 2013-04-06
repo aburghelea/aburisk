@@ -7,7 +7,7 @@
  * For : PWeb 2013
  */
 
-require_once dirname(__FILE__)."/../generic/GenericDao.php";
+require_once dirname(__FILE__) . "/../generic/GenericDao.php";
 
 /**
  * Planet_Game CRUD/domain
@@ -20,9 +20,6 @@ class Planet_Game extends GenericDao
     public $owner_id;
     public $game_id;
     public $noships;
-    public $x_axis;
-    public $y_axis;
-    public $radius;
 
     function __construct()
     {
@@ -35,10 +32,7 @@ class Planet_Game extends GenericDao
         return "Planet_game: " . $this->planet_id . " - "
             . $this->owner_id . " - "
             . $this->game_id . " - "
-            . $this->noships . " - "
-            . $this->x_axis . " - "
-            . $this->y_axis . " - "
-            . $this->radius;
+            . $this->noships;
     }
 
     public function getId()

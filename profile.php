@@ -1,1 +1,1 @@
-<?php require_once "html/profile_interface.php" ?>
+<?php require_once "views/profile_interface.php" ?>

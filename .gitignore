@@ -28,9 +28,10 @@ dist
 test-output
 build.log
 glyph
-theme/index*
-theme/license*
-theme/login*
+
+resources/index*
+resources/license*
+resources/login*
 
 atlassian-ide-plugin.xml
 spring-training/atlassian-ide-plugin.xml

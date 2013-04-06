@@ -6,7 +6,7 @@
  * Time: 4:58 PM
  * To change this template use File | Settings | File Templates.
  */
-require_once dirname(__FILE__) . "/../dao/User.php";
+require_once dirname(__FILE__) . "/../dao/actual/User.php";
 
 if (session_status() == PHP_SESSION_NONE)
     session_start();

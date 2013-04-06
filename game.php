@@ -6,4 +6,4 @@
  * Time: 7:13 PM
  * To change this template use File | Settings | File Templates.
  */
-require_once "html/game_interface.php" ?>
+require_once "views/game_interface.php" ?>

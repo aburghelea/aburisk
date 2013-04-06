@@ -131,7 +131,7 @@ ABURISK.map = function () {
         planet.setAttribute('width', planetJSON.radius * 2);
         planet.setAttribute('height', planetJSON.radius * 2);
         planet.setAttribute('id', planetJSON.id);
-        planet.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "/aburisk/theme/plantes/" + planetJSON.image);
+        planet.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "/aburisk/resources/plantes/" + planetJSON.image);
 
         return planet;
     };

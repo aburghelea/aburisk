@@ -10,7 +10,7 @@
 /**
  * Planet_Neighbour CRUD/domain
  */
-require_once dirname(__FILE__)."/../generic/GenericDao.php";
+require_once dirname(__FILE__) . "/../generic/GenericDao.php";
 
 class Planet_Neighbour extends GenericDao
 {

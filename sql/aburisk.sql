@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 03, 2013 at 08:40 AM
+-- Generation Time: Apr 06, 2013 at 07:00 PM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -28,15 +28,10 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `galaxies`
 --
+-- Creation: Apr 04, 2013 at 10:26 AM
+--
 
-DROP DATABASE IF EXISTS `aburisk` ;
-CREATE DATABASE IF NOT EXISTS `aburisk` DEFAULT CHARACTER SET utf8 ;
-
-DROP SCHEMA IF EXISTS `aburisk` ;
-CREATE SCHEMA IF NOT EXISTS `aburisk` DEFAULT CHARACTER SET utf8 ;
-USE `aburisk` ;
-
-
+DROP TABLE IF EXISTS `galaxies`;
 CREATE TABLE IF NOT EXISTS `galaxies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL DEFAULT 'Milky Way',
@@ -59,7 +54,10 @@ INSERT INTO `galaxies` (`id`, `name`) VALUES
 --
 -- Table structure for table `games`
 --
+-- Creation: Apr 04, 2013 at 10:26 AM
+--
 
+DROP TABLE IF EXISTS `games`;
 CREATE TABLE IF NOT EXISTS `games` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `noplayers` tinyint(4) NOT NULL DEFAULT '2',
@@ -67,25 +65,17 @@ CREATE TABLE IF NOT EXISTS `games` (
   `current_player_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_games_users1_idx` (`current_player_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
-
---
--- Dumping data for table `games`
---
-
-INSERT INTO `games` (`id`, `noplayers`, `state`, `current_player_id`) VALUES
-(1, 2, 'GAME_END', 1),
-(3, 2, 'SHIP_PLACING', 1),
-(4, 2, 'WAITING_PLAYERS', 1),
-(5, 2, 'WAITING_PLAYERS', 1),
-(6, 2, 'WAITING_PLAYERS', 1);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `planets`
 --
+-- Creation: Apr 04, 2013 at 10:26 AM
+--
 
+DROP TABLE IF EXISTS `planets`;
 CREATE TABLE IF NOT EXISTS `planets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL DEFAULT 'Tatooine',
@@ -96,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `planets` (
   `radius` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_planets_galaxies1_idx` (`containing_galaxy_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
 --
 -- Dumping data for table `planets`
@@ -127,35 +117,31 @@ INSERT INTO `planets` (`id`, `name`, `containing_galaxy_id`, `image`, `x_pos`, `
 --
 -- Table structure for table `planets_games`
 --
+-- Creation: Apr 04, 2013 at 10:26 AM
+--
 
+DROP TABLE IF EXISTS `planets_games`;
 CREATE TABLE IF NOT EXISTS `planets_games` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `planet_id` int(11) NOT NULL,
   `owner_id` int(11) NOT NULL,
   `game_id` int(11) NOT NULL,
   `noships` int(11) NOT NULL,
-  `x_axis` int(11) NOT NULL DEFAULT '0',
-  `y_axis` int(11) NOT NULL DEFAULT '0',
-  `radius` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_planets_games_planets1_idx` (`planet_id`),
   KEY `fk_planets_games_users1_idx` (`owner_id`),
   KEY `fk_planets_games_games1_idx` (`game_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
---
--- Dumping data for table `planets_games`
---
-
-INSERT INTO `planets_games` (`id`, `planet_id`, `owner_id`, `game_id`, `noships`, `x_axis`, `y_axis`, `radius`) VALUES
-(1, 1, 1, 1, 3, 1, 1, 5);
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `planets_neighbours`
 --
+-- Creation: Apr 04, 2013 at 10:26 AM
+--
 
+DROP TABLE IF EXISTS `planets_neighbours`;
 CREATE TABLE IF NOT EXISTS `planets_neighbours` (
   `first_planet_id` int(11) NOT NULL,
   `second_planet_id` int(11) NOT NULL,
@@ -227,7 +213,10 @@ INSERT INTO `planets_neighbours` (`first_planet_id`, `second_planet_id`) VALUES
 --
 -- Table structure for table `users`
 --
+-- Creation: Apr 04, 2013 at 10:26 AM
+--
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
@@ -236,22 +225,26 @@ CREATE TABLE IF NOT EXISTS `users` (
   `played_games` int(11) NOT NULL DEFAULT '0',
   `won_games` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `played_games`, `won_games`) VALUES
-(1, 'iceman', 'iceman.ftg@gmail.com', '1', 6, 1),
-(2, 'iceman2', 'i2ceman.ftg@gmail.com', '1', 1, 0);
+(1, 'iceman', 'iceman.ftg@gmail.com', '1', 8, 1),
+(2, 'iceman2', 'i2ceman.ftg@gmail.com', '1', 4, 0),
+(3, 'aburghelea', 'iceman@da.da', 'iceman', 0, 0);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `users_games`
 --
+-- Creation: Apr 04, 2013 at 10:26 AM
+--
 
+DROP TABLE IF EXISTS `users_games`;
 CREATE TABLE IF NOT EXISTS `users_games` (
   `user_id` int(11) NOT NULL,
   `score` int(11) DEFAULT '0',
@@ -259,18 +252,6 @@ CREATE TABLE IF NOT EXISTS `users_games` (
   KEY `fk_users_games_users1_idx` (`user_id`),
   KEY `fk_users_games_games1_idx` (`game_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `users_games`
---
-
-INSERT INTO `users_games` (`user_id`, `score`, `game_id`) VALUES
-(1, 10, 1),
-(1, 0, 3),
-(1, 0, 4),
-(1, 0, 5),
-(1, 0, 6),
-(2, 0, 4);
 
 --
 -- Constraints for dumped tables
@@ -292,9 +273,9 @@ ALTER TABLE `planets`
 -- Constraints for table `planets_games`
 --
 ALTER TABLE `planets_games`
+  ADD CONSTRAINT `fk_planets_games_games1` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_planets_games_planets1` FOREIGN KEY (`planet_id`) REFERENCES `planets` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_planets_games_users1` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_planets_games_games1` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_planets_games_users1` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `planets_neighbours`
@@ -307,8 +288,8 @@ ALTER TABLE `planets_neighbours`
 -- Constraints for table `users_games`
 --
 ALTER TABLE `users_games`
-  ADD CONSTRAINT `fk_users_games_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_users_games_games1` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_users_games_games1` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_users_games_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 

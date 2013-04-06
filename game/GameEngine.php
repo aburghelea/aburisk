@@ -7,18 +7,18 @@
  * For : PWeb 2013
  */
 
-require_once dirname(__FILE__)."/../interface/IGameEngine.inc.php";
+require_once dirname(__FILE__) . "/../inc/IGameEngine.inc.php";
 //foreach (glob("../dao/*.php") as $filename)
 //{
 //    require_onceonce($filename);
 //}
-require_once dirname(__FILE__)."/../dao/Game.php";
-require_once dirname(__FILE__)."/../dao/User.php";
-require_once dirname(__FILE__)."/../dao/Galaxy.php";
-require_once dirname(__FILE__)."/../dao/Planet.php";
-require_once dirname(__FILE__)."/../dao/Planet_Neighbour.php";
-require_once dirname(__FILE__)."/../dao/Planet_Game.php";
-require_once dirname(__FILE__)."/../dao/User_Game.php";
+require_once dirname(__FILE__) . "/../dao/actual/Game.php";
+require_once dirname(__FILE__) . "/../dao/actual/User.php";
+require_once dirname(__FILE__) . "/../dao/actual/Galaxy.php";
+require_once dirname(__FILE__) . "/../dao/actual/Planet.php";
+require_once dirname(__FILE__) . "/../dao/actual/Planet_Neighbour.php";
+require_once dirname(__FILE__) . "/../dao/actual/Planet_Game.php";
+require_once dirname(__FILE__) . "/../dao/actual/User_Game.php";
 require_once dirname(__FILE__)."/GameState.php";
 require_once dirname(__FILE__)."/ShipAttackJudge.php";
 

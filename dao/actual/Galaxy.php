@@ -6,7 +6,7 @@
  * For : PWeb 2013
  */
 
-require_once dirname(__FILE__)."/../generic/GenericDao.php";
+require_once dirname(__FILE__) . "/../generic/GenericDao.php";
 
 /**
  * Gaxaly CRUD/domain

@@ -5,6 +5,6 @@
     <title>Aburisk</title>
 
 
-    <link href="theme/css/default.css" rel="stylesheet" type="text/css" media="all"/>
-    <script src="theme/js/script.js"></script>
+    <link href="resources/css/default.css" rel="stylesheet" type="text/css" media="all"/>
+    <script src="resources/js/script.js"></script>
 </head>
