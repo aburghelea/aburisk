@@ -14,9 +14,15 @@ if (!isSet($_SESSION['user_id'])) {
 $gameDao = new Game();
 $userGameDao = new User_Game();
 $userDao = new User();
-$game_list = $gameDao->getRowsByField('state not', 'GAME_END');
+//$game_list = $gameDao->getRowsByField('state not', 'GAME_END');
+
+$uid =  $_SESSION['user_id'];
+$gamesUserCanJoin = "select * from games where state not like 'GAME_END'  and id not in (select game_id from users_games where user_id = $uid)";
+$game_list = $gameDao->getCustomRows($gamesUserCanJoin);
+
 $liClass = "class='first'";
 ?>
+
 
 <!DOCTYPE HTML>
 <html>
@@ -56,14 +62,14 @@ $liClass = "class='first'";
                                             <input type="hidden" name="idGame" value="<?php echo  $game->getId() ?>">
                                             <input type="hidden" name="idUser"
                                                    value="<?php echo $_SESSION['user_id'] ?>">
-                                            <a href='#' class="join-style" onclick="submitForm(this)">JOIN GAME</a>
+                                            <a href='javascript:void(0)' class="join-style" onclick="submitForm(this)">JOIN GAME</a>
                                         </form>
                                     <?php } else { ?>
                                         <form method="post" action="scripts/watch-game.php">
                                             <input type="hidden" name="idGame" value="<?php echo  $game->getId() ?>">
                                             <input type="hidden" name="idUser"
                                                    value="<?php echo $_SESSION['user_id'] ?>">
-                                            <a href='#' class="join-style" onclick="submitForm(this)"> &nbsp;SPECTATE&nbsp;</a>
+                                            <a href='javascript:void(0)' class="join-style" onclick="submitForm(this)"> &nbsp;SPECTATE&nbsp;</a>
                                         </form>
                                     <?php } ?>
                                 </h3>

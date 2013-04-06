@@ -13,10 +13,10 @@ require_once dirname(__FILE__)."/../generic/GenericDao.php";
  */
 class Game extends GenericDao
 {
-    protected $id;
+    public $id;
     public $noplayers;
     public $state;
-    protected  $current_player_id;
+    public  $current_player_id;
 
     function __construct()
     {

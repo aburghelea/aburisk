@@ -15,6 +15,7 @@ class Scaffold extends MySqliIHelper implements IScaffold
 {
     private $table;
 
+    const CUSTOM_SELECT_SQL = "SELECT * FROM %s";
     const GET_ROWS_SQL = "SELECT * FROM %s WHERE %s %s %s";
     const INSERT_SQL = "INSERT INTO %s (%s) VALUES (%s)";
     const UPDATE_SQL = "UPDATE %s SET %s WHERE %s";
@@ -171,7 +172,6 @@ class Scaffold extends MySqliIHelper implements IScaffold
     private function run_get($query, $format, $value, $prepare = 'false')
     {
         $stmt = $this->prepare_and_execute($query, $format, $value, $prepare);
-
         /* Binding results to column_headers */
         $row = $this->bind_table_header($stmt);
 
