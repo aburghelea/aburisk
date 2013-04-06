@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html>
-<?php require_once dirname(__FILE__) . "/head.html" ?>
+<?php require_once dirname(__FILE__) . "/head.php" ?>
 
 <body onload="init()">
 <div id="wrapper">

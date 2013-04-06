@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html>
-<?php require_once "head.html" ?>
+<?php require_once "head.php" ?>
 
 <body>
 <div id="wrapper">

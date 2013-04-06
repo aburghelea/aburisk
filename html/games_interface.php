@@ -1,3 +1,7 @@
+<!DOCTYPE HTML>
+<html>
+<?php require_once "head.php" ?>
+
 <?php
 require_once dirname(__FILE__) . "/../dao/Game.php";
 require_once dirname(__FILE__) . "/../dao/User_Game.php";
@@ -6,8 +10,8 @@ require_once dirname(__FILE__) . "/../dao/User.php";
 if (session_status() == PHP_SESSION_NONE)
     session_start();
 
-if (!isSet($_SESSION['user_id'])) {
-    header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/index.php');
+if (!AuthManager::getLoggedInUserId()) {
+    header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/');
     exit();
 }
 
@@ -16,17 +20,12 @@ $userGameDao = new User_Game();
 $userDao = new User();
 //$game_list = $gameDao->getRowsByField('state not', 'GAME_END');
 
-$uid =  $_SESSION['user_id'];
+$uid = AuthManager::getLoggedInUserId();
 $gamesUserCanJoin = "select * from games where state not like 'GAME_END'  and id not in (select game_id from users_games where user_id = $uid)";
 $game_list = $gameDao->getCustomRows($gamesUserCanJoin);
 
 $liClass = "class='first'";
 ?>
-
-
-<!DOCTYPE HTML>
-<html>
-<?php require_once "head.html" ?>
 
 <body>
 <div id="wrapper">
@@ -44,7 +43,6 @@ $liClass = "class='first'";
                     foreach ((array)$game_list as $index => $game) {
                         $joined = count($userGameDao->getRowsByField('game_id', $game->getId()));
 
-
                         if ($joined < $game->noplayers) {
                             $hostUser = $userDao->getRowsByField('id', $game->getCurrentPlayerId())[0];
 
@@ -53,7 +51,7 @@ $liClass = "class='first'";
                                 <h3>
                                     <?php echo $index + 1?>)
                                     Game created by
-                                    <a href='/profile.php?id=<?php $game->getCurrentPlayerId() ?>'>
+                                    <a href='/aburisk/profile.php?id=<?php echo $game->getCurrentPlayerId() ?>'>
                                         <?php echo $hostUser->username ?>
                                     </a>
 
@@ -61,15 +59,17 @@ $liClass = "class='first'";
                                         <form method="post" action="scripts/join-game.php">
                                             <input type="hidden" name="idGame" value="<?php echo  $game->getId() ?>">
                                             <input type="hidden" name="idUser"
-                                                   value="<?php echo $_SESSION['user_id'] ?>">
-                                            <a href='javascript:void(0)' class="join-style" onclick="submitForm(this)">JOIN GAME</a>
+                                                   value="<?php echo AuthManager::getLoggedInUserId() ?>">
+                                            <a href='javascript:void(0)' class="join-style" onclick="submitForm(this)">JOIN
+                                                GAME</a>
                                         </form>
                                     <?php } else { ?>
                                         <form method="post" action="scripts/watch-game.php">
                                             <input type="hidden" name="idGame" value="<?php echo  $game->getId() ?>">
                                             <input type="hidden" name="idUser"
-                                                   value="<?php echo $_SESSION['user_id'] ?>">
-                                            <a href='javascript:void(0)' class="join-style" onclick="submitForm(this)"> &nbsp;SPECTATE&nbsp;</a>
+                                                   value="<?php echo AuthManager::getLoggedInUserId() ?>">
+                                            <a href='javascript:void(0)' class="join-style" onclick="submitForm(this)">
+                                                &nbsp;SPECTATE&nbsp;</a>
                                         </form>
                                     <?php } ?>
                                 </h3>
@@ -112,15 +112,10 @@ $liClass = "class='first'";
                         </p>
                     </li>
                 </ul>
-                <div class=''>
-                    <input type='hidden' name='idHost' value='<?php echo $_SESSION['user_id']; ?>'/>
-                </div>
-                <p>
-                    <!--                    <input type=submit name="submit" style="display: none" value="Submit"/>-->
-                    <a href="javascript:void(0);" class="button-style" onclick="submitForm(this)">
-                        Create New Game
-                    </a>
-                </p>
+                <input type='hidden' name='idHost' value='<?php echo AuthManager::getLoggedInUserId() ?>'/>
+                <a href="javascript:void(0);" class="button-style" onclick="submitForm(this)">
+                    Create New Game
+                </a>
             </form>
         </div>
     </div>

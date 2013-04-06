@@ -8,16 +8,17 @@
 
 require_once dirname(__FILE__)."/script-constants.php";
 require_once dirname(__FILE__)."/../dao/User.php";
+require_once dirname(__FILE__)."/../auth/AuthManager.php";
 
 if (session_status() == PHP_SESSION_NONE)
     session_start();
 
 
 if (areParamsSet()) {
-    $loginStatus = User::login($_POST[S_USERNAME], $_POST[S_PASSWORD]);
-    if ($loginStatus > 0) {
+    $userId = User::login($_POST[S_USERNAME], $_POST[S_PASSWORD]);
+    if ($userId > 0) {
         echo "User exists in database <br/>";
-        $_SESSION['user_id'] = $loginStatus;
+        AuthManager::userId($userId);
     }
     else
         echo "User doesn't exists in the database<br/>";

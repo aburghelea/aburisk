@@ -1,3 +1,7 @@
+<!DOCTYPE HTML>
+<html>
+<?php require_once "head.php" ?>
+
 <?php
 
 require_once dirname(__FILE__) . "/../dao/User.php";
@@ -6,9 +10,7 @@ if (session_status() == PHP_SESSION_NONE)
 if (isset($_GET['id']))
     $id = $_GET['id'];
 else
-    if (isset($_SESSION['user_id'])) {
-        $id = $_SESSION['user_id'];
-    }
+    $id = AuthManager::getLoggedInUserId();
 
 if (!isset($id)) {
     header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/index.php');
@@ -17,15 +19,13 @@ if (!isset($id)) {
 $user = new User();
 $user = $user->getRowsByField('id', $id)[0];
 
-if ($user == null ) {
+if ($user == null) {
     header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/index.php');
     exit();
 }
 ?>
 
-<!DOCTYPE HTML>
-<html>
-<?php require_once "head.html" ?>
+
 
 <body>
 <div id="wrapper">

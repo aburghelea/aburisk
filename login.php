@@ -6,13 +6,13 @@
  * Time: 9:59 PM
  * To change this template use File | Settings | File Templates.
  */
-
+require_once dirname(__FILE__) . "/auth/AuthManager.php";
 
 if (session_status() == PHP_SESSION_NONE)
     session_start();
 
 
-if (isset($_SESSION['user_id'])) {
+if (AuthManager::getLoggedInUserId()) {
     redirectHome();
 } else if (isset($_GET['registered='])) {
     if ($_GET['registered='] === true) {

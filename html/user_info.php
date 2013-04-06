@@ -12,20 +12,20 @@ require_once  dirname(__FILE__) . "/../dao/User.php";
 if (session_status() == PHP_SESSION_NONE)
     session_start();
 
-if (isSet($_SESSION['user_id'])) {
-    profileLink();
-} else
+if (!AuthManager::getLoggedInUserId()) {
     loginLink();
+} else {
+    profileLink();
+}
 
 function profileLink()
 {
-    $username = new User();
-    $username = $username->getRowsByField('id', $_SESSION['user_id'])[0]->username;
+    $username = AuthManager::getLoggedInUserName();
     ?>
-    <a href="/aburisk/profile.php" accesskey="p" >[ <?php echo $username ?> ]</a>
+    <a href="/aburisk/profile.php" accesskey="p">[ <?php echo $username ?> ]</a>
     </li>
     <li>
-    <a href="/aburisk/scripts/logout.php"  accesskey="l">Logout</a>
+    <a href="/aburisk/scripts/logout.php" accesskey="l">Logout</a>
 
 <?php
 }

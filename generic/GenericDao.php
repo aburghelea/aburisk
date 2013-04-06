@@ -42,7 +42,9 @@ abstract class GenericDao implements IScaffold
 
     public function getCustomRows($query)
     {
-        $this->scaffold->getCustomRows($query);
+        $rows = $this->scaffold->getCustomRows($query);
+
+        return empty($rows) ? null : $this->mapRowsToObject($rows);
     }
 
     public function updateRows($arr, $field, $value)

@@ -8,16 +8,20 @@
 
 require_once dirname(__FILE__) . "/script-constants.php";
 require_once dirname(__FILE__) . "/../dao/User.php";
+require_once dirname(__FILE__) . "/../auth/AuthManager.php";
+
 if (session_status() == PHP_SESSION_NONE)
     session_start();
 
 if (areParamsSet($_POST)) {
-    $register = User::register($_POST[S_USERNAME], $_POST[S_EMAIL], $_POST[S_PASSWORD]);
-    if ($register > 0) {
-        $_SESSION['user_id'] = $register;
+    $userId = User::register($_POST[S_USERNAME], $_POST[S_EMAIL], $_POST[S_PASSWORD]);
+    if ($userId > 0) {
+        AuthManager::userId($userId);
+
         header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php?registered=true');
         exit();
     } else {
+
         header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php?registered=1');
         exit();
     }

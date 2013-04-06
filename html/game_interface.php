@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html>
-<?php require_once "head.html";
+<?php require_once "head.php";
 
 require_once dirname(__FILE__) . "/../dao/Planet_Neighbour.php";
 require_once dirname(__FILE__) . "/../dao/Planet.php";
