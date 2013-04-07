@@ -8,11 +8,13 @@
 
 require_once dirname(__FILE__) . "/script-constants.php";
 require_once dirname(__FILE__) . "/../game/GameEngine.php";
+require_once dirname(__FILE__)."/../session/GameManager.php";
 
 if (areParamsSet()) {
     $gameEngine = new GameEngine(0, $_POST[S_NOPLAYERS], $_POST[S_IDHOST]);
     if ($gameEngine->getGame() != null) {
         echo "Created a game with the id " . $gameEngine->getGame()->getId() . "<br/>";
+        GameManager::setGameId($gameEngine);
         header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/game.php');
         exit();
     } else

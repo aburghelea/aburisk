@@ -159,7 +159,6 @@ class Scaffold extends MySqliIHelper implements IScaffold
 
         /* formating query based on column, sorting and limits */
         $query = sprintf(Scaffold::GET_ROWS_SQL, $this->table, $where_clause, $orderby, $limit);
-
         return $this->run_get($query, $format, $value, 'true');
     }
 

@@ -20,7 +20,8 @@ if (areParamsSet($_POST)) {
     $join_status = $gameEngine->joinGame($_POST[S_IDUSER]);
     if ($join_status == 1) {
         echo "Successfully joined game<br/>";
-        GameManager::setGameId($_POST[S_IDUSER]);
+        GameManager::setGameId($gameEngine);
+        GameManager::advanceStageIfNecessary();
         header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/game.php');
         exit();
     }

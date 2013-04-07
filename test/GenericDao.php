@@ -29,12 +29,6 @@ class GenericDao
     {
         return $this->scaffold->customQuery($query);
     }
-
 }
-$g = new GenericDao();
-//$g = new Scaffold('games');
-//$gs = $g->customQuery("select * from games where state not like 'GAME_END'  and id not in (select game_id from users_games where user_id = 2)");
-$gs = $g->customQuery("select * from games where id =1");
-var_dump(current($gs));
 ?>
 

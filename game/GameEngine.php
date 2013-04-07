@@ -35,19 +35,24 @@ class GameEngine implements IGameEngine
      */
     public function __construct($idGame = 0, $noPlayers = 2, $idHost = 1)
     {
-        var_dump($idHost);
         $gameDao = new Game();
+        $planetDao = new Planet();
+        $planetGameDao = new Planet_Game();
         if ($idGame > 0) {
             $games = $gameDao->getRowsByField('id', $idGame);
             if (!empty($games)) {
                 $this->game = current($games);
                 return;
             }
+
         }
 
         $idGame = $gameDao->insertRow(array('noPlayers' => $noPlayers, 'current_player_id' => $idHost, 'state' => GameState::WAITING_PLAYERS));
         $this->game = current($gameDao->getRowsByField('id', $idGame));
-
+        $planets = $planetDao->getRowsByField('"1"', '1');
+        foreach ($planets as $planet) {
+            $planetGameDao->insertRow(array('planet_id' => $planet->id, 'game_id' => $idGame));
+        }
         $this->joinGame($idHost);
     }
 
@@ -62,8 +67,6 @@ class GameEngine implements IGameEngine
         $user_game = new User_Game();
         $user = new User();
         $users = $user->getRowsByField('id', $idUser);
-        var_dump($idUser);
-        var_dump($users);
         if (empty($users))
             return -1;
         $games = $user_game->getRowsByArray(array('user_id' => $idUser, 'game_id' => $this->game->getId()));
@@ -111,8 +114,10 @@ class GameEngine implements IGameEngine
     public function endGame($idUser = null)
     {
         $this->game->updateRows(array("current_player_id" => $idUser, 'state' => GameState::GAME_END), 'id', $this->game->getId());
+        $planetGamesDao = new Planet_Game();
         $userGameDao = new User_Game();
         $userGameDao->deleteRowsByField('game_id', $this->game->getId());
+        $planetGamesDao->deleteRowsByField('game_id', $this->game->getId());
         if ($idUser) {
             if (!$this->isUserInThisGame($idUser))
                 return -1;
@@ -136,11 +141,11 @@ class GameEngine implements IGameEngine
      */
     public function claimPlanet($idPlanet, $idUser)
     {
-        if ($this->planetIsClaimable($idPlanet, $idUser))
+        if ($this->planetIsNotClaimable($idPlanet, $idUser))
             return -1;
 
         $planet_in_game = new Planet_Game();
-        $planet_in_game->insertRow(array("planet_id" => $idPlanet, "game_id" => $this->game->getId(), "owner_id" => $idUser, "noships" => 1));
+        $planet_in_game->updateRows(array("game_id" => $this->game->getId(), "owner_id" => $idUser, "noships" => 1), "planet_id", $idPlanet);
 
         return 1;
 
@@ -280,14 +285,13 @@ class GameEngine implements IGameEngine
      * @param int $idUser claimer
      * @return bool if is claimable
      */
-    public function planetIsClaimable($idPlanet, $idUser)
+    public function planetIsNotClaimable($idPlanet, $idUser)
     {
         $planet = new Planet();
         $planet_in_game = new Planet_Game();
         $planet = $planet->getRowsByField('id', $idPlanet);
         $planets = $planet_in_game->getRowsByArray(array('planet_id' => $idPlanet, "game_id" => $this->game->getId()));
-
-        return !$this->isUserInThisGame($idUser) || empty($planet) || !empty($planets);
+        return !$this->isUserInThisGame($idUser) || empty($planet) || empty($planets) || $this->planetIsClaimed($idPlanet, $idUser);
     }
 
     /**
@@ -310,5 +314,32 @@ class GameEngine implements IGameEngine
         return $planet_game->getId();
     }
 
+    public function getNextState()
+    {
+        $currentState = $this->game->state;
+        if (strcmp($currentState, 'WAITING_PLAYERS') == 0)
+            return 'PLANET_CLAIM';
+        if (strcmp($currentState, 'PLANET_CLAIM') == 0)
+            return 'SHIP_PLACING';
+        if (strcmp($currentState, 'ATTACK') == 0)
+            return 'SHIP_PLACING';
 
+        return 'END_GAME';
+    }
+
+    public function getCurrentPlayerUsername()
+    {
+        $userDao = new User();
+        $users = $userDao->getRowsByField('id', $this->game->current_player_id);
+        if (is_array($users))
+            return current($users)->username;
+
+        return 'none';
+    }
+
+    public function getPlayers()
+    {
+        $userDao = new User();
+        return $userDao->getUsersFromGame($this->game->id);
+    }
 }

@@ -19,7 +19,6 @@ if (areParamsSet($_GET)) {
     $move_status = $gameEngine->move($_GET[S_IDPLANET1], $_GET[S_IDPLANET2], $_GET[S_NOSHIPS], $_GET[S_IDUSER]);
     if (!($move_status < 0)) {
         echo "Move successfull<br/>";
-        var_dump($move_status);
     } else
         echo "Could not move<br/>";
 

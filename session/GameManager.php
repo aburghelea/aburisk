@@ -8,6 +8,7 @@
  */
 require_once dirname(__FILE__) . "/../dao/actual/User_Game.php";
 require_once dirname(__FILE__) . "/../dao/actual/Game.php";
+require_once dirname(__FILE__) . "/../dao/wrapper/Player.php";
 require_once dirname(__FILE__) . "/../game/GameEngine.php";
 require_once dirname(__FILE__) . "/AuthManager.php";
 
@@ -17,24 +18,38 @@ if (session_status() == PHP_SESSION_NONE)
 class GameManager
 {
 
+    public static function getNextPlayer($user_id)
+    {
+        $players = self::getPlayers();
+        $elem = current($players);
+        $players[] = current($players);
+
+        echo $user_id . "</br>";
+        while ($elem != null && $elem->getId() != $user_id) {
+            echo "**</br>";
+            $elem = next($players);
+        }
+        $elem = next($players);
+        return $elem->getId();
+    }
+
     public static function getGameId()
     {
-        self::updateEngagedGame(AuthManager::getLoggedInUserId());
-        $isInGame = isSet($_SESSION['game_engine']);
-
-        return $isInGame ? $_SESSION['game_engine'] : false;
+        $game = self::getGame();
+        return isset($game) ? $game->getId() : false;
     }
 
     public static function setGameId($game = null)
     {
-        if ($game == null)
+        if ($game == null) {
             unset($_SESSION['game_engine']);
-        else
+        } else
             $_SESSION['game_engine'] = $game;
     }
 
     public static function getGame()
     {
+        self::updateEngagedGame(AuthManager::getLoggedInUserId());
         if (isset($_SESSION['game_engine'])) {
             return ($_SESSION['game_engine']->getGame());
         }
@@ -66,13 +81,15 @@ class GameManager
         }
     }
 
-    public static function getJoinedPlayers() {
+    public static function getJoinedPlayersNumber()
+    {
         $userGameDao = new User_Game();
         return $userGameDao->getJoinedPlayers(self::getGame());
     }
 
-    public static function needsMorePlayers() {
-        $joined = self::getJoinedPlayers();
+    public static function needsMorePlayers()
+    {
+        $joined = self::getJoinedPlayersNumber();
         $needed = self::getGame()->noplayers;
 
         return $needed > $joined;
@@ -84,5 +101,29 @@ class GameManager
             $nextState = self::getGameEngine()->getNextState();
             self::getGameEngine()->changeState($nextState);
         }
+    }
+
+    public static function getCurrentPlayerUsername()
+    {
+        return self::getGameEngine()->getCurrentPlayerUsername();
+    }
+
+    public static function getCurrentPlayerId()
+    {
+        return self::getGameEngine()->getGame()->current_player_id;
+    }
+
+    public static function isLoggedInPlayersTurn()
+    {
+        return self::getCurrentPlayerId() == AuthManager::getLoggedInUserId();
+    }
+
+    public static function getPlayers()
+    {
+        $users = self::getGameEngine()->getPlayers();
+        $players = array();
+        foreach ($users as $player)
+            $players[] = new Player($player);
+        return $players;
     }
 }

@@ -15,7 +15,9 @@ $connectiosJSON = json_encode($planetNeighboursDao->getRowsByField('"1"', '1'));
 
 GameManager::updateEngagedGame(AuthManager::getLoggedInUserId());
 $game = GameManager::getGame();
-
+$planetHandler = "function(){}";
+if (GameManager::getGame() && GameManager::getGame()->state === 'PLANET_CLAIM' && GameManager::isLoggedInPlayersTurn())
+    $planetHandler = "ABURISK.game.initClaim";
 ?>
 
 <body>
@@ -25,7 +27,7 @@ $game = GameManager::getGame();
     <div id="page">
         <div id="content">
             <?php if (isset($game)) { ?>
-                <object id='map' onload='ABURISK.map.init(<?php echo $planetsJSON ?>,<?php echo $connectiosJSON ?> )'
+                <object id='mapContainer' onload='ABURISK.map.init(<?php echo $planetsJSON ?>,<?php echo $connectiosJSON ?>, <?php echo $planetHandler ?> )'
                         type="image/svg+xml" width="750" height="421" data="views/map.svg"></object>
             <?php
             } else {
@@ -38,43 +40,77 @@ $game = GameManager::getGame();
         <div id="sidebar">
             <div id="tbox1">
                 <?php if (isset($game)) { ?>
-                    <h2 style="float: left">Game <?php echo $game->id; ?> </h2>
-
-                    <div style="float: right">
-
-                        <form action="scripts/end-game.php" method="post">
-                            <input type="hidden" name='idGame' value="<?php echo $game->id ?>">
-                            <a href="javascript:void(0);" class="join-style" onclick="submitForm(this)">End game</a>
-                        </form>
-                    </div>
-                    <div class="clearfix"></div>
+                    <h2>Game <?php echo $game->id; ?> </h2>
 
                     <ul class="style2">
                         <li class="first">
-                           <h3> State </h3>
+                            <h3>Statistics </h3>
 
-                            <p><a href="javascript:void(0)"><?php echo $game->state; ?></a></p>
+                            <p>State : <a href="javascript:void(0)"><?php echo $game->state; ?></a></p>
+                            <?php if (!GameManager::needsMorePlayers()) { ?>
+                                <p> Current player: <a target="_blank"
+                                                       href="/aburisk/profile.php?id=<?php echo GameManager::getCurrentPlayerId(); ?>">
+                                        <?php echo GameManager::getCurrentPlayerUsername(); ?>
+                                    </a></p>
+                                <p>
+                                    Is your turn?  <?php echo GameManager::isLoggedInPlayersTurn() ? "Yes" : "No" ?>
+                                </p>
+                            <?php } else { ?>
+                                <p>Needed players: <a href="javascript:void(0)"> <?php echo $game->noplayers ?></a></p>
+                                <p>Joined players: <a href="javascript:void(0)">
+                                        <?php echo GameManager::getJoinedPlayersNumber(); ?></a></p>
+
+                            <?php }  ?>
+                            <form action="scripts/end-game.php" method="post">
+                                <input type="hidden" name='idGame' value="<?php echo $game->id ?>"/>
+                                <a href="javascript:void(0);" class="button-style" onclick="submitForm(this)">End
+                                    game</a>
+                            </form>
                         </li>
-                        <li>
-                           <h3>Needed / Joined players</h3>
+                        <?php if (!GameManager::needsMorePlayers() && GameManager::isLoggedInPlayersTurn()) { ?>
+                            <li>
+                                <h3>
+                                    Players
+                                </h3>
+                                <?php foreach (GameManager::getPlayers() as $player) { ?>
+                                    <p>
+                                        <a target="_blank"
+                                           href="/aburisk/profile.php?id=<?php echo $player->getId() ?>">
+                                            <?php echo $player->getUsername() ?>
+                                        </a>
+                                    </p>
+                                <?php } ?>
+                            </li>
+                            <li>
+                                <h3>
+                                    Actions
+                                </h3>
 
-                            <p><a href="javascript:void(0)"> <?php echo "$game->noplayers / ".GameManager::getJoinedPlayers(); ?></a></p>
-                        </li>
+                                <div>
+                                    <form action="scripts/claim-planet.php" method="post">
+                                        <p>
+                                            Selected planet
+                                            <input type="text" id="claimIdPlanet" style="width: 30px" name="idPlanet" value="3">
+                                        </p>
+                                        <input type="hidden" name="idUser"
+                                               value="<?php echo AuthManager::getLoggedInUserId() ?>"/>
+                                        <input type="hidden" name="idGame"
+                                               value="<?php echo $game->id ?>"/>
+                                        <!--                                    <div class="clearfix"></div>-->
+                                        <a href="javascript:void(0);" class="button-style"
+                                           onclick="submitForm(this)">Claim</a>
 
-                        <li>
-                            <h3>
-                                    Needs more players?
-                            </h3>
+                                    </form>
+                                </div>
+                            </li>
+                        <?php } ?>
 
-                            <p><a href="javascript:void(0)"> <?php echo GameManager::needsMorePlayers() ? "Yes" : "No"; ?></a></p>
-                        </li>
 
                     </ul>
                 <?php } ?>
             </div>
         </div>
     </div>
-
 
     <?php require_once "footer.html" ?>
 </div>

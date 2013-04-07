@@ -92,6 +92,16 @@ class User extends GenericDao
     }
 
 
+    const usersInGame = "select * from %s where id in (select user_id from users_games where game_id = %s)";
+
+    function getUsersFromGame($gid)
+    {
+        $userDao = new User();
+
+        $query = sprintf(self::usersInGame, self::$TABLE_NAME, $gid);
+        return $userDao->getCustomRows($query);
+    }
+
 }
 
 ?>
