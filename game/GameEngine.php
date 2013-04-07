@@ -291,7 +291,7 @@ class GameEngine implements IGameEngine
         $planet_in_game = new Planet_Game();
         $planet = $planet->getRowsByField('id', $idPlanet);
         $planets = $planet_in_game->getRowsByArray(array('planet_id' => $idPlanet, "game_id" => $this->game->getId()));
-        return !$this->isUserInThisGame($idUser) || empty($planet) || empty($planets) || $this->planetIsClaimed($idPlanet, $idUser);
+        return !$this->isUserInThisGame($idUser) || empty($planet) || empty($planets) || !$this->planetIsClaimed($idPlanet, $idUser);
     }
 
     /**

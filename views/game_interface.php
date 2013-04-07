@@ -48,7 +48,7 @@ if (GameManager::getGame() && GameManager::getGame()->state === 'PLANET_CLAIM' &
 
                             <p>State : <a href="javascript:void(0)"><?php echo $game->state; ?></a></p>
                             <?php if (!GameManager::needsMorePlayers()) { ?>
-                                <p> Current player: <a target="_blank"
+                                <p class="javascript:ABURISK.players.index(0)"> Current player: <a target="_blank"
                                                        href="/aburisk/profile.php?id=<?php echo GameManager::getCurrentPlayerId(); ?>">
                                         <?php echo GameManager::getCurrentPlayerUsername(); ?>
                                     </a></p>
