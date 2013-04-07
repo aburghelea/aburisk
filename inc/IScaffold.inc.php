@@ -64,6 +64,14 @@ interface IScaffold
      * @return array|null query results
      */
     public function customQuery($query);
+
+    /**
+     * Deletes the entries where the field matches the value
+     * @param $field
+     * @param $value
+     * @return mixed
+     */
+    public function deleteRowsByField($field, $value);
 }
 
 ?>

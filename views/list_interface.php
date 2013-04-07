@@ -27,7 +27,7 @@ $liClass = "class='first'";
 <div id="wrapper">
     <?php require_once "header.php" ?>
     <div id="page">
-        <?php if (GameManager::getGame()) {
+        <?php if (GameManager::getGameId()) {
             ?>
             <div id="content">
                 <h3>Te afli deja intr-un joc. Nu poti incepe alt joc.</h3>

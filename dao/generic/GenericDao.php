@@ -62,6 +62,10 @@ abstract class GenericDao implements IScaffold
         $this->scaffold->customQuery($query);
     }
 
+    public function deleteRowsByField($field, $value) {
+        $this->scaffold->deleteRowsByField($field, $value);
+    }
+
     /**
      * Maps an database row to a Domain object
      * @param $rows array of rows

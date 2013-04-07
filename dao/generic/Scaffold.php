@@ -17,6 +17,7 @@ class Scaffold extends MySqliIHelper implements IScaffold
 
     const CUSTOM_SELECT_SQL = "SELECT * FROM %s";
     const GET_ROWS_SQL = "SELECT * FROM %s WHERE %s %s %s";
+    const DELETE_ROWS_SQL = "DELETE FROM %s WHERE %s";
     const INSERT_SQL = "INSERT INTO %s (%s) VALUES (%s)";
     const UPDATE_SQL = "UPDATE %s SET %s WHERE %s";
 
@@ -177,6 +178,22 @@ class Scaffold extends MySqliIHelper implements IScaffold
 
         /* running query */
         return $this->bind_results($stmt, $row);
+    }
+
+    /**
+     * Deletes the entries where the field matches the value
+     * @param $field
+     * @param $value
+     * @return mixed
+     */
+    public function deleteRowsByField($field, $value)
+    {
+        $format = 's';
+        $where_clause = $this->build_where_clause($field);
+
+        $query = sprintf(Scaffold::DELETE_ROWS_SQL, $this->table, $where_clause);
+        $stmt = $this->prepare_and_execute($query, $format, array("{$value}"), "true");
+        $stmt->close();
     }
 }
 ?>

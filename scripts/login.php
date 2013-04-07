@@ -38,15 +38,7 @@ function areParamsSet()
 function setSessionDetalils($userId)
 {
     AuthManager::userId($userId);
-    $userGameDao = new User_Game();
-    $userGames = $userGameDao->getRowsByField('user_id', $userId);
-    if (is_array($userGames)) {
-        if (count($userGames) > 1){
-            //TODO: should clean some of them;
-        }
-        $game = current($userGames)->game_id;
-        GameManager::setGame($game);
-    }
+    GameManager::updateEngagedGame($userId);
 }
 
 ?>

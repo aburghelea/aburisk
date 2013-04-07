@@ -19,8 +19,8 @@ require_once dirname(__FILE__) . "/../dao/actual/Planet.php";
 require_once dirname(__FILE__) . "/../dao/actual/Planet_Neighbour.php";
 require_once dirname(__FILE__) . "/../dao/actual/Planet_Game.php";
 require_once dirname(__FILE__) . "/../dao/actual/User_Game.php";
-require_once dirname(__FILE__)."/GameState.php";
-require_once dirname(__FILE__)."/ShipAttackJudge.php";
+require_once dirname(__FILE__) . "/GameState.php";
+require_once dirname(__FILE__) . "/ShipAttackJudge.php";
 
 class GameEngine implements IGameEngine
 {
@@ -106,20 +106,26 @@ class GameEngine implements IGameEngine
     /**
      * Ends the game and declares the winner
      * @param int $idUser the winner
-     * @return int the winners id if the operation succeded, -1 otherwise
+     * @return boolean if the operation succeded
      */
-    public function endGame($idUser)
+    public function endGame($idUser = null)
     {
-        if (!$this->isUserInThisGame($idUser))
-            return -1;
-
         $this->game->updateRows(array("current_player_id" => $idUser, 'state' => GameState::GAME_END), 'id', $this->game->getId());
-        $user = new User();
-        $user = current($user->getRowsByField('id', $idUser));
+        $userGameDao = new User_Game();
+        $userGameDao->deleteRowsByField('game_id', $this->game->getId());
+        if ($idUser) {
+            if (!$this->isUserInThisGame($idUser))
+                return -1;
 
-        $user->won_games++;
-        $user->updateRows(array("won_games" => $user->won_games), "id", $idUser);
-        return $user->getId();
+            $user = new User();
+            $user = current($user->getRowsByField('id', $idUser));
+
+            $user->won_games++;
+            $user->updateRows(array("won_games" => $user->won_games), "id", $idUser);
+            return $user->getId() != null;
+        }
+
+        return true;
     }
 
     /**
@@ -303,5 +309,6 @@ class GameEngine implements IGameEngine
         $planet_game = current($planets);
         return $planet_game->getId();
     }
+
 
 }
