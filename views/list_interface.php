@@ -43,7 +43,7 @@ $liClass = "class='first'";
                         <?php
 
                         foreach ((array)$game_list as $index => $game) {
-                            $joined = count($userGameDao->getRowsByField('game_id', $game->getId()));
+                            $joined = $userGameDao->getJoinedPlayers($game);
 
                             if ($joined < $game->noplayers) {
                                 $hostUser = $userDao->getRowsByField('id', $game->getCurrentPlayerId())[0];

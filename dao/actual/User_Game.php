@@ -24,6 +24,19 @@ class User_Game extends GenericDao
         parent::__construct();
     }
 
+    function getJoinedPlayers($game)
+    {
+        if (!isset($game))
+            return 0;
+
+        $userGameDao = new User_Game();
+        $games = $userGameDao->getRowsByField('game_id', $game->id);
+        if (is_array($games))
+            return count($games);
+
+        return 0;
+    }
+
     function __toString()
     {
         return "User Game: " . $this->user_id . " - " . $this->score . " - " . $this->game_id;

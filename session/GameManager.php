@@ -8,6 +8,8 @@
  */
 require_once dirname(__FILE__) . "/../dao/actual/User_Game.php";
 require_once dirname(__FILE__) . "/../dao/actual/Game.php";
+require_once dirname(__FILE__) . "/../game/GameEngine.php";
+require_once dirname(__FILE__) . "/AuthManager.php";
 
 if (session_status() == PHP_SESSION_NONE)
     session_start();
@@ -17,24 +19,33 @@ class GameManager
 
     public static function getGameId()
     {
-        $isInGame = isSet($_SESSION['game_id']);
+        self::updateEngagedGame(AuthManager::getLoggedInUserId());
+        $isInGame = isSet($_SESSION['game_engine']);
 
-        return $isInGame ? $_SESSION['game_id'] : false;
+        return $isInGame ? $_SESSION['game_engine'] : false;
     }
 
     public static function setGameId($game = null)
     {
         if ($game == null)
-            unset($_SESSION['game_id']);
+            unset($_SESSION['game_engine']);
         else
-            $_SESSION['game_id'] = $game;
+            $_SESSION['game_engine'] = $game;
     }
 
     public static function getGame()
     {
-        if (isset($_SESSION['game_id'])) {
-            $gameDao = new Game();
-            return current($gameDao->getRowsByField('id', $_SESSION['game_id']));
+        if (isset($_SESSION['game_engine'])) {
+            return ($_SESSION['game_engine']->getGame());
+        }
+
+        return null;
+    }
+
+    private static function getGameEngine()
+    {
+        if (isset($_SESSION['game_engine'])) {
+            return $_SESSION['game_engine'];
         }
 
         return null;
@@ -49,9 +60,29 @@ class GameManager
                 //TODO: should clean some of them;
             }
             $game = current($userGames)->game_id;
-            self::setGameId($game);
+            self::setGameId(new GameEngine($game));
         } else {
             self::setGameId(null);
+        }
+    }
+
+    public static function getJoinedPlayers() {
+        $userGameDao = new User_Game();
+        return $userGameDao->getJoinedPlayers(self::getGame());
+    }
+
+    public static function needsMorePlayers() {
+        $joined = self::getJoinedPlayers();
+        $needed = self::getGame()->noplayers;
+
+        return $needed > $joined;
+    }
+
+    public static function advanceStageIfNecessary()
+    {
+        if (strcmp(self::getGame()->state, 'WAITING_PLAYERS') == 0 && !self::needsMorePlayers()) {
+            $nextState = self::getGameEngine()->getNextState();
+            self::getGameEngine()->changeState($nextState);
         }
     }
 }
