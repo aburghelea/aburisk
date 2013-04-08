@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 06, 2013 at 07:00 PM
+-- Generation Time: Apr 08, 2013 at 10:10 PM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
@@ -65,7 +65,70 @@ CREATE TABLE IF NOT EXISTS `games` (
   `current_player_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_games_users1_idx` (`current_player_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=69 ;
+
+--
+-- Dumping data for table `games`
+--
+
+INSERT INTO `games` (`id`, `noplayers`, `state`, `current_player_id`) VALUES
+(12, 2, 'GAME_END', NULL),
+(13, 2, 'GAME_END', NULL),
+(14, 2, 'GAME_END', NULL),
+(15, 2, 'GAME_END', NULL),
+(16, 2, 'GAME_END', NULL),
+(17, 2, 'GAME_END', NULL),
+(18, 2, 'GAME_END', NULL),
+(19, 5, 'GAME_END', NULL),
+(20, 2, 'GAME_END', NULL),
+(21, 2, 'GAME_END', NULL),
+(22, 2, 'GAME_END', NULL),
+(23, 2, 'GAME_END', NULL),
+(24, 2, 'GAME_END', NULL),
+(25, 2, 'GAME_END', NULL),
+(26, 2, 'GAME_END', NULL),
+(27, 2, 'GAME_END', NULL),
+(28, 2, 'GAME_END', NULL),
+(29, 2, 'GAME_END', NULL),
+(30, 2, 'GAME_END', NULL),
+(31, 2, 'GAME_END', NULL),
+(32, 2, 'GAME_END', NULL),
+(33, 2, 'GAME_END', NULL),
+(34, 2, 'GAME_END', NULL),
+(35, 2, 'GAME_END', NULL),
+(36, 2, 'GAME_END', NULL),
+(37, 2, 'GAME_END', NULL),
+(38, 2, 'GAME_END', NULL),
+(39, 2, 'GAME_END', NULL),
+(40, 2, 'GAME_END', NULL),
+(41, 2, 'GAME_END', NULL),
+(42, 2, 'GAME_END', NULL),
+(43, 2, 'GAME_END', NULL),
+(44, 2, 'GAME_END', NULL),
+(45, 2, 'GAME_END', NULL),
+(46, 2, 'GAME_END', NULL),
+(47, 2, 'GAME_END', NULL),
+(48, 2, 'GAME_END', NULL),
+(49, 2, 'GAME_END', NULL),
+(50, 2, 'GAME_END', NULL),
+(51, 2, 'GAME_END', NULL),
+(52, 2, 'GAME_END', NULL),
+(53, 2, 'GAME_END', NULL),
+(54, 2, 'GAME_END', NULL),
+(55, 2, 'GAME_END', NULL),
+(56, 2, 'GAME_END', NULL),
+(57, 3, 'GAME_END', NULL),
+(58, 2, 'GAME_END', NULL),
+(59, 2, 'GAME_END', NULL),
+(60, 2, 'GAME_END', NULL),
+(61, 2, 'GAME_END', NULL),
+(62, 2, 'GAME_END', NULL),
+(63, 2, 'GAME_END', NULL),
+(64, 2, 'GAME_END', NULL),
+(65, 2, 'GAME_END', NULL),
+(66, 2, 'GAME_END', NULL),
+(67, 2, 'GAME_END', NULL),
+(68, 2, 'ATTACK', 3);
 
 -- --------------------------------------------------------
 
@@ -124,14 +187,38 @@ DROP TABLE IF EXISTS `planets_games`;
 CREATE TABLE IF NOT EXISTS `planets_games` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `planet_id` int(11) NOT NULL,
-  `owner_id` int(11) NOT NULL,
+  `owner_id` int(11) DEFAULT NULL,
   `game_id` int(11) NOT NULL,
-  `noships` int(11) NOT NULL,
+  `noships` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_planets_games_planets1_idx` (`planet_id`),
   KEY `fk_planets_games_users1_idx` (`owner_id`),
   KEY `fk_planets_games_games1_idx` (`game_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=652 ;
+
+--
+-- Dumping data for table `planets_games`
+--
+
+INSERT INTO `planets_games` (`id`, `planet_id`, `owner_id`, `game_id`, `noships`) VALUES
+(634, 1, 1, 68, 0),
+(635, 2, 1, 68, 0),
+(636, 3, 1, 68, 0),
+(637, 4, 1, 68, 0),
+(638, 5, 1, 68, 0),
+(639, 6, 1, 68, 0),
+(640, 7, 1, 68, 0),
+(641, 8, 1, 68, 0),
+(642, 9, 1, 68, 0),
+(643, 10, 1, 68, 1),
+(644, 11, 3, 68, 0),
+(645, 12, 3, 68, 0),
+(646, 13, 3, 68, 0),
+(647, 14, 3, 68, 10),
+(648, 15, 3, 68, 4),
+(649, 16, 3, 68, 0),
+(650, 17, 3, 68, 0),
+(651, 18, 3, 68, 0);
 
 -- --------------------------------------------------------
 
@@ -225,16 +312,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   `played_games` int(11) NOT NULL DEFAULT '0',
   `won_games` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `played_games`, `won_games`) VALUES
-(1, 'iceman', 'iceman.ftg@gmail.com', '1', 8, 1),
+(1, 'iceman', 'iceman.ftg@gmail.com', '1', 56, 1),
 (2, 'iceman2', 'i2ceman.ftg@gmail.com', '1', 4, 0),
-(3, 'aburghelea', 'iceman@da.da', 'iceman', 0, 0);
+(3, 'aburghelea', 'iceman@da.da', 'iceman', 63, 0),
+(4, 'cougar', 'cougar_ftg@yahoo.com', '1', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -252,6 +340,14 @@ CREATE TABLE IF NOT EXISTS `users_games` (
   KEY `fk_users_games_users1_idx` (`user_id`),
   KEY `fk_users_games_games1_idx` (`game_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `users_games`
+--
+
+INSERT INTO `users_games` (`user_id`, `score`, `game_id`) VALUES
+(1, 0, 68),
+(3, 0, 68);
 
 --
 -- Constraints for dumped tables
