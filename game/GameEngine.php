@@ -322,6 +322,8 @@ class GameEngine implements IGameEngine
             return 'PLANET_CLAIM';
         if (strcmp($currentState, 'PLANET_CLAIM') == 0)
             return 'SHIP_PLACING';
+        if (strcmp($currentState, 'SHIP_PLACING') == 0)
+            return 'ATTACK';
         if (strcmp($currentState, 'ATTACK') == 0)
             return 'SHIP_PLACING';
 
@@ -353,7 +355,6 @@ class GameEngine implements IGameEngine
         foreach ($planets as $planet)
             if ($planet->owner_id == null)
                 return true;
-
 
         return false;
     }

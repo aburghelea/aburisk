@@ -25,7 +25,7 @@ if (areParamsSet($_GET)) {
 } else {
     echo "Use all the necessary params<br/>";
 }
-function areParamsSet($_GET)
+function areParamsSet()
 {
     return
         isset($_GET[S_IDGAME]) &&
