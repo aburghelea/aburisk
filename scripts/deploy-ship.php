@@ -6,8 +6,8 @@
  * For : PWeb 2013
  */
 
-require_once dirname(__FILE__)."/script-constants.php";
-require_once dirname(__FILE__)."/../game/GameEngine.php";
+require_once dirname(__FILE__) . "/script-constants.php";
+require_once dirname(__FILE__) . "/../game/GameEngine.php";
 
 if (areParamsSet($_GET)) {
     $gameEngine = new GameEngine($_GET[S_IDGAME]);
@@ -17,9 +17,10 @@ if (areParamsSet($_GET)) {
         echo "Game was not retrieved<br/>";
 
     $deploy = $gameEngine->deployShip($_GET[S_IDPLANET], $_GET[S_IDUSER]);
-    if ($deploy > 0)
+    if ($deploy > 0) {
+        GameManager::decreaseShips();
         echo "Troops deployed<br/>";
-    else
+    } else
         echo "No reinforcements comming<br/>";
 
 } else {

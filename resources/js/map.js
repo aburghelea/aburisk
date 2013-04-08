@@ -17,9 +17,10 @@ ABURISK.players = function () {
 
             if (players[user] == undefined) {
                 players[user] = idx;
+                console.log(user + " " + idx);
                 idx++;
             }
-
+            console.log(players);
             return players[user];
         }
     }

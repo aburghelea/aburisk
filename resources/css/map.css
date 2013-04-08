@@ -36,14 +36,22 @@
 }
 
 .text {
-    fill: rgba(255,255,255,1);
-    text-shadow: -1px -1px 0 black, 1px  -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
-    font: 20px 'Yanone Kaffeesatz', 'Segoe UI',Arial,sans-serif;
+    fill: rgba(255, 255, 255, 1);
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    font: 20px 'Yanone Kaffeesatz', 'Segoe UI', Arial, sans-serif;
 }
-.player_1 ,.player_2,.player_3,.player_4,.player_5,.player_6,.player_7,.player_8,.player_9 {
+
+/*.player_1 a,*/
+/*.player_2 a,*/
+/*.player_3 a,*/
+/*.player_4 a, .player_5 a, .player_6 a, .player_7 a, .player_8 a, .player_9 a */
+[class^='player'] a, [class^='player']
+{
     color: #000000 !important;
-    font: 20px 'Yanone Kaffeesatz', 'Segoe UI',Arial,sans-serif;
+    font: 20px 'Yanone Kaffeesatz', 'Segoe UI', Arial, sans-serif;
+    padding-left: 5px;
 }
+
 .player_1 {
     fill: rgb(214, 238, 48);
     background-color: rgb(214, 238, 48);
@@ -54,30 +62,25 @@
     background-color: rgb(238, 72, 94);
 }
 
-
 .player_3 {
     fill: rgb(55, 238, 45);
     background-color: rgb(55, 238, 45);
 }
-
 
 .player_4 {
     fill: rgb(33, 51, 238);
     background-color: rgb(33, 51, 238);
 }
 
-
 .player_5 {
     fill: rgb(174, 41, 107);
     background-color: rgb(174, 41, 107);
 }
 
-
 .player_6 {
     fill: rgb(60, 227, 238);
     background-color: rgb(60, 227, 238);
 }
-
 
 .player_7 {
     fill: rgb(238, 115, 71);
@@ -89,11 +92,10 @@
     background-color: rgb(102, 79, 144);
 }
 
-
 .player_9 {
-     fill: rgb(108, 238, 159);
+    fill: rgb(108, 238, 159);
     background-color: rgb(108, 238, 159);
- }
+}
 
 .player_9 {
     fill: rgb(256, 256, 256);

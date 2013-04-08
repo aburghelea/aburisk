@@ -26,6 +26,7 @@ class GameEngine implements IGameEngine
 {
     private $game;
 
+
     /**
      * Extracts the game with the specified id from the database or creates an
      * new game if the id 0
@@ -38,6 +39,7 @@ class GameEngine implements IGameEngine
         $gameDao = new Game();
         $planetDao = new Planet();
         $planetGameDao = new Planet_Game();
+        $this->ships = 18;
         if ($idGame > 0) {
             $games = $gameDao->getRowsByField('id', $idGame);
             if (!empty($games)) {
@@ -46,7 +48,6 @@ class GameEngine implements IGameEngine
             }
 
         }
-
         $idGame = $gameDao->insertRow(array('noPlayers' => $noPlayers, 'current_player_id' => $idHost, 'state' => GameState::WAITING_PLAYERS));
         $this->game = current($gameDao->getRowsByField('id', $idGame));
         $planets = $planetDao->getRowsByField('"1"', '1');
@@ -146,9 +147,9 @@ class GameEngine implements IGameEngine
 
         $planet_in_game = new Planet_Game();
         $planet_in_game->updateRows(array("game_id" => $this->game->getId(), "owner_id" => $idUser, "noships" => 1), "planet_id", $idPlanet);
-
+        $this->ships -= 1;
+        echo $this->ships;
         return 1;
-
     }
 
     /**
@@ -166,7 +167,7 @@ class GameEngine implements IGameEngine
         $pg = current($planet_game->getRowsByField('id', $planet));
 
         $planet_game->updateRows(array("noships" => $pg->noships + 1), 'id', $pg->getId());
-
+        $this->ships -= 1;
         return 1;
     }
 
@@ -341,5 +342,19 @@ class GameEngine implements IGameEngine
     {
         $userDao = new User();
         return $userDao->getUsersFromGame($this->game->id);
+    }
+
+
+    public function claimablePlanetsExist()
+    {
+        $planetsGamesDao = new Planet_Game();
+        $planets = $planetsGamesDao->getRowsByArray(array("game_id" => $this->game->getId()));
+
+        foreach ($planets as $planet)
+            if ($planet->owner_id == null)
+                return true;
+
+
+        return false;
     }
 }

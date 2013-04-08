@@ -15,6 +15,7 @@ if (areParamsSet()) {
     if ($gameEngine->getGame() != null) {
         echo "Created a game with the id " . $gameEngine->getGame()->getId() . "<br/>";
         GameManager::setGameId($gameEngine);
+        GameManager::initShips();
         header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/game.php');
         exit();
     } else

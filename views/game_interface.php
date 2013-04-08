@@ -41,12 +41,9 @@ if (GameManager::getGame() && GameManager::getGame()->state === 'PLANET_CLAIM' &
         <div id="sidebar">
             <div id="tbox1">
                 <?php if (isset($game)) { ?>
-                    <h2>Game <?php echo $game->id; ?> </h2>
 
                     <ul class="style2">
                         <li class="first">
-                            <h3>Statistics </h3>
-
                             <p>State : <a href="javascript:void(0)"><?php echo $game->state; ?></a></p>
                             <?php if (!GameManager::needsMorePlayers()) { ?>
                                 <p class="javascript:ABURISK.players.index(0)"> Current player: <a target="_blank"
@@ -55,6 +52,9 @@ if (GameManager::getGame() && GameManager::getGame()->state === 'PLANET_CLAIM' &
                                     </a></p>
                                 <p>
                                     Is your turn?  <?php echo GameManager::isLoggedInPlayersTurn() ? "Yes" : "No" ?>
+                                </p>
+                                <p>
+                                    <?php echo GameManager::getRemainingShips() ?> ship(s) left
                                 </p>
                             <?php } else { ?>
                                 <p>Needed players: <a href="javascript:void(0)"> <?php echo $game->noplayers ?></a></p>
@@ -65,16 +65,18 @@ if (GameManager::getGame() && GameManager::getGame()->state === 'PLANET_CLAIM' &
                             <form action="scripts/end-game.php" method="post">
                                 <input type="hidden" name='idGame' value="<?php echo $game->id ?>"/>
                                 <a href="javascript:void(0);" class="button-style" onclick="submitForm(this)">End
-                                    game</a>
+                                    game <?php echo $game->id ?></a>
                             </form>
+
                         </li>
-                        <?php if (!GameManager::needsMorePlayers() && GameManager::isLoggedInPlayersTurn()) { ?>
+                        <?php if (!GameManager::needsMorePlayers()) { ?>
                             <li id="userlist">
                                 <h3>
                                     Players
                                 </h3>
                                 <?php foreach (GameManager::getPlayers() as $player) { ?>
-                                    <p name="<?php echo $player->getUsername() ?>">
+                                    <p name="<?php echo $player->getId() ?>">
+
                                         <a target="_blank"
                                            href="/aburisk/profile.php?id=<?php echo $player->getId() ?>">
                                             <?php echo $player->getUsername() ?>
@@ -83,38 +85,28 @@ if (GameManager::getGame() && GameManager::getGame()->state === 'PLANET_CLAIM' &
                                 <?php } ?>
                                 <script>
                                     var links = document.getElementById("userlist").getElementsByTagName("p");
-                                    for (var i = 0; i < links.length; i++){
+                                    for (var i = 0; i < links.length; i++) {
                                         var name = links[i].getAttribute("name");
-                                        var class_name = "player_"+ABURISK.players.index(name);
+                                        console.log(name);
+                                        var class_name = "player_" + ABURISK.players.index(name);
                                         var element = links[i].classList;
-                                        console.log(element);
                                         links[i].classList.add(class_name);
                                     }
                                 </script>
                             </li>
-                            <li>
-                                <h3>
-                                    Actions
-                                </h3>
+                            <?php if (GameManager::isLoggedInPlayersTurn()) { ?>
+                                <li>
+                                    <h3>
+                                        Actions
+                                    </h3>
 
-                                <div>
-                                    <form action="scripts/claim-planet.php" method="post">
-                                        <p>
-                                            Selected planet
-                                            <input type="text" id="claimIdPlanet" style="width: 30px" name="idPlanet"
-                                                   value="3">
-
-                                            <input type="hidden" name="idUser"
-                                                   value="<?php echo AuthManager::getLoggedInUserId() ?>"/>
-                                            <input type="hidden" name="idGame"
-                                                   value="<?php echo $game->id ?>"/>
-                                            <!--                                    <div class="clearfix"></div>-->
-                                            <a href="javascript:void(0);" class="join-style"
-                                               onclick="submitForm(this)">Claim</a>
-                                        </p>
-                                    </form>
-                                </div>
-                            </li>
+                                    <div>
+                                        <?php if (GameManager::getGame()->state == 'PLANET_CLAIM') {
+                                            require_once dirname(__FILE__) . "/partials/planet-claimer.php";
+                                        }?>
+                                    </div>
+                                </li>
+                            <?php } ?>
                         <?php } ?>
 
 

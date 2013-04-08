@@ -17,6 +17,7 @@ if (session_status() == PHP_SESSION_NONE)
 
 class GameManager
 {
+    private static $ships;
 
     public static function getNextPlayer($user_id)
     {
@@ -43,8 +44,9 @@ class GameManager
     {
         if ($game == null) {
             unset($_SESSION['game_engine']);
-        } else
+        } else {
             $_SESSION['game_engine'] = $game;
+        }
     }
 
     public static function getGame()
@@ -101,6 +103,11 @@ class GameManager
             $nextState = self::getGameEngine()->getNextState();
             self::getGameEngine()->changeState($nextState);
         }
+
+        if (strcmp(self::getGame()->state, 'PLANET_CLAIM') == 0 && !self::getGameEngine()->claimablePlanetsExist()){
+            $nextState = self::getGameEngine()->getNextState();
+            self::getGameEngine()->changeState($nextState);
+        }
     }
 
     public static function getCurrentPlayerUsername()
@@ -125,5 +132,22 @@ class GameManager
         foreach ($users as $player)
             $players[] = new Player($player);
         return $players;
+    }
+
+    public static function getRemainingShips()
+    {
+        return $_SESSION['ships'];
+    }
+
+    public static function decreaseShips($with = 1)
+    {
+        echo "<br/>**".self::getRemainingShips()."**<br/>";
+        echo "<br/>**".($_SESSION['ships'] - $with)."**<br/>";
+        $_SESSION['ships'] = $_SESSION['ships'] - $with;
+        echo "<br/>**".(self::$ships)."**<br/>";
+    }
+
+    public static function initShips() {
+        $_SESSION['ships'] = 18;
     }
 }

@@ -21,6 +21,7 @@ if (areParamsSet($_POST)) {
     if ($join_status == 1) {
         echo "Successfully joined game<br/>";
         GameManager::setGameId($gameEngine);
+        GameManager::initShips();
         GameManager::advanceStageIfNecessary();
         header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/game.php');
         exit();

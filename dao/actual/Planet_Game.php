@@ -39,7 +39,6 @@ class Planet_Game extends GenericDao
     {
         return $this->id;
     }
-
 }
 
 ?>

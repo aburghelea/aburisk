@@ -20,8 +20,8 @@ if (areParamsSet($_POST)) {
     $claim_staus = $gameEngine->claimPlanet($_POST[S_IDPLANET], $_POST[S_IDUSER]);
     if ($claim_staus > 0) {
         $gameEngine->changeTurn(GameManager::getNextPlayer($_POST[S_IDUSER]));
-
-
+        GameManager::decreaseShips();
+        GameManager::advanceStageIfNecessary();
     } else
         echo "Planet not claimed<br/>";
 
@@ -36,5 +36,4 @@ function areParamsSet()
 {
     return isset($_POST[S_IDGAME]) && isset($_POST[S_IDUSER]) && isset($_POST[S_IDPLANET]);
 }
-
 ?>
