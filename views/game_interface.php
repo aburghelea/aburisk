@@ -18,6 +18,12 @@ $game = GameManager::getGame();
 $planetHandler = "function(){}";
 if (GameManager::getGame() && GameManager::getGame()->state === 'PLANET_CLAIM' && GameManager::isLoggedInPlayersTurn())
     $planetHandler = "ABURISK.game.initClaim";
+
+if (GameManager::getGame() && GameManager::getGame()->state === 'SHIP_PLACING' && GameManager::isLoggedInPlayersTurn())
+    $planetHandler = "ABURISK.game.initPlacing";
+
+//if (GameManager::getGame() && GameManager::getGame()->state === 'ATTACK' && GameManager::isLoggedInPlayersTurn())
+//    $planetHandler = "ABURISK.game.initPlacing";
 ?>
 
 <body>
@@ -101,9 +107,19 @@ if (GameManager::getGame() && GameManager::getGame()->state === 'PLANET_CLAIM' &
                                     </h3>
 
                                     <div>
-                                        <?php if (GameManager::getGame()->state == 'PLANET_CLAIM') {
+                                        <?php
+                                        if (GameManager::getGame()->state == 'PLANET_CLAIM') {
                                             require_once dirname(__FILE__) . "/partials/planet-claimer.php";
-                                        }?>
+                                        }
+
+                                        if (GameManager::getGame()->state == 'SHIP_PLACING') {
+                                            require_once dirname(__FILE__) . "/partials/ship-placer.php";
+                                        }
+
+                                        if (GameManager::getGame()->state == 'ATTACK') {
+                                            require_once dirname(__FILE__) . "/partials/planet-attacker.php";
+                                        }
+                                        ?>
                                     </div>
                                 </li>
                             <?php } ?>

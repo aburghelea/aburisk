@@ -97,20 +97,37 @@ class GameManager
         return $needed > $joined;
     }
 
-    public static function advanceStageIfNecessary()
+    public static function advanceStageIfNecessary($necessary = false)
     {
-        if (strcmp(self::getGame()->state, 'WAITING_PLAYERS') == 0 && !self::needsMorePlayers()) {
+        self::updateEngagedGame(AuthManager::getLoggedInUserId());
+        if ($necessary != false ) {
             $nextState = self::getGameEngine()->getNextState();
             self::getGameEngine()->changeState($nextState);
-        }
+        } else {
+            if (strcmp(self::getGame()->state, 'WAITING_PLAYERS') == 0 && !self::needsMorePlayers()) {
+                $nextState = self::getGameEngine()->getNextState();
+                self::getGameEngine()->changeState($nextState);
+            }
 
-        if (strcmp(self::getGame()->state, 'PLANET_CLAIM') == 0 && !self::getGameEngine()->claimablePlanetsExist()){
-            $nextState = self::getGameEngine()->getNextState();
-            self::getGameEngine()->changeState($nextState);
+            if (strcmp(self::getGame()->state, 'PLANET_CLAIM') == 0 && !self::getGameEngine()->claimablePlanetsExist()) {
+                $nextState = self::getGameEngine()->getNextState();
+                self::getGameEngine()->changeState($nextState);
+            }
+
+            if (strcmp(self::getGame()->state, 'SHIP_PLACING') == 0 && !self::getGameEngine()->claimablePlanetsExist()) {
+                $nextState = self::getGameEngine()->getNextState();
+                self::getGameEngine()->changeState($nextState);
+            }
+
+            if (strcmp(self::getGame()->state, 'ATTACK') == 0 && !self::getGameEngine()->claimablePlanetsExist()) {
+                $nextState = self::getGameEngine()->getNextState();
+                self::getGameEngine()->changeState($nextState);
+            }
         }
     }
 
-    public static function getCurrentPlayerUsername()
+    public
+    static function getCurrentPlayerUsername()
     {
         return self::getGameEngine()->getCurrentPlayerUsername();
     }
@@ -141,13 +158,16 @@ class GameManager
 
     public static function decreaseShips($with = 1)
     {
-        echo "<br/>**".self::getRemainingShips()."**<br/>";
-        echo "<br/>**".($_SESSION['ships'] - $with)."**<br/>";
         $_SESSION['ships'] = $_SESSION['ships'] - $with;
-        echo "<br/>**".(self::$ships)."**<br/>";
     }
 
-    public static function initShips() {
+    public static function increaseShips($with = 1)
+    {
+        $_SESSION['ships'] = $_SESSION['ships'] + $with;
+    }
+
+    public static function initShips()
+    {
         $_SESSION['ships'] = 18;
     }
 }

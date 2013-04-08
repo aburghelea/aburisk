@@ -5,29 +5,39 @@
  * Time: 5:51 PM
  * To change this template use File | Settings | File Templates.
  */
-ABURISK.game = function() {
+ABURISK.game = function () {
     var svgRoot,
         svgDocument;
 
-     var selectForClaim = function(e) {
+    var selectForClaim = function (e) {
 
     };
 
 //    planet.addEventListener("mouseout", selectForClaim, false);
 
-    function claimPlanet(e) {
+    function selectPlanet(e) {
         $claimInput = document.getElementById("claimIdPlanet");
         var planetId = e.target.getAttribute("id");
         $claimInput.setAttribute("value", planetId);
     }
 
     return {
-        initClaim : function() {
+        initClaim: function () {
             svgRoot = document.getElementById("mapContainer").contentDocument;
             svgDocument = svgRoot.documentElement;
             var planets = svgDocument.getElementsByClassName("planet");
             for (var i = 0; i < planets.length; i++) {
-                planets[i].addEventListener('click', claimPlanet, false);
+                planets[i].addEventListener('click', selectPlanet, false);
+            }
+        },
+
+        initPlacing: function () {
+            svgRoot = document.getElementById("mapContainer").contentDocument;
+            svgDocument = svgRoot.documentElement;
+            var planets = svgDocument.getElementsByClassName("planet");
+            for (var i = 0; i < planets.length; i++) {
+                //TODO: check if it belongs to user
+                planets[i].addEventListener('click', selectPlanet, false);
             }
         }
     }
