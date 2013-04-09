@@ -7,10 +7,11 @@
     <div id="menu">
         <ul>
             <li><a href="/aburisk" accesskey="h" title="">Homepage</a></li>
-            <li><a href="/aburisk/games_list.php" accesskey="g" title="">Games List</a></li>
-            <li><a href="/aburisk/game.php" accesskey="g" title="">Current Game</a></li>
-            <li><?php require_once dirname(__FILE__)."/user_info.php"?></li>
-<!--            <li><a href="#" accesskey="1" title="">Login</a></li>-->
+            <?php if (AuthManager::getLoggedInUserId()) { ?>
+                <li><a href="/aburisk/games_list.php" accesskey="g" title="">Games List</a></li>
+                <li><a href="/aburisk/game.php" accesskey="g" title="">Current Game</a></li>
+            <?php } ?>
+            <li><?php require_once dirname(__FILE__) . "/user_info.php"?></li>
         </ul>
     </div>
 </div>

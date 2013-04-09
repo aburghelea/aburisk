@@ -25,7 +25,7 @@ require_once dirname(__FILE__) . "/ShipAttackJudge.php";
 class GameEngine implements IGameEngine
 {
     private $game;
-
+    private $winner;
 
     /**
      * Extracts the game with the specified id from the database or creates an
@@ -115,6 +115,7 @@ class GameEngine implements IGameEngine
     public function endGame($idUser = null)
     {
         $this->game->updateRows(array("current_player_id" => $idUser, 'state' => GameState::GAME_END), 'id', $this->game->getId());
+        $this->game->current_player_id = $idUser;
         $planetGamesDao = new Planet_Game();
         $userGameDao = new User_Game();
         $userGameDao->deleteRowsByField('game_id', $this->game->getId());
@@ -358,4 +359,63 @@ class GameEngine implements IGameEngine
 
         return false;
     }
+
+    function getShipBonus($userId)
+    {
+        $planetGameDao = new Planet_Game();
+        $planetDao = new Planet();
+
+        $allPlanets = $planetDao->getRowsByField("'1'", "1");
+        $planetGalaxyMap = array();
+        $bonusesMap = array();
+        foreach ($allPlanets as $planet)
+            $planetGalaxyMap[$planet->id] = $planet->containing_galaxy_id;
+
+        $myPlanetGames = $planetGameDao->getRowsByArray(array("owner_id" => $userId, "game_id" => $this->game->id));
+        if (is_array($myPlanetGames))
+            foreach ($myPlanetGames as $planetGame) {
+                $galaxyId = $planetGalaxyMap[$planetGame->planet_id];
+                if (!array_key_exists($galaxyId, $bonusesMap)) {
+                    $bonusesMap[$galaxyId] = 0;
+                }
+                $bonusesMap[$galaxyId] += 1;
+            }
+
+        $oponentPlanetGame = $planetGameDao->getRowsByArray(array("owner_id not" => $userId, "game_id" => $this->game->id));
+        if (is_array($oponentPlanetGame))
+            foreach ($oponentPlanetGame as $planetGame) {
+                $galaxyId = $planetGalaxyMap[$planetGame->planet_id];
+                if (array_key_exists($galaxyId, $bonusesMap))
+                    $bonusesMap[$galaxyId] = 0;
+
+            }
+
+        $bonusesMap = array_map('self::halfCeil', $bonusesMap);
+        $bonus = array_sum($bonusesMap);
+        return $bonus;
+    }
+
+    function isGameOver($userId)
+    {
+        $planetGameDao = new Planet_Game();
+        echo "$userId  " . $this->game->id;
+        $myPlanetGames = $planetGameDao->getRowsByArray(array("owner_id" => $userId, "game_id" => $this->game->id));
+
+        return count($myPlanetGames) == 18;
+    }
+
+    static function halfCeil($nr)
+    {
+        return intval(ceil($nr / 2));
+    }
+
+    public function getWinner()
+    {
+
+        $userDao = new User();
+        $user = $userDao->getRowsByField("id", $this->game->current_player_id);
+        return current($user);
+    }
+
+
 }

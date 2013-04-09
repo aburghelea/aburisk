@@ -33,7 +33,7 @@ function profileLink()
 function loginLink()
 {
     ?>
-    <a href="/aburisk/login.php" accesskey="l">Login</a>
+    <a href="/aburisk/login.php" accesskey="l">Login/Register</a>
 <?php
 }
 

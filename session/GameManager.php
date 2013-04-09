@@ -59,7 +59,7 @@ class GameManager
         return null;
     }
 
-    private static function getGameEngine()
+    public static function getGameEngine()
     {
         if (isset($_SESSION['game_engine'])) {
             return $_SESSION['game_engine'];
@@ -101,8 +101,14 @@ class GameManager
     {
         self::updateEngagedGame(AuthManager::getLoggedInUserId());
         if ($necessary != false) {
-            if (strcmp(self::getGame()->state, 'ATTACK') ==0){
+            if (strcmp(self::getGame()->state, 'ATTACK') == 0) {
+                //TODO: check if end
+                $bonus = self::getGameEngine()->getShipBonus(self::getCurrentPlayerId());
+                self::increaseShips(6);
+                self::increaseShips($bonus);
                 self::getGameEngine()->changeTurn(GameManager::getNextPlayer(self::getCurrentPlayerId()));
+
+
             }
             $nextState = self::getGameEngine()->getNextState();
             self::getGameEngine()->changeState($nextState);
@@ -131,8 +137,7 @@ class GameManager
         }
     }
 
-    public
-    static function getCurrentPlayerUsername()
+    public static function getCurrentPlayerUsername()
     {
         return self::getGameEngine()->getCurrentPlayerUsername();
     }
@@ -174,5 +179,10 @@ class GameManager
     public static function initShips()
     {
         $_SESSION['ships'] = 18;
+    }
+
+    public static function getWinner()
+    {
+        return self::getGameEngine()->getWinner();
     }
 }

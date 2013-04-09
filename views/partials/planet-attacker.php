@@ -9,8 +9,8 @@
         <input type="hidden" name="idGame" value="<?php echo $game->id ?>"/>
     </p>
 
-    <div class="clearfix">
-        <a href="scripts/change-inner-state.php" class="button-style" style="margin-top: 0 !important;">End turn</a>
+    <div class="clearfix" style="margin-top: 10px">
+        <a href="scripts/change-inner-state.php" class="button-style" style="margin-top: 0 !important;">&gt;&gt;End turn</a>
 
         <a href="javascript:void(0);" class="join-style" onclick="submitForm(this)">ATTACK</a>
     </div>

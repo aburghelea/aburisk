@@ -24,6 +24,8 @@ if (GameManager::getGame() && GameManager::getGame()->state === 'SHIP_PLACING' &
 
 if (GameManager::getGame() && GameManager::getGame()->state === 'ATTACK' && GameManager::isLoggedInPlayersTurn())
     $planetHandler = "ABURISK.game.initAttack";
+
+$winner = GameManager::getWinner();
 ?>
 
 <body>
@@ -32,17 +34,21 @@ if (GameManager::getGame() && GameManager::getGame()->state === 'ATTACK' && Game
     <?php require_once "header.php" ?>
     <div id="page">
         <div id="content">
-            <?php if (isset($game)) { ?>
+            <?php if (GameManager::getGame()->state === 'FINISHED') { ?>
+                <h2>Game over</h2>
+                <h3>Winner is
+                    <a target="_blank"
+                       href="/aburisk/profile.php?id=<?php echo $winner->getId() ?>">
+                        <?php echo $winner->username ?>
+                    </a>
+                </h3>
+            <?php } else if (isset($game)) { ?>
                 <object id='mapContainer'
                         onload='ABURISK.map.init(<?php echo $planetsJSON ?>,<?php echo $connectiosJSON ?>, <?php echo $planetHandler ?> )'
                         type="image/svg+xml" width="750" height="421" data="views/map.svg"></object>
-            <?php
-            } else {
-                ?>
+            <?php } else { ?>
                 <h2>Nu esti angajat in nici un joc</h2>
-            <?php
-            }
-            ?>
+            <?php } ?>
         </div>
         <div id="sidebar">
             <div id="tbox1">
@@ -52,18 +58,22 @@ if (GameManager::getGame() && GameManager::getGame()->state === 'ATTACK' && Game
                         <li class="first">
                             <p>State : <a href="javascript:void(0)"><?php echo $game->state; ?></a></p>
                             <?php if (!GameManager::needsMorePlayers()) { ?>
-                                <p class="javascript:ABURISK.players.index(0)"> Current player: <a target="_blank"
-                                                                                                   href="/aburisk/profile.php?id=<?php echo GameManager::getCurrentPlayerId(); ?>">
+                                <p id="currentPlayer"> Current player:
+                                    <a target="_blank"
+                                       href="/aburisk/profile.php?id=<?php echo GameManager::getCurrentPlayerId(); ?>">
                                         <?php echo GameManager::getCurrentPlayerUsername(); ?>
                                     </a></p>
+
                                 <p>
                                     Is your turn?  <?php echo GameManager::isLoggedInPlayersTurn() ? "Yes" : "No" ?>
                                 </p>
+
                                 <p>
                                     <?php echo GameManager::getRemainingShips() ?> ship(s) left
                                 </p>
                             <?php } else { ?>
                                 <p>Needed players: <a href="javascript:void(0)"> <?php echo $game->noplayers ?></a></p>
+
                                 <p>Joined players: <a href="javascript:void(0)">
                                         <?php echo GameManager::getJoinedPlayersNumber(); ?></a></p>
 
@@ -97,6 +107,9 @@ if (GameManager::getGame() && GameManager::getGame()->state === 'ATTACK' && Game
                                         var element = links[i].classList;
                                         links[i].classList.add(class_name);
                                     }
+                                    var current = document.getElementById('currentPlayer').getElementsByTagName('a');
+                                    var currentUsername = current[0].innerHTML.replace(/\s+/g, ' ')+".";
+                                    document.getElementById('currentPlayer').classList.add("player_" + ABURISK.players.index(name))
                                 </script>
                             </li>
                             <?php if (GameManager::isLoggedInPlayersTurn()) { ?>

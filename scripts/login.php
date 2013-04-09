@@ -38,6 +38,7 @@ function areParamsSet()
 function setSessionDetalils($userId)
 {
     AuthManager::userId($userId);
+    GameManager::initShips();
     GameManager::updateEngagedGame($userId);
 }
 
