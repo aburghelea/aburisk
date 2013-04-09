@@ -11,6 +11,10 @@ require_once dirname(__FILE__) . "/../dao/actual/User.php";
 if (session_status() == PHP_SESSION_NONE)
     session_start();
 
+/**
+ * Class AuthManager
+ * Checks to se if the user is logged in or not
+ */
 class AuthManager
 {
     private static $userDao = NULL;

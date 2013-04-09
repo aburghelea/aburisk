@@ -41,10 +41,6 @@
     font: 20px 'Yanone Kaffeesatz', 'Segoe UI', Arial, sans-serif;
 }
 
-/*.player_1 a,*/
-/*.player_2 a,*/
-/*.player_3 a,*/
-/*.player_4 a, .player_5 a, .player_6 a, .player_7 a, .player_8 a, .player_9 a */
 [class^='player'] a, [class^='player']
 {
     color: #000000 !important;

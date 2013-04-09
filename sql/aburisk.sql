@@ -3,14 +3,11 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 08, 2013 at 10:10 PM
+-- Generation Time: Apr 09, 2013 at 08:12 PM
 -- Server version: 5.5.24-log
 -- PHP Version: 5.4.3
 
-SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT=0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -28,10 +25,7 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `galaxies`
 --
--- Creation: Apr 04, 2013 at 10:26 AM
---
 
-DROP TABLE IF EXISTS `galaxies`;
 CREATE TABLE IF NOT EXISTS `galaxies` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL DEFAULT 'Milky Way',
@@ -54,91 +48,31 @@ INSERT INTO `galaxies` (`id`, `name`) VALUES
 --
 -- Table structure for table `games`
 --
--- Creation: Apr 04, 2013 at 10:26 AM
---
 
-DROP TABLE IF EXISTS `games`;
 CREATE TABLE IF NOT EXISTS `games` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `noplayers` tinyint(4) NOT NULL DEFAULT '2',
-  `state` enum('WAITING_PLAYERS','PLANET_CLAIM','SHIP_PLACING','ATTACK','GAME_END') DEFAULT NULL,
+  `state` enum('WAITING_PLAYERS','PLANET_CLAIM','SHIP_PLACING','ATTACK','FINISHED','GAME_END') DEFAULT NULL,
   `current_player_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_games_users1_idx` (`current_player_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=69 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=75 ;
 
 --
 -- Dumping data for table `games`
 --
 
 INSERT INTO `games` (`id`, `noplayers`, `state`, `current_player_id`) VALUES
-(12, 2, 'GAME_END', NULL),
-(13, 2, 'GAME_END', NULL),
-(14, 2, 'GAME_END', NULL),
-(15, 2, 'GAME_END', NULL),
-(16, 2, 'GAME_END', NULL),
-(17, 2, 'GAME_END', NULL),
-(18, 2, 'GAME_END', NULL),
-(19, 5, 'GAME_END', NULL),
-(20, 2, 'GAME_END', NULL),
-(21, 2, 'GAME_END', NULL),
-(22, 2, 'GAME_END', NULL),
-(23, 2, 'GAME_END', NULL),
-(24, 2, 'GAME_END', NULL),
-(25, 2, 'GAME_END', NULL),
-(26, 2, 'GAME_END', NULL),
-(27, 2, 'GAME_END', NULL),
-(28, 2, 'GAME_END', NULL),
-(29, 2, 'GAME_END', NULL),
-(30, 2, 'GAME_END', NULL),
-(31, 2, 'GAME_END', NULL),
-(32, 2, 'GAME_END', NULL),
-(33, 2, 'GAME_END', NULL),
-(34, 2, 'GAME_END', NULL),
-(35, 2, 'GAME_END', NULL),
-(36, 2, 'GAME_END', NULL),
-(37, 2, 'GAME_END', NULL),
-(38, 2, 'GAME_END', NULL),
-(39, 2, 'GAME_END', NULL),
-(40, 2, 'GAME_END', NULL),
-(41, 2, 'GAME_END', NULL),
-(42, 2, 'GAME_END', NULL),
-(43, 2, 'GAME_END', NULL),
-(44, 2, 'GAME_END', NULL),
-(45, 2, 'GAME_END', NULL),
-(46, 2, 'GAME_END', NULL),
-(47, 2, 'GAME_END', NULL),
-(48, 2, 'GAME_END', NULL),
-(49, 2, 'GAME_END', NULL),
-(50, 2, 'GAME_END', NULL),
-(51, 2, 'GAME_END', NULL),
-(52, 2, 'GAME_END', NULL),
-(53, 2, 'GAME_END', NULL),
-(54, 2, 'GAME_END', NULL),
-(55, 2, 'GAME_END', NULL),
-(56, 2, 'GAME_END', NULL),
-(57, 3, 'GAME_END', NULL),
-(58, 2, 'GAME_END', NULL),
-(59, 2, 'GAME_END', NULL),
-(60, 2, 'GAME_END', NULL),
-(61, 2, 'GAME_END', NULL),
-(62, 2, 'GAME_END', NULL),
-(63, 2, 'GAME_END', NULL),
-(64, 2, 'GAME_END', NULL),
-(65, 2, 'GAME_END', NULL),
-(66, 2, 'GAME_END', NULL),
-(67, 2, 'GAME_END', NULL),
-(68, 2, 'ATTACK', 3);
+(71, 2, 'FINISHED', 1),
+(73, 2, 'FINISHED', 3),
+(74, 2, 'GAME_END', NULL);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `planets`
 --
--- Creation: Apr 04, 2013 at 10:26 AM
---
 
-DROP TABLE IF EXISTS `planets`;
 CREATE TABLE IF NOT EXISTS `planets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL DEFAULT 'Tatooine',
@@ -180,10 +114,7 @@ INSERT INTO `planets` (`id`, `name`, `containing_galaxy_id`, `image`, `x_pos`, `
 --
 -- Table structure for table `planets_games`
 --
--- Creation: Apr 04, 2013 at 10:26 AM
---
 
-DROP TABLE IF EXISTS `planets_games`;
 CREATE TABLE IF NOT EXISTS `planets_games` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `planet_id` int(11) NOT NULL,
@@ -194,41 +125,38 @@ CREATE TABLE IF NOT EXISTS `planets_games` (
   KEY `fk_planets_games_planets1_idx` (`planet_id`),
   KEY `fk_planets_games_users1_idx` (`owner_id`),
   KEY `fk_planets_games_games1_idx` (`game_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=652 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=760 ;
 
 --
 -- Dumping data for table `planets_games`
 --
 
 INSERT INTO `planets_games` (`id`, `planet_id`, `owner_id`, `game_id`, `noships`) VALUES
-(634, 1, 1, 68, 0),
-(635, 2, 1, 68, 0),
-(636, 3, 1, 68, 0),
-(637, 4, 1, 68, 0),
-(638, 5, 1, 68, 0),
-(639, 6, 1, 68, 0),
-(640, 7, 1, 68, 0),
-(641, 8, 1, 68, 0),
-(642, 9, 1, 68, 0),
-(643, 10, 1, 68, 1),
-(644, 11, 3, 68, 0),
-(645, 12, 3, 68, 0),
-(646, 13, 3, 68, 0),
-(647, 14, 3, 68, 10),
-(648, 15, 3, 68, 4),
-(649, 16, 3, 68, 0),
-(650, 17, 3, 68, 0),
-(651, 18, 3, 68, 0);
+(724, 1, 1, 73, 0),
+(725, 2, 1, 73, 0),
+(726, 3, 1, 73, 0),
+(727, 4, 1, 73, 0),
+(728, 5, 1, 73, 0),
+(729, 6, 1, 73, 0),
+(730, 7, 1, 73, 0),
+(731, 8, 1, 73, 0),
+(732, 9, 1, 73, 0),
+(733, 10, 1, 73, 0),
+(734, 11, 1, 73, 0),
+(735, 12, 1, 73, 0),
+(736, 13, 1, 73, 0),
+(737, 14, 1, 73, 0),
+(738, 15, 1, 73, 0),
+(739, 16, 1, 73, 0),
+(740, 17, 1, 73, 0),
+(741, 18, 1, 73, 0);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `planets_neighbours`
 --
--- Creation: Apr 04, 2013 at 10:26 AM
---
 
-DROP TABLE IF EXISTS `planets_neighbours`;
 CREATE TABLE IF NOT EXISTS `planets_neighbours` (
   `first_planet_id` int(11) NOT NULL,
   `second_planet_id` int(11) NOT NULL,
@@ -300,10 +228,7 @@ INSERT INTO `planets_neighbours` (`first_planet_id`, `second_planet_id`) VALUES
 --
 -- Table structure for table `users`
 --
--- Creation: Apr 04, 2013 at 10:26 AM
---
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
@@ -319,9 +244,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `played_games`, `won_games`) VALUES
-(1, 'iceman', 'iceman.ftg@gmail.com', '1', 56, 1),
+(1, 'iceman', 'iceman.ftg@gmail.com', '1', 61, 1),
 (2, 'iceman2', 'i2ceman.ftg@gmail.com', '1', 4, 0),
-(3, 'aburghelea', 'iceman@da.da', 'iceman', 63, 0),
+(3, 'aburghelea', 'iceman@da.da', 'iceman', 68, 0),
 (4, 'cougar', 'cougar_ftg@yahoo.com', '1', 2, 0);
 
 -- --------------------------------------------------------
@@ -329,10 +254,7 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `played_games`, `won
 --
 -- Table structure for table `users_games`
 --
--- Creation: Apr 04, 2013 at 10:26 AM
---
 
-DROP TABLE IF EXISTS `users_games`;
 CREATE TABLE IF NOT EXISTS `users_games` (
   `user_id` int(11) NOT NULL,
   `score` int(11) DEFAULT '0',
@@ -346,8 +268,8 @@ CREATE TABLE IF NOT EXISTS `users_games` (
 --
 
 INSERT INTO `users_games` (`user_id`, `score`, `game_id`) VALUES
-(1, 0, 68),
-(3, 0, 68);
+(3, 0, 73),
+(1, 0, 73);
 
 --
 -- Constraints for dumped tables
@@ -386,8 +308,6 @@ ALTER TABLE `planets_neighbours`
 ALTER TABLE `users_games`
   ADD CONSTRAINT `fk_users_games_games1` FOREIGN KEY (`game_id`) REFERENCES `games` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_users_games_users1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-SET FOREIGN_KEY_CHECKS=1;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

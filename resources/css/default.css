@@ -1,7 +1,4 @@
-/*<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700" rel="stylesheet" type="text/css">*/
-
 @import url('fonts.css');
-
 
 html, body {
     height: 100%;
@@ -70,12 +67,9 @@ hr {
     display: none;
 }
 
-/** WRAPPER */
-
 #wrapper {
     overflow: hidden;
     width: 1200px;
-    /*padding-top: 50px;*/
     margin: 0 auto;
     background: #FFFFFF;
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, .2);
@@ -90,15 +84,11 @@ hr {
     clear: both;
 }
 
-/** HEADER */
-
 #header {
     overflow: hidden;
     height: 90px;
     background: #262626 repeat;
 }
-
-/* Logo */
 
 #logo {
     float: left;
@@ -128,8 +118,6 @@ hr {
 #logo p a {
     color: #7C7C7C;
 }
-
-/* Menu */
 
 #menu {
     float: right;
@@ -167,8 +155,6 @@ hr {
     color: #FFFFFF;
 }
 
-/** PAGE */
-
 #page {
     overflow: hidden;
     width: 1100px;
@@ -176,11 +162,6 @@ hr {
     background: #F6F6F6;
     color: #202020;
 }
-
-#page h2 {
-}
-
-/** CONTENT */
 
 #content {
     float: left;
@@ -194,14 +175,10 @@ hr {
     overflow: hidden;
 }
 
-/** SIDEBAR */
-
 #sidebar {
     float: right;
     width: 300px;
 }
-
-/* Footer */
 
 #footer {
     overflow: hidden;
@@ -217,33 +194,6 @@ hr {
 #footer a {
     color: #545454;
 }
-
-/* Three Column */
-
-#three-column {
-    overflow: hidden;
-    margin: 0 50px;
-    padding: 50px 0;
-    background-color: #F6F6F6;
-}
-
-#three-column #tbox1 {
-    float: left;
-    width: 400px;
-    margin-right: 50px;
-}
-
-#three-column #tbox2 {
-    float: left;
-    width: 300px;
-}
-
-#three-column #tbox3 {
-    float: right;
-    width: 300px;
-}
-
-/* List Style 1 */
 
 ul.style1 {
     margin: 0;
@@ -269,8 +219,6 @@ ul.style1 .first {
     padding-top: 0;
     border-top: none;
 }
-
-/* List style 2 */
 
 ul.style2 {
     margin: 0;
@@ -311,8 +259,6 @@ ul.style2 a:hover {
     text-decoration: underline;
 }
 
-/* Button Style 1 */
-
 .button-style {
     display: inline-block;
     margin-top: 20px;
@@ -334,165 +280,166 @@ ul.style2 a:hover {
     float: right;
 }
 
-
-/*----------------------------
-	Styling the forms
------------------------------*/
-#formContainer{
-    width:288px;
-    height:321px;
-    margin:0 auto;
-    position:relative;
-    z-index:1;
-
+#formContainer {
+    width: 288px;
+    height: 321px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
     -webkit-perspective: 800px;
 }
-#formContainer form{
-    width:100%;
-    height:100%;
-    position:absolute;
-    top:0;
-    left:0;
+
+#formContainer form {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
     -webkit-transform-style: preserve-3d;
     -webkit-backface-visibility: hidden;
-    -webkit-transition:0.8s;
+    -webkit-transition: 0.8s;
     -webkit-animation: pulse 2s infinite;
     background-image: -webkit-radial-gradient(center center, farthest-corner circle, rgba(244, 230, 254, 0.49) 0%, rgba(158, 158, 158, 0.63) 100%);
 }
-/* Webkit keyframe animation */
-@-webkit-keyframes pulse{
-    0%{		box-shadow:0 0 1px #008aff;}
-    50%{	box-shadow:0 0 10px #008aff;}
-    100%{	box-shadow:0 0 1px #008aff;}
+
+@-webkit-keyframes pulse {
+    0% {
+        box-shadow: 0 0 1px #008aff;
+    }
+    50% {
+        box-shadow: 0 0 10px #008aff;
+    }
+    100% {
+        box-shadow: 0 0 1px #008aff;
+    }
 }
 
-@-webkit-keyframes pulse-link{
-    0%{		box-shadow:0 0 1px #ffae02;}
-    50%{	box-shadow:0 0 5px #ffae02;}
-    100%{	box-shadow:0 0 1px #ffae02;}
+@-webkit-keyframes pulse-link {
+    0% {
+        box-shadow: 0 0 1px #ffae02;
+    }
+    50% {
+        box-shadow: 0 0 5px #ffae02;
+    }
+    100% {
+        box-shadow: 0 0 1px #ffae02;
+    }
 }
-#login{
-    z-index:100;
+
+#login {
+    z-index: 100;
 }
-#register{
-    z-index:1;
-    opacity:0;
 
-    -webkit-transform:rotateY(180deg);
+#register {
+    z-index: 1;
+    opacity: 0;
+
+    -webkit-transform: rotateY(180deg);
 }
-#formContainer.flipped #login{
 
-    opacity:0;
-    -webkit-transform:rotateY(-180deg);
+#formContainer.flipped #login {
+
+    opacity: 0;
+    -webkit-transform: rotateY(-180deg);
 }
-#formContainer.flipped #register{
 
-    opacity:1;
+#formContainer.flipped #register {
 
-    -webkit-transform:rotateY(0deg);
+    opacity: 1;
+
+    -webkit-transform: rotateY(0deg);
 }
-/*----------------------------
-	Inputs, Buttons & Links
------------------------------*/
-.flipLink{
 
+.flipLink {
     overflow: hidden;
     position: absolute;
     right: 10px;
     top: 5px;
-    font: 20px 'Yanone Kaffeesatz', 'Segoe UI',Arial,sans-serif;
-    color:#eee;
+    font: 20px 'Yanone Kaffeesatz', 'Segoe UI', Arial, sans-serif;
+    color: #eee;
     margin: 2px;
     padding-right: 3px;
     -webkit-box-shadow: -3px 3px 5px #50455e;
-    -webkit-border-top-left-radius:5px;
-    -webkit-border-top-right-radius:5px;
-    -webkit-border-bottom-left-radius:5px;
-    -webkit-border-bottom-right-radius:5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
     -webkit-animation: pulse-link 5s infinite;
 }
+
 .flipLink:visited {
     color: #eee;
     text-decoration: none;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 
-input[type=text],input[type=password],input[type=email], input[type=number]{
-    /* The text fields */
-    font: 15px 'Segoe UI',Arial,sans-serif;
+input[type=text], input[type=password], input[type=email], input[type=number] {
+    font: 15px 'Segoe UI', Arial, sans-serif;
     border: none;
-    background:none;
+    background: none;
     height: 36px;
 
     width: 234px;
     text-indent: 8px;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
-    color:#eee;
-    background-color: rgba(128,129,133, 1);
-    outline:none;
+    color: #eee;
+    background-color: rgba(128, 129, 133, 1);
+    outline: none;
 
     -webkit-border-radius: 5px;
     border-radius: 5px;
 }
-#formContainer #loginPass{
+
+#formContainer #loginPass {
     top: 215px;
 }
-#formContainer #registerEmail{
-    top:215px;
+
+#formContainer #registerEmail {
+    top: 215px;
 }
+
 #formContainer #registerUsername {
     top: 137px;
 }
-#formContainer input[type=text], #formContainer input[type=password], #formContainer input[type=email] {
+
+#formContainer input[type=text],
+#formContainer input[type=password],
+#formContainer input[type=email] {
     position: absolute;
     left: 26px;
     top: 176px;
 }
 
-.submit{
-
-    /* Submit button */
-
-    opacity:0.9;
-    position:absolute;
-    top:262px;
-    left:25px;
+.submit {
+    opacity: 0.9;
+    position: absolute;
+    top: 262px;
+    left: 25px;
     width: 239px;
-    height:36px;
-    cursor:pointer;
-    border-radius:6px;
-    box-shadow:0 1px 1px #888;
-    border:none;
-    color:#fff;
-    font:14px/36px 'Segoe UI Light','Segoe UI',Arial,sans-serif;
+    height: 36px;
+    cursor: pointer;
+    border-radius: 6px;
+    box-shadow: 0 1px 1px #888;
+    border: none;
+    color: #fff;
+    font: 14px/36px 'Segoe UI Light', 'Segoe UI', Arial, sans-serif;
 
-    /* CSS3 Gradients */
-
-    background-image: linear-gradient(bottom, rgb(80,102,127) 50%, rgb(87,109,136) 50%, rgb(106,129,155) 100%);
-    background-image: -o-linear-gradient(bottom, rgb(80,102,127) 50%, rgb(87,109,136) 50%, rgb(106,129,155) 100%);
-    background-image: -webkit-linear-gradient(bottom, rgb(80,102,127) 50%, rgb(87,109,136) 50%, rgb(106,129,155) 100%);
-    background-image: -ms-linear-gradient(bottom, rgb(80,102,127) 50%, rgb(87,109,136) 50%, rgb(106,129,155) 100%);
-
-    background-image: -webkit-gradient(
-        linear,
-        left bottom,
-        left top,
-        color-stop(0.5, rgb(80,102,127)),
-        color-stop(0.5, rgb(87,109,136)),
-        color-stop(1, rgb(106,129,155))
-    );
+    background-image: -webkit-linear-gradient(bottom, rgb(80, 102, 127) 50%, rgb(87, 109, 136) 50%, rgb(106, 129, 155) 100%);
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.5, rgb(80, 102, 127)), color-stop(0.5, rgb(87, 109, 136)), color-stop(1, rgb(106, 129, 155)));
 }
-.submit:hover{
-    opacity:1;
+
+.submit:hover {
+    opacity: 1;
 }
+
 .formTitle {
-    font: 50px 'Lobster', 'Segoe UI',Arial,sans-serif;
+    font: 50px 'Lobster', 'Segoe UI', Arial, sans-serif;
     margin: 30px auto;
     border: none;
     width: 50%;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
-    color:#eee;
-    outline:none;
+    color: #eee;
+    outline: none;
     text-align: center;
 }
 
@@ -522,41 +469,8 @@ input[type=text],input[type=password],input[type=email], input[type=number]{
     background-position: -168px 0;
 }
 
-.icon-ok-circle {
-    background-position: -192px -96px;
-}
-
-.icon-ban-circle {
-    background-position: -216px -96px;
-}
-
 .icon-arrow-left {
     background-position: -240px -96px;
-}
-
-.icon-arrow-right {
-    background-position: -264px -96px;
-}
-
-.icon-arrow-up {
-    background-position: -289px -96px;
-}
-
-
-.icon-circle-arrow-right {
-    background-position: -240px -144px;
-}
-
-.icon-circle-arrow-left {
-    background-position: -264px -144px;
-}
-
-.icon-circle-arrow-up {
-    background-position: -288px -144px;
-}
-
-.icon-circle-arrow-down {
-    background-position: -312px -144px;
 }
 
 .scrolable {
@@ -565,7 +479,7 @@ input[type=text],input[type=password],input[type=email], input[type=number]{
 }
 
 object {
-    border:double 5px #124f31;
+    border: double 5px #124f31;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;

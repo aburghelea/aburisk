@@ -15,6 +15,10 @@ require_once dirname(__FILE__) . "/AuthManager.php";
 if (session_status() == PHP_SESSION_NONE)
     session_start();
 
+/**
+ * Class GameManager
+ * Mainly a static wrapper over GameEngine
+ */
 class GameManager
 {
     private static $ships;

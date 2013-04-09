@@ -22,12 +22,12 @@
                     <div class='formTitle'>Register</div>
                     <a href="javascript:void(0);" id="flipToLogin" class="flipLink">
                         Login?
-                        <span class=" icon-hand-left"></span>
+                        <span class=" icon-arrow-left"></span>
                     </a>
                     <input type="text" name="username" id="registerUsername" placeholder="Username"/>
                     <input type="password" name="password" id="RegisterPassword" placeholder="Password"/>
                     <input type="email" name="email" id="registerEmail" placeholder="Email"/>
-                    <input type="submit"  class="submit" name="submit" value="Register"/>
+                    <input type="submit" class="submit" name="submit" value="Register"/>
                 </form>
             </div>
         </div>

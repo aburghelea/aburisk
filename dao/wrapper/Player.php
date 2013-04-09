@@ -4,6 +4,11 @@
  * For : PWeb 2013
  */
 
+
+/**
+ * Class Player
+ * Wrapper over users to send to the interface the players from a game
+ */
 class Player
 {
     private $user;
