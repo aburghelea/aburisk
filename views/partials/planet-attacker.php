@@ -1,8 +1,8 @@
 <form action="scripts/attack.php" method="post">
     <p>
-        From: <input type="text" id="claimIdPlanet" style="width: 30px" name="idPlanet1">
-        To: <input type="text" id="claimIdPlanet" style="width: 30px" name="idPlanet2">
-        Ships: <input type="text" id="claimIdPlanet" style="width: 30px" name="noShips">
+        From: <input type="text" id="idPlanet" style="width: 30px" name="idPlanet1">
+        To: <input type="text" id="idPlanet" style="width: 30px" name="idPlanet2">
+        Ships: <input type="text" id="idPlanet" style="width: 30px" name="noShips">
 
 
         <input type="hidden" name="idUser" value="<?php echo AuthManager::getLoggedInUserId() ?>"/>

@@ -93,7 +93,6 @@ if (GameManager::getGame() && GameManager::getGame()->state === 'SHIP_PLACING' &
                                     var links = document.getElementById("userlist").getElementsByTagName("p");
                                     for (var i = 0; i < links.length; i++) {
                                         var name = links[i].getAttribute("name");
-                                        console.log(name);
                                         var class_name = "player_" + ABURISK.players.index(name);
                                         var element = links[i].classList;
                                         links[i].classList.add(class_name);

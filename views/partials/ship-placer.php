@@ -1,6 +1,6 @@
 <form action="scripts/deploy-ship.php" method="post">
     <p>
-        Deploy to: <input type="text" id="claimIdPlanet" style="width: 30px" name="idPlanet">
+        Deploy to: <input type="text" id="idPlanet" style="width: 30px" name="idPlanet">
 
         <input type="hidden" name="idUser" value="<?php echo AuthManager::getLoggedInUserId() ?>"/>
         <input type="hidden" name="idGame" value="<?php echo $game->id ?>"/>

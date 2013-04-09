@@ -1,7 +1,7 @@
 <form action="scripts/claim-planet.php" method="post">
     <p>
         Planet:
-        <input type="text" id="claimIdPlanet" style="width: 30px"
+        <input type="text" id="idPlanet" style="width: 30px"
                name="idPlanet"
             >
 

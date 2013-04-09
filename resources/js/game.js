@@ -9,22 +9,20 @@ ABURISK.game = function () {
     var svgRoot,
         svgDocument;
 
-    var selectForClaim = function (e) {
-
-    };
-
-//    planet.addEventListener("mouseout", selectForClaim, false);
-
     function selectPlanet(e) {
-        $claimInput = document.getElementById("claimIdPlanet");
+        $claimInput = document.getElementById("idPlanet");
         var planetId = e.target.getAttribute("id");
         $claimInput.setAttribute("value", planetId);
     }
 
+    function init() {
+        svgRoot = document.getElementById("mapContainer").contentDocument;
+        svgDocument = svgRoot.documentElement;
+    }
+
     return {
         initClaim: function () {
-            svgRoot = document.getElementById("mapContainer").contentDocument;
-            svgDocument = svgRoot.documentElement;
+            init();
             var planets = svgDocument.getElementsByClassName("planet");
             for (var i = 0; i < planets.length; i++) {
                 planets[i].addEventListener('click', selectPlanet, false);
@@ -32,13 +30,24 @@ ABURISK.game = function () {
         },
 
         initPlacing: function () {
-            svgRoot = document.getElementById("mapContainer").contentDocument;
-            svgDocument = svgRoot.documentElement;
-            var planets = svgDocument.getElementsByClassName("planet");
-            for (var i = 0; i < planets.length; i++) {
-                //TODO: check if it belongs to user
-                planets[i].addEventListener('click', selectPlanet, false);
-            }
+            init();
+            url = 'scripts/get-info.php?about=planets';
+            success = function (data) {
+                var planetsJSON = JSON.parse(data.responseText);
+                for (var i in planetsJSON) {
+                    ABURISK.players.index(planetsJSON.owner_id);
+                    if (planetsJSON[i].owner_id == ABURISK.players.getCurrent()) {
+                        var planet = svgDocument.getElementById(planetsJSON[i].planet_id);
+                        planet.addEventListener('click', selectPlanet, true);
+                    }
+                }
+            };
+
+            fail = function () {
+                console.log("nasol");
+            };
+
+            postCall(url, success, fail);
         }
     }
 }();

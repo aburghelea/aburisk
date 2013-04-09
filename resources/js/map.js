@@ -5,26 +5,7 @@
  * Time: 3:57 PM
  * To change this template use File | Settings | File Templates.
  */
-ABURISK.players = function () {
-    var players = {};
-    var idx = 1;
 
-    return {
-        index: function (user) {
-
-            if (user == undefined || user == null)
-                return 0;
-
-            if (players[user] == undefined) {
-                players[user] = idx;
-                console.log(user + " " + idx);
-                idx++;
-            }
-            console.log(players);
-            return players[user];
-        }
-    }
-}();
 
 ABURISK.map = function () {
 
@@ -127,7 +108,6 @@ ABURISK.map = function () {
         planet.setAttribute('class', "planet");
         planet.setAttribute('x', planetJSON.x_pos);
         planet.setAttribute('y', planetJSON.y_pos);
-
         planet.setAttribute('width', planetJSON.radius * 2);
         planet.setAttribute('height', planetJSON.radius * 2);
         planet.setAttribute('id', planetJSON.id);
@@ -175,9 +155,11 @@ ABURISK.map = function () {
             this.drawPlanets(planets);
             this.drawGalaxies(planets);
             this.drawConnections(connections, planets);
+            this.setPlanetInfo();
+
+
             planetHandler();
 
-            this.setPlanetInfo();
         },
         setPlanetInfo: function () {
             url = 'scripts/get-info.php?about=planets';
