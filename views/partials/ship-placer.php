@@ -4,9 +4,12 @@
 
         <input type="hidden" name="idUser" value="<?php echo AuthManager::getLoggedInUserId() ?>"/>
         <input type="hidden" name="idGame" value="<?php echo $game->id ?>"/>
+    </p>
 
-        <a href="javascript:void(0);" class="join-style" onclick="submitForm(this)">Deploy</a>
-        <a href="scripts/change-inner-state.php" class="join-style">-Atack-</a>
+    <p>
+        <a href="scripts/change-inner-state.php" class="button-style" style="margin-top: 0 !important;">-Atack-</a>
+        <a href="javascript:void(0);" class="join-style"
+           onclick="submitForm(this)">Deploy</a>
     </p>
 
 </form>

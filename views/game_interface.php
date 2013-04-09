@@ -22,8 +22,8 @@ if (GameManager::getGame() && GameManager::getGame()->state === 'PLANET_CLAIM' &
 if (GameManager::getGame() && GameManager::getGame()->state === 'SHIP_PLACING' && GameManager::isLoggedInPlayersTurn())
     $planetHandler = "ABURISK.game.initPlacing";
 
-//if (GameManager::getGame() && GameManager::getGame()->state === 'ATTACK' && GameManager::isLoggedInPlayersTurn())
-//    $planetHandler = "ABURISK.game.initPlacing";
+if (GameManager::getGame() && GameManager::getGame()->state === 'ATTACK' && GameManager::isLoggedInPlayersTurn())
+    $planetHandler = "ABURISK.game.initAttack";
 ?>
 
 <body>

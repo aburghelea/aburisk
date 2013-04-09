@@ -100,9 +100,14 @@ class GameManager
     public static function advanceStageIfNecessary($necessary = false)
     {
         self::updateEngagedGame(AuthManager::getLoggedInUserId());
-        if ($necessary != false ) {
+        if ($necessary != false) {
+            if (strcmp(self::getGame()->state, 'ATTACK') ==0){
+                self::getGameEngine()->changeTurn(GameManager::getNextPlayer(self::getCurrentPlayerId()));
+            }
             $nextState = self::getGameEngine()->getNextState();
             self::getGameEngine()->changeState($nextState);
+
+
         } else {
             if (strcmp(self::getGame()->state, 'WAITING_PLAYERS') == 0 && !self::needsMorePlayers()) {
                 $nextState = self::getGameEngine()->getNextState();

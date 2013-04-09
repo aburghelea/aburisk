@@ -172,7 +172,7 @@ ABURISK.map = function () {
             };
 
             fail = function () {
-                console.log("nasol");
+                console.log("Nu s-au obtinut informatii despre planete in stadiul de afisare a informatiilor despre planete");
             };
 
             postCall(url, success, fail);
