@@ -141,14 +141,17 @@ ABURISK.map = function () {
 
         var x = circle.getAttribute('cx');
         var y = circle.getAttribute('cy');
-        text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        text.setAttribute('x', x);
-        text.setAttribute('y', y);
-        text.setAttribute('id', "ships_" + planplanetJSON.planet_id);
+        var text = svgDocument.getElementById("ships_" + planplanetJSON.planet_id);
+        if (text == undefined) {
+            text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            text.setAttribute('x', x);
+            text.setAttribute('y', y);
+            text.setAttribute('id', "ships_" + planplanetJSON.planet_id);
+        }
         text.setAttribute('class', "text player_" + ABURISK.players.index(planplanetJSON.owner_id));
         text.textContent = planplanetJSON.noships;
 
-        return text;
+        return text == undefined ? false : text;
     };
 
     var createPolygon = function (galaxy, cn) {
@@ -165,30 +168,45 @@ ABURISK.map = function () {
     };
 
     return {
-        init: function (planets, connections, planetHandler) {
-            svgRoot = document.getElementById("mapContainer").contentDocument;
-            svgDocument = svgRoot.documentElement;
-            galaxiesDelimiter = svgRoot.getElementById("galaxies");
-            atmospheresDelimiter = svgDocument.getElementById('atmospheres');
-            planetsDelimiter = svgDocument.getElementById('planets');
-            routesDelimiter = svgRoot.getElementById("routes");
+        init: function (planetHandler) {
+            var url = 'scripts/get-info.php?about=all';
+            var _this = this;
+            var success = function (data) {
+                var jsonData = JSON.parse(data.responseText);
+                var planets = jsonData.planets;
+                var connections = jsonData.connections;
+                svgRoot = document.getElementById("mapContainer").contentDocument;
+                svgDocument = svgRoot.documentElement;
+                galaxiesDelimiter = svgRoot.getElementById("galaxies");
+                atmospheresDelimiter = svgDocument.getElementById('atmospheres');
+                planetsDelimiter = svgDocument.getElementById('planets');
+                routesDelimiter = svgRoot.getElementById("routes");
 
-            this.drawPlanets(planets);
-            this.drawGalaxies(planets);
-            this.drawConnections(connections, planets);
-            this.setPlanetInfo();
+                _this.drawPlanets(planets);
+                _this.drawGalaxies(planets);
+                _this.drawConnections(connections, planets);
+                _this.setPlanetInfo();
 
+                planetHandler();
+            };
 
-            planetHandler();
+            var fail = function () {
+                console.log("Nu s-au obtinut informatii despre planete in stadiul de initializare harta");
+            };
+            postCall(url, success, fail);
+
 
         },
         setPlanetInfo: function () {
             url = 'scripts/get-info.php?about=planets';
+            console.log("Uplating planet info");
             success = function (data) {
                 var planetsJSON = JSON.parse(data.responseText);
                 for (var i in planetsJSON) {
                     ABURISK.players.index(planetsJSON.owner_id);
-                    svgDocument.appendChild(createShipNo(planetsJSON[i]));
+                    var shipNumber = createShipNo(planetsJSON[i]);
+                    if (shipNumber != false)
+                        svgDocument.appendChild(shipNumber);
                 }
             };
 

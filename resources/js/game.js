@@ -10,10 +10,11 @@ ABURISK.game = function () {
         svgDocument;
 
     function selectPlanet(e, inputId) {
-        var claimInput = document.getElementById(inputId);
+//        resetPlanets();
         var planetId = e.target.getAttribute("id");
         var url = "scripts/claim-planet.php";
         var success = function (xhr) {
+            console.log(xhr.responseText);
             var response = JSON.parse(xhr.responseText);
             console.log(response);
             if (response.status == "SUCCESS") {
@@ -31,6 +32,12 @@ ABURISK.game = function () {
         postCall(url, success, fail, {"idPlanet": planetId});
     }
 
+    function placeShip(e, inputId) {
+        var claimInput = document.getElementById(inputId);
+        var planetId = e.target.getAttribute("id");
+        claimInput.setAttribute("value", planetId);
+    }
+
     function selectMaxShips(e, inputId) {
         var shipsInput = document.getElementById(inputId);
         var planetId = e.target.getAttribute("id");
@@ -39,12 +46,23 @@ ABURISK.game = function () {
         shipsInput.setAttribute("value", noShips);
     }
 
+    function resetPlanets() {
+        var planets = svgDocument.getElementsByClassName("planet");
+        for (var i = 0; i < planets.length; i++) {
+            var clone = planets[i].cloneNode();
+            planets[i].parentNode.replaceChild(clone, planets[i]);
+            planets[i] = clone;
+        }
+    }
+
     function init() {
         svgRoot = document.getElementById("mapContainer").contentDocument;
         svgDocument = svgRoot.documentElement;
+        resetPlanets();
     }
 
     return {
+        resetPlanets: resetPlanets,
         initClaim: function () {
             init();
             var planets = svgDocument.getElementsByClassName("planet");
@@ -65,7 +83,7 @@ ABURISK.game = function () {
                     if (planetsJSON[i].owner_id == ABURISK.players.getCurrent()) {
                         var planet = svgDocument.getElementById(planetsJSON[i].planet_id);
                         planet.addEventListener('click', function (e) {
-                            selectPlanet(e, "idPlanet")
+                            placeShip(e, "idPlanet")
                         }, true);
                     }
                 }

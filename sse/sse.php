@@ -10,8 +10,14 @@ header('Cache-Control: no-cache');
 
 function sendData($id)
 {
+    $return = array("status" => "UPDATE");
+    $return['player_list'] = GameManager::getPlayers();
+    $return['action']  = !GameManager::isLoggedInPlayersTurn() ? 'NONE' : GameManager::getGame()->state;
+    $return['state']  = GameManager::getGame()->state;
+    $currentPlayer = array("id"=>GameManager::getCurrentPlayerId(), "username"=>GameManager::getCurrentPlayerUsername());
+    $return['currentPlayer'] = $currentPlayer;
     echo "id: $id" . PHP_EOL;
-    echo "data: You should update" . PHP_EOL;
+    echo "data: ".json_encode($return). PHP_EOL;
     echo PHP_EOL;
     ob_flush();
     flush();
@@ -19,8 +25,9 @@ function sendData($id)
 
 function sendNo($id)
 {
+    $return = array("status" => "HALT");
     echo "id: $id" . PHP_EOL;
-    echo "data: Do not update" . PHP_EOL;
+    echo "data: ".json_encode($return). PHP_EOL;
     echo PHP_EOL;
     ob_flush();
     flush();
@@ -30,6 +37,7 @@ $serverTime = time();
 
 if (GameManager::isModified()) {
     sendData($serverTime);
+    GameManager::setModified();
 } else {
     sendNo($serverTime);
 }

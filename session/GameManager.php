@@ -74,6 +74,21 @@ class GameManager
         return false;
     }
 
+    public static function setModified($dirty = false)
+    {
+        $dirty = $dirty == true ? "true" : "false";
+        $gameId = self::getGameId();
+        if ($gameId != false) {
+            $userGameDao = new User_Game();
+            $userGameDao->updateRows(array("dirty" => $dirty), "user_id", AuthManager::getLoggedInUserId());
+        }
+    }
+
+    public static function  coldLoad()
+    {
+        self::setModified(true);
+    }
+
     public static function getGameEngine()
     {
         if (isset($_SESSION['game_engine'])) {

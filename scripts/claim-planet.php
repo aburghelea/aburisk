@@ -12,18 +12,18 @@ require_once dirname(__FILE__) . "/../session/GameManager.php";
 $rtn = array();
 if (areParamsSet($_POST)) {
     $gameEngine = new GameEngine($_POST[S_IDGAME]);
-    if ($gameEngine->getGame() != null) {
-        $rtn['status'] = 'SUCCESS';
-        $rtn['owner'] = AuthManager::getLoggedInUserId();
-        echo json_encode($rtn);
-    } else {
+    if ($gameEngine->getGame() == null)  {
         $rtn['status'] = 'GAME_RETRIEVE';
         echo json_encode($rtn);
     }
 
     $claim_staus = $gameEngine->claimPlanet($_POST[S_IDPLANET], $_POST[S_IDUSER]);
     if ($claim_staus > 0) {
+        $rtn['status'] = 'SUCCESS';
+        $rtn['owner'] = AuthManager::getLoggedInUserId();
+        echo json_encode($rtn);
         $gameEngine->changeTurn(GameManager::getNextPlayer($_POST[S_IDUSER]));
+        $gameEngine->signalUpdate($_POST[S_IDUSER]);
         GameManager::decreaseShips();
         GameManager::advanceStageIfNecessary();
     } else {

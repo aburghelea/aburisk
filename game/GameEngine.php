@@ -77,7 +77,7 @@ class GameEngine implements IGameEngine
         $user = current($users);
         $user->played_games++;
         $user->updateRows(array("played_games" => $user->played_games), "id", $idUser);
-        $this->signalUpdate($idUser);
+        $this->signalUpdate(-1);
 
         return 1;
     }
@@ -89,15 +89,13 @@ class GameEngine implements IGameEngine
     public function changeState($state)
     {
         $this->game->state = $state;
-        var_dump($state);
         $this->game->updateRows(array("state" => $state), 'id', $this->game->getId());
     }
 
-    private function signalUpdate($exceptUserId)
+    public function signalUpdate($exceptUserId)
     {
         $userGameDao = new User_Game();
         $userGameDao->updateRows(array("dirty" => "true"), 'game_id', $this->game->getId());
-        $userGameDao->updateRows(array("dirty" => "false"), 'user_id', $exceptUserId);
     }
 
     /**
@@ -112,7 +110,7 @@ class GameEngine implements IGameEngine
 
         $this->game->current_player_id = $idUser;
         $this->game->updateRows(array("current_player_id" => $idUser), 'id', $this->game->getId());
-        $this->signalUpdate($idUser);
+//        $this->signalUpdate($idUser);
 
         return $idUser;
     }
@@ -140,7 +138,7 @@ class GameEngine implements IGameEngine
             $user->won_games++;
             $user->updateRows(array("won_games" => $user->won_games), "id", $idUser);
 
-            $this->signalUpdate($idUser);
+//            $this->signalUpdate($idUser);
             return $user->getId() != null;
         }
 
@@ -161,7 +159,7 @@ class GameEngine implements IGameEngine
         $planet_in_game = new Planet_Game();
         $planet_in_game->updateRows(array("game_id" => $this->game->getId(), "owner_id" => $idUser, "noships" => 1), "planet_id", $idPlanet);
         $this->ships -= 1;
-        $this->signalUpdate($idUser);
+
         return 1;
     }
 
@@ -181,7 +179,7 @@ class GameEngine implements IGameEngine
 
         $planet_game->updateRows(array("noships" => $pg->noships + 1), 'id', $pg->getId());
         $this->ships -= 1;
-        $this->signalUpdate($idUser);
+//        $this->signalUpdate($idUser);
         return 1;
     }
 
@@ -229,7 +227,7 @@ class GameEngine implements IGameEngine
         $pg_finder->updateRows(array("noships" => $firstPlanet->noships, 'owner_id' => $firstPlanet->owner_id), 'id', $firstPlanet->getId());
         $pg_finder->updateRows(array("noships" => $secondPlanet->noships, 'owner_id' => $secondPlanet->owner_id), 'id', $secondPlanet->getId());
 
-        $this->signalUpdate($idUser);
+//        $this->signalUpdate($idUser);
         return array($firstPlanet->owner_id, $secondPlanet->owner_id);
     }
 
@@ -266,7 +264,7 @@ class GameEngine implements IGameEngine
         $pg_finder->updateRows(array("noships" => $firstPlanet->noships), 'id', $firstPlanet->getId());
         $pg_finder->updateRows(array("noships" => $secondPlanet->noships), 'id', $secondPlanet->getId());
 
-        $this->signalUpdate($idUser);
+//        $this->signalUpdate($idUser);
         return array($firstPlanet->noships, $secondPlanet->noships);
     }
 
@@ -307,7 +305,10 @@ class GameEngine implements IGameEngine
         $planet_in_game = new Planet_Game();
         $planet = $planet->getRowsByField('id', $idPlanet);
         $planets = $planet_in_game->getRowsByArray(array('planet_id' => $idPlanet, "game_id" => $this->game->getId()));
-        return !$this->isUserInThisGame($idUser) || empty($planet) || empty($planets) || !$this->planetIsClaimed($idPlanet, $idUser);
+        $validPlanet = !empty($planets) && $planets[0]->owner_id != null;
+
+        $inGame = !$this->isUserInThisGame($idUser) || empty($planet) || $validPlanet;
+        return $inGame;
     }
 
     /**

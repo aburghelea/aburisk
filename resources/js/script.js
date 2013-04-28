@@ -63,5 +63,13 @@ function postCall(url, success, fail, params) {
     };
 }
 
+function clearContent(container) {
+    while(container.firstChild){
+        container.removeChild(container.firstChild);
+    }
+}
+
+
+
 ABURISK = {};
 
