@@ -28,17 +28,8 @@ function sendNo($id)
 
 $serverTime = time();
 
-GameManager::isModified();
-echo "id: $id" . PHP_EOL;
-echo "data: " + GameManager::isModified() . PHP_EOL;
-echo PHP_EOL;
-ob_flush();
-flush();
-
-
-
-//if (GameManager::isModified()) {
-//    sendData($serverTime);
-//} else {
-//    sendNo($serverTime);
-//}
+if (GameManager::isModified()) {
+    sendData($serverTime);
+} else {
+    sendNo($serverTime);
+}

@@ -89,6 +89,7 @@ class GameEngine implements IGameEngine
     public function changeState($state)
     {
         $this->game->state = $state;
+        var_dump($state);
         $this->game->updateRows(array("state" => $state), 'id', $this->game->getId());
     }
 

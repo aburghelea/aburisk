@@ -31,7 +31,7 @@ class AuthManager
     {
         $isSet = isset($_SESSION['user_id']);
 
-        return $isSet ? $_SESSION['user_id'] : false;
+        return $isSet ? unserialize($_SESSION['user_id']) : false;
     }
 
     public static function userId($user = null)
@@ -39,12 +39,12 @@ class AuthManager
         if ($user == null)
             unset($_SESSION['user_id']);
         else
-            $_SESSION['user_id'] = $user;
+            $_SESSION['user_id'] = serialize($user);
     }
 
     public static function getLoggedInUserName()
     {
-        return self::userDao()->getRowsByField('id', $_SESSION['user_id'])[0]->username;
+        return self::userDao()->getRowsByField('id', unserialize($_SESSION['user_id']))[0]->username;
     }
 }
 

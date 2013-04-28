@@ -66,9 +66,9 @@ class GameManager
         $gameId = self::getGameId();
         if ($gameId != false) {
             $userGameDao = new User_Game();
-            $userGame = $userGameDao->getRowsByArray(array("user_id" => AuthManager::getLoggedInUserId(), "game_id" => $gameId));
+            $userGame = $userGameDao->getRowsByArray(array("user_id" => AuthManager::getLoggedInUserId(), "game_id" => $gameId))[0];
 
-            return $userGame->dirty;
+            return $userGame->dirty == "true" ? true : false;
         }
 
         return false;
@@ -178,22 +178,24 @@ class GameManager
 
     public static function getRemainingShips()
     {
-        return $_SESSION['ships'];
+        return unserialize($_SESSION['ships']);
     }
 
     public static function decreaseShips($with = 1)
     {
-        $_SESSION['ships'] = $_SESSION['ships'] - $with;
+        $ships = unserialize($_SESSION['ships']);
+        $_SESSION['ships'] = serialize($ships - $with);
     }
 
     public static function increaseShips($with = 1)
     {
-        $_SESSION['ships'] = $_SESSION['ships'] + $with;
+        $ships = unserialize($_SESSION['ships']);
+        $_SESSION['ships'] = serialize($ships + $with);
     }
 
     public static function initShips()
     {
-        $_SESSION['ships'] = 18;
+        $_SESSION['ships'] = serialize(18);
     }
 
     public static function getWinner()
