@@ -1,5 +1,5 @@
-<?php require_once dirname(__FILE__) . "/../session/GameManager.php" ?>
 <?php require_once dirname(__FILE__) . "/../session/AuthManager.php" ?>
+<?php require_once dirname(__FILE__) . "/../session/GameManager.php" ?>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -14,7 +14,7 @@
     <script src="resources/js/game.js"></script>
     <?php if (AuthManager::getLoggedInUserId()) { ?>
         <script>
-            ABURISK.players.setCurrent(<?php echo GameManager::getCurrentPlayerId() ?>);
+            ABURISK.players.setCurrent(<?php echo AuthManager::getLoggedInUserId() ?>);
         </script>
     <?php } ?>
 </head>

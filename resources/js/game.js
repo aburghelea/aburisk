@@ -12,7 +12,23 @@ ABURISK.game = function () {
     function selectPlanet(e, inputId) {
         var claimInput = document.getElementById(inputId);
         var planetId = e.target.getAttribute("id");
-        claimInput.setAttribute("value", planetId);
+        var url = "scripts/claim-planet.php";
+        var success = function (xhr) {
+            var response = JSON.parse(xhr.responseText);
+            console.log(response);
+            if (response.status == "SUCCESS") {
+                var owner_class = "player_" + ABURISK.players.index(response.owner);
+                var circle = svgDocument.getElementById("circle_" + planetId);
+                var text = svgDocument.getElementById("ships_" + planetId);
+                circle.classList.add(owner_class);
+                text.classList.add(owner_class);
+                text.textContent = 1;
+            }
+        };
+        var fail = function () {
+            console.log("epic fail");
+        };
+        postCall(url, success, fail, {"idPlanet": planetId});
     }
 
     function selectMaxShips(e, inputId) {
@@ -90,6 +106,7 @@ ABURISK.game = function () {
 
             postCall(url, success, fail);
         }
+
 
     }
 }();

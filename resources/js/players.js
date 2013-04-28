@@ -20,6 +20,7 @@ ABURISK.players = function () {
                 players[user] = idx;
                 idx++;
             }
+//            console.log(players);
             return players[user];
         },
 

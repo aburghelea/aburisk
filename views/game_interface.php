@@ -123,9 +123,9 @@ if (GameManager::getGame())
 
                                     <div>
                                         <?php
-                                        if (GameManager::getGame()->state == 'PLANET_CLAIM') {
-                                            require_once dirname(__FILE__) . "/partials/planet-claimer.php";
-                                        }
+//                                        if (GameManager::getGame()->state == 'PLANET_CLAIM') {
+//                                            require_once dirname(__FILE__) . "/partials/planet-claimer.php";
+//                                        }
 
                                         if (GameManager::getGame()->state == 'SHIP_PLACING') {
                                             require_once dirname(__FILE__) . "/partials/ship-placer.php";
@@ -148,6 +148,12 @@ if (GameManager::getGame())
     </div>
 
     <?php require_once "footer.html" ?>
+    <script>
+        source = new EventSource('sse/sse.php');
+        source.addEventListener('message', function (e) {
+            console.log(e.data);
+        }, false);
+    </script>
 </div>
 </body>
 </html>

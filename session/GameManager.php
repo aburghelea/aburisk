@@ -29,9 +29,7 @@ class GameManager
         $elem = current($players);
         $players[] = current($players);
 
-        echo $user_id . "</br>";
         while ($elem != null && $elem->getId() != $user_id) {
-            echo "**</br>";
             $elem = next($players);
         }
         $elem = next($players);
@@ -61,6 +59,19 @@ class GameManager
         }
 
         return null;
+    }
+
+    public static function isModified()
+    {
+        $gameId = self::getGameId();
+        if ($gameId != false) {
+            $userGameDao = new User_Game();
+            $userGame = $userGameDao->getRowsByArray(array("user_id" => AuthManager::getLoggedInUserId(), "game_id" => $gameId));
+
+            return $userGame->dirty;
+        }
+
+        return false;
     }
 
     public static function getGameEngine()

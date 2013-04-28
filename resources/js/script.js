@@ -39,12 +39,17 @@ function prepareParams(json) {
     return dataArray.join("&");
 }
 
-function postCall(url, success, fail) {
+function postCall(url, success, fail, params) {
     var xhr = new XMLHttpRequest;
 
-    xhr.open('post', url, true);
-    xhr.setRequestHeader("Content-Type", "appliIcation/x-www-form-urlencoded");
-    xhr.send(prepareParams({x: 1, y: 2}));
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    if (params !== undefined) {
+        console.log(prepareParams(params));
+        xhr.send(prepareParams(params));
+    }
+    else
+        xhr.send("");
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {

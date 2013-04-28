@@ -7,7 +7,7 @@
  * For : PWeb 2013
  */
 
-foreach (glob("../dao/*.php") as $filename)
+foreach (glob("../dao/actual/*.php") as $filename)
 {
     require_once($filename);
 }
@@ -19,7 +19,7 @@ foreach (glob("../dao/*.php") as $filename)
 //}
 //
 $g = new Game();
-$gs = $g->getRowsByField('state', 'WAITING_PLAYERS');
+$gs = $g->getRowsByField('1', '1');
 foreach ($gs as $obj) {
     echo $obj . "\n";
 }

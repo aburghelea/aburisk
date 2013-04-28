@@ -93,7 +93,6 @@ ABURISK.map = function () {
     var enlargeAtmosphere = function enlargeAtmosphere(e) {
         var owner_id = e.target.getAttribute('id');
         id = 'circle_' + owner_id;
-//        console.log(owner_id + " " +ABURISK.players.getCurrent());
         var circle = svgDocument.getElementById(id);
 
         if (isOwnerByCurrentPlayer(circle)) {
