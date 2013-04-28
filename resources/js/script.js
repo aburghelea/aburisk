@@ -43,7 +43,7 @@ function postCall(url, success, fail) {
     var xhr = new XMLHttpRequest;
 
     xhr.open('post', url, true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.setRequestHeader("Content-Type", "appliIcation/x-www-form-urlencoded");
     xhr.send(prepareParams({x: 1, y: 2}));
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {

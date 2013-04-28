@@ -24,8 +24,9 @@ if (GameManager::getGame() && GameManager::getGame()->state === 'SHIP_PLACING' &
 
 if (GameManager::getGame() && GameManager::getGame()->state === 'ATTACK' && GameManager::isLoggedInPlayersTurn())
     $planetHandler = "ABURISK.game.initAttack";
+if (GameManager::getGame())
+    $winner = GameManager::getWinner();
 
-$winner = GameManager::getWinner();
 ?>
 
 <body>
@@ -34,7 +35,8 @@ $winner = GameManager::getWinner();
     <?php require_once "header.php" ?>
     <div id="page">
         <div id="content">
-            <?php if (GameManager::getGame()->state === 'FINISHED') { ?>
+            <?php
+                if (GameManager::getGame() && GameManager::getGame()->state === 'FINISHED') { ?>
                 <h2>Game over</h2>
                 <h3>Winner is
                     <a target="_blank"
@@ -59,7 +61,7 @@ $winner = GameManager::getWinner();
                             <p>State : <a href="javascript:void(0)"><?php echo $game->state; ?></a></p>
                             <?php if (!GameManager::needsMorePlayers()) { ?>
                                 <p id="currentPlayer"> Current player:
-                                    <a target="_blank"
+                                    <a target="_blank"  id="currentUserName"
                                        href="/aburisk/profile.php?id=<?php echo GameManager::getCurrentPlayerId(); ?>">
                                         <?php echo GameManager::getCurrentPlayerUsername(); ?>
                                     </a></p>
@@ -108,8 +110,9 @@ $winner = GameManager::getWinner();
                                         links[i].classList.add(class_name);
                                     }
                                     var current = document.getElementById('currentPlayer').getElementsByTagName('a');
-                                    var currentUsername = current[0].innerHTML.replace(/\s+/g, ' ')+".";
-                                    document.getElementById('currentPlayer').classList.add("player_" + ABURISK.players.index(name))
+                                    var currentUsername = current[0].innerHTML.replace(/\s+/g, ' ') + ".";
+
+                                    document.getElementById('currentPlayer').classList.add("player_" + ABURISK.players.getCurrent())
                                 </script>
                             </li>
                             <?php if (GameManager::isLoggedInPlayersTurn()) { ?>

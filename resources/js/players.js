@@ -24,10 +24,12 @@ ABURISK.players = function () {
         },
 
         setCurrent: function (current) {
+            if (typeof (current) == "string")
+                current = this.index(current);
             _current = current;
         },
 
-        getCurrent: function() {
+        getCurrent: function () {
             return _current;
         }
     }

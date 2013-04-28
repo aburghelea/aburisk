@@ -77,18 +77,38 @@ ABURISK.map = function () {
         return polygon;
     };
 
+    function isOwnerByCurrentPlayer(circle) {
+        var owner = 0;
+        for (var i = 0; i < circle.classList.length; i++) {
+            var _class = circle.classList[i];
+            if (_class.indexOf("player_") !== -1) {
+                owner = _class.substr(_class.indexOf("player_") + 7);
+            }
+            else
+                owner = -1;
+        }
+        return owner == ABURISK.players.getCurrent() || owner == 0;
+    }
+
     var enlargeAtmosphere = function enlargeAtmosphere(e) {
-        id = 'circle_' + e.target.getAttribute('id');
+        var owner_id = e.target.getAttribute('id');
+        id = 'circle_' + owner_id;
+//        console.log(owner_id + " " +ABURISK.players.getCurrent());
         var circle = svgDocument.getElementById(id);
-        var radius = circle.getAttribute('r');
-        circle.setAttribute('r', Number(radius) + 5);
+
+        if (isOwnerByCurrentPlayer(circle)) {
+            var radius = circle.getAttribute('r');
+            circle.setAttribute('r', Number(radius) + 5);
+        }
     };
 
     var shrinkAtmoshpere = function shrinkAtmoshpere(e) {
         id = 'circle_' + e.target.getAttribute('id');
         var circle = svgDocument.getElementById(id);
-        var radius = circle.getAttribute('r');
-        circle.setAttribute('r', Number(radius) - 5);
+        if (isOwnerByCurrentPlayer(circle)) {
+            var radius = circle.getAttribute('r');
+            circle.setAttribute('r', Number(radius) - 5);
+        }
     };
 
 
@@ -118,6 +138,8 @@ ABURISK.map = function () {
 
     var createShipNo = function (planplanetJSON) {
         var circle = svgDocument.getElementById("circle_" + planplanetJSON.planet_id);
+        circle.classList.add("player_" + ABURISK.players.index(planplanetJSON.owner_id));
+
         var x = circle.getAttribute('cx');
         var y = circle.getAttribute('cy');
         text = document.createElementNS("http://www.w3.org/2000/svg", "text");

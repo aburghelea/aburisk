@@ -91,6 +91,5 @@ ABURISK.game = function () {
             postCall(url, success, fail);
         }
 
-
     }
 }();
