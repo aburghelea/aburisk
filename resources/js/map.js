@@ -198,9 +198,9 @@ ABURISK.map = function () {
 
         },
         setPlanetInfo: function () {
-            url = 'scripts/get-info.php?about=planets_games';
+            var url = 'scripts/get-info.php?about=planets_games';
             console.log("Uplating planet info");
-            success = function (data) {
+            var success = function (data) {
                 var planetsJSON = JSON.parse(data.responseText);
                 for (var i in planetsJSON) {
                     ABURISK.players.index(planetsJSON.owner_id);
@@ -210,7 +210,7 @@ ABURISK.map = function () {
                 }
             };
 
-            fail = function () {
+            var fail = function () {
                 console.log("Nu s-au obtinut informatii despre planete in stadiul de afisare a informatiilor despre planete");
             };
 

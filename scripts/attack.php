@@ -25,6 +25,7 @@ if (areParamsSet($_POST)) {
         if (GameManager::getGameEngine()->isGameOver(GameManager::getCurrentPlayerId())) {
             $gameEngine->endGame(GameManager::getCurrentPlayerId());
         }
+        $gameEngine->signalUpdate($_POST[S_IDUSER]);
         $rtn['winner'] = AuthManager::getLoggedInUserId();
         echo json_encode($rtn);
     } else {

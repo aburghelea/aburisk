@@ -8,12 +8,14 @@
 ABURISK.game = function () {
     var svgRoot,
         svgDocument,
-        defenderPlaner,
+        defenderPlanet,
         attackerPlanet,
         connections,
-        arrowDelimiter;
+        arrowDelimiter,
+        noShips;
 
     function selectPlanet(e, inputId) {
+        console.log("Select handler");
         var planetId = e.target.getAttribute("id");
         var url = "scripts/claim-planet.php";
         var success = function (xhr) {
@@ -36,9 +38,9 @@ ABURISK.game = function () {
     }
 
     function placeShip(e, inputId) {
-        var claimInput = document.getElementById(inputId);
+//        var claimInput = document.getElementById(inputId);
         var planetId = e.target.getAttribute("id");
-        claimInput.setAttribute("value", planetId);
+//        claimInput.setAttribute("value", planetId);
         var url = "scripts/deploy-ship.php";
         var success = function (xhr) {
             console.log(xhr.responseText);
@@ -59,9 +61,9 @@ ABURISK.game = function () {
         var shipsInput = document.getElementById(inputId);
         var planetId = e.target.getAttribute("id");
         var shipsId = "ships_" + planetId;
-        var noShips = svgDocument.getElementById(shipsId).textContent;
+        noShips = svgDocument.getElementById(shipsId).textContent;
         noShips = Math.min(noShips, 3);
-        shipsInput.setAttribute("value", noShips);
+//        shipsInput.setAttribute("value", noShips);
     }
 
     function resetPlanets() {
@@ -91,6 +93,7 @@ ABURISK.game = function () {
     }
 
     function canBeAttacked(defender) {
+        console.log("canBeAttacked " + defender + " by " + attackerPlanet);
         for (var i = 0; i < connections.length; i++) {
             if (connections[i].first_planet_id == defender && connections[i].second_planet_id == attackerPlanet)
                 return true;
@@ -103,7 +106,6 @@ ABURISK.game = function () {
 
 
     function updateArrow(e) {
-        console.log(e);
         var arrow = svgDocument.getElementById("arrow_attack");
         arrow.setAttribute("x2", e.clientX);
         arrow.setAttribute("y2", e.clientY);
@@ -138,7 +140,6 @@ ABURISK.game = function () {
         if (shipsNo < 2)
             return;
 
-        claimInput.setAttribute("value", attackerPlanet);
         selectMaxShips(e, "noShips");
 
         console.log(e);
@@ -146,24 +147,40 @@ ABURISK.game = function () {
     }
 
     function selectDefendingPlanet(e, inputId) {
-        var claimInput = document.getElementById(inputId);
         var defender = e.target.getAttribute("id");
         if (canBeAttacked(defender)) {
-            defenderPlaner = defender;
-            claimInput.setAttribute("value", defenderPlaner);
-
-            updateArrow(e);
+            defenderPlanet = defender;
+//            updateArrow(e);
             svgDocument.removeEventListener("mousemove", updateArrow);
+            doAttack();
         }
 
+
+    }
+
+    function doAttack() {
+        var url = "scripts/attack.php";
+        var success = function (data) {
+            console.log(data.responseText);
+            var json = JSON.parse(data.responseText);
+            console.log("Attack finished");
+        };
+        var fail = function () {
+            console.log("Nu s-au putut obtine informatii despre attack");
+        };
+
+        var params = {idPlanet1: attackerPlanet, idPlanet2: defenderPlanet, noShips: noShips};
+        postCall(url, success, fail, params);
     }
 
     return {
         resetPlanets: resetPlanets,
         initClaim: function () {
+            console.log("Initializing claim");
             init();
             var planets = svgDocument.getElementsByClassName("planet");
             for (var i = 0; i < planets.length; i++) {
+                console.log(i);
                 planets[i].addEventListener('click', function (e) {
                     selectPlanet(e, "idPlanet")
                 }, false);
@@ -223,8 +240,23 @@ ABURISK.game = function () {
             };
 
             postCall(url, success, fail);
-        }
+        },
 
+        doAttack: doAttack,
+
+        changeInnerState: function () {
+            var url = "scripts/change-inner-state.php";
+            var success = function (data) {
+                var json = JSON.parse(data.responseText);
+                console.log("Changed turn");
+                console.log(json);
+            };
+            var fail = function () {
+                console.log("Nu s-au putut obtine informatii despre schimbarea starii");
+            };
+
+            postCall(url, success, fail);
+        }
 
     }
 }();

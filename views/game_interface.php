@@ -76,12 +76,19 @@ if (GameManager::getGame())
         source.addEventListener('message', function (e) {
 
             var responseJSON = JSON.parse(e.data);
+            if (responseJSON.status == "NONE") {
+                ABURISK.game.resetPlanets();
+            }
             if (responseJSON.status == "UPDATE") {
-                if (responseJSON.action == "PLANET_CLAIM")
+                ABURISK.game.resetPlanets();
+                if (responseJSON.action == "PLANET_CLAIM") {
                     ABURISK.game.initClaim();
-                if (responseJSON.action == "SHIP_PLACING")
+                }
+                if (responseJSON.action == "SHIP_PLACING") {
                     ABURISK.game.initPlacing();
-                if (responseJSON.action == "ATTACK"){
+                }
+                if (responseJSON.action == "ATTACK") {
+
                     console.log("preparring attack");
                     ABURISK.game.initAttack();
                 }
@@ -91,7 +98,6 @@ if (GameManager::getGame())
                 updateState(responseJSON);
                 updateCurrentPlayer(responseJSON);
                 ABURISK.map.setPlanetInfo();
-                ABURISK.game.resetPlanets();
 
             }
         }, false);
@@ -163,29 +169,24 @@ if (GameManager::getGame())
                             <div id='player_list'>
                             </div>
                         </li>
-                        <?php if (!GameManager::needsMorePlayers()) { ?>
-                            <?php if (GameManager::isLoggedInPlayersTurn()) { ?>
+<!--                        --><?php //if (!GameManager::needsMorePlayers()) { ?>
+<!--                            --><?php //if (GameManager::isLoggedInPlayersTurn()) { ?>
                                 <li>
                                     <h3>
                                         Actions
                                     </h3>
 
                                     <div>
-                                        <?php
+                                        <p id="ship_placer">
+                                            <?php
+                                            //                                            if (GameManager::getGame()->state == 'SHIP_PLACING') {
 
-                                        if (GameManager::getGame()->state == 'SHIP_PLACING') {
                                             require_once dirname(__FILE__) . "/partials/ship-placer.php";
-                                        }
-
-                                        if (GameManager::getGame()->state == 'ATTACK') {
-                                            require_once dirname(__FILE__) . "/partials/planet-attacker.php";
-                                        }
-                                        ?>
+                                            //                                            }
+                                            ?>
+                                        </p>
                                     </div>
                                 </li>
-                            <?php } ?>
-                        <?php } ?>
-
 
                     </ul>
                 <?php } ?>
