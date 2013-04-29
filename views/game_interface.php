@@ -16,15 +16,6 @@ $connectiosJSON = json_encode($planetNeighboursDao->getRowsByField('"1"', '1'));
 GameManager::updateEngagedGame(AuthManager::getLoggedInUserId());
 GameManager::setModified(true);
 $game = GameManager::getGame();
-$planetHandler = "function(){}";
-if (GameManager::getGame() && GameManager::getGame()->state === 'PLANET_CLAIM' && GameManager::isLoggedInPlayersTurn())
-    $planetHandler = "ABURISK.game.initClaim";
-
-if (GameManager::getGame() && GameManager::getGame()->state === 'SHIP_PLACING' && GameManager::isLoggedInPlayersTurn())
-    $planetHandler = "ABURISK.game.initPlacing";
-
-if (GameManager::getGame() && GameManager::getGame()->state === 'ATTACK' && GameManager::isLoggedInPlayersTurn())
-    $planetHandler = "ABURISK.game.initAttack";
 if (GameManager::getGame())
     $winner = GameManager::getWinner();
 
@@ -71,14 +62,14 @@ if (GameManager::getGame())
         anchor.setAttribute("href", "profile.php?id=" + jsonCurrent.id);
         anchor.appendChild(document.createTextNode(jsonCurrent.username));
         currentPlayer.appendChild(anchor);
-        currentPlayer.parentNode.setAttribute("class","player_"+ ABURISK.players.index(jsonCurrent.id) )
+        currentPlayer.parentNode.setAttribute("class", "player_" + ABURISK.players.index(jsonCurrent.id))
     }
     function initGame() {
-        var handler = function () {
-            ABURISK.game.initClaim();
-            initSSE();
-        };
-        ABURISK.map.init(handler);
+//        var handler = function () {
+//            ABURISK.game.initClaim();
+//            initSSE();
+//        };
+        ABURISK.map.init(initSSE);
     }
     function initSSE() {
         source = new EventSource('sse/sse.php');
@@ -86,14 +77,22 @@ if (GameManager::getGame())
 
             var responseJSON = JSON.parse(e.data);
             if (responseJSON.status == "UPDATE") {
+                if (responseJSON.action == "PLANET_CLAIM")
+                    ABURISK.game.initClaim();
+                if (responseJSON.action == "SHIP_PLACING")
+                    ABURISK.game.initPlacing();
+                if (responseJSON.action == "ATTACK"){
+                    console.log("preparring attack");
+                    ABURISK.game.initAttack();
+                }
+
                 console.log(e.data);
                 updatePlayerList(responseJSON);
                 updateState(responseJSON);
                 updateCurrentPlayer(responseJSON);
                 ABURISK.map.setPlanetInfo();
                 ABURISK.game.resetPlanets();
-                if (responseJSON.action == "PLANET_CLAIM")
-                    ABURISK.game.initClaim();
+
             }
         }, false);
     }
@@ -131,16 +130,17 @@ if (GameManager::getGame())
                     <ul class="style2">
                         <li class="first">
                             <p>State: <span id='state'></span></p>
-                                <p> Current player: <span id="currentPlayer"></span></p>
 
-                                <p>
-                            <?php if (!GameManager::needsMorePlayers()) { ?>
-                                    Is your turn?  <?php echo GameManager::isLoggedInPlayersTurn() ? "Yes" : "No" ?>
-                                </p>
+                            <p> Current player: <span id="currentPlayer"></span></p>
 
-                                <p>
-                                    <?php echo GameManager::getRemainingShips() ?> ship(s) left
-                                </p>
+                            <p>
+                                <?php if (!GameManager::needsMorePlayers()) { ?>
+                                Is your turn?  <?php echo GameManager::isLoggedInPlayersTurn() ? "Yes" : "No" ?>
+                            </p>
+
+                            <p>
+                                <?php echo GameManager::getRemainingShips() ?> ship(s) left
+                            </p>
                             <?php } else { ?>
                                 <p>Needed players: <a href="javascript:void(0)"> <?php echo $game->noplayers ?></a></p>
 

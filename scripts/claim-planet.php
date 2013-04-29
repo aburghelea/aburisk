@@ -13,7 +13,7 @@ $rtn = array();
 if (areParamsSet($_POST)) {
     $gameEngine = new GameEngine($_POST[S_IDGAME]);
     if ($gameEngine->getGame() == null)  {
-        $rtn['status'] = 'GAME_RETRIEVE';
+        $rtn['status'] = 'GAME_RETRIVE_FAIL';
         echo json_encode($rtn);
     }
 

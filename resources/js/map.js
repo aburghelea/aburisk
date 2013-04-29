@@ -169,7 +169,7 @@ ABURISK.map = function () {
 
     return {
         init: function (planetHandler) {
-            var url = 'scripts/get-info.php?about=all';
+            var url = 'scripts/get-info.php?about=planet_connections';
             var _this = this;
             var success = function (data) {
                 var jsonData = JSON.parse(data.responseText);
@@ -198,7 +198,7 @@ ABURISK.map = function () {
 
         },
         setPlanetInfo: function () {
-            url = 'scripts/get-info.php?about=planets';
+            url = 'scripts/get-info.php?about=planets_games';
             console.log("Uplating planet info");
             success = function (data) {
                 var planetsJSON = JSON.parse(data.responseText);
