@@ -26,6 +26,7 @@ ABURISK.game = function () {
                 var owner_class = "player_" + ABURISK.players.index(response.owner);
                 var circle = svgDocument.getElementById("circle_" + planetId);
                 var text = svgDocument.getElementById("ships_" + planetId);
+                circle.className = "";
                 circle.classList.add(owner_class);
                 text.classList.add(owner_class);
                 text.textContent = 1;

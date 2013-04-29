@@ -102,7 +102,7 @@ ABURISK.map = function () {
     };
 
     var shrinkAtmoshpere = function shrinkAtmoshpere(e) {
-        id = 'circle_' + e.target.getAttribute('id');
+        var id = 'circle_' + e.target.getAttribute('id');
         var circle = svgDocument.getElementById(id);
         if (isOwnerByCurrentPlayer(circle)) {
             var radius = circle.getAttribute('r');
@@ -137,6 +137,7 @@ ABURISK.map = function () {
 
     var createShipNo = function (planplanetJSON) {
         var circle = svgDocument.getElementById("circle_" + planplanetJSON.planet_id);
+        circle.className = "";
         circle.classList.add("player_" + ABURISK.players.index(planplanetJSON.owner_id));
 
         var x = circle.getAttribute('cx');
@@ -202,6 +203,7 @@ ABURISK.map = function () {
             console.log("Uplating planet info");
             var success = function (data) {
                 var planetsJSON = JSON.parse(data.responseText);
+                console.log(planetsJSON);
                 for (var i in planetsJSON) {
                     ABURISK.players.index(planetsJSON.owner_id);
                     var shipNumber = createShipNo(planetsJSON[i]);

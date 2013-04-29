@@ -74,6 +74,7 @@ if (GameManager::getGame())
     function initSSE() {
         source = new EventSource('sse/sse.php');
         source.addEventListener('message', function (e) {
+            var actions = document.getElementById("actions");
 
             var responseJSON = JSON.parse(e.data);
             if (responseJSON.status == "NONE") {
@@ -81,6 +82,10 @@ if (GameManager::getGame())
             }
             if (responseJSON.status == "UPDATE") {
                 ABURISK.game.resetPlanets();
+                if (responseJSON.action != "NONE")
+                    actions.style.display = 'block';
+                else
+                    actions.style.display = 'none';
                 if (responseJSON.action == "PLANET_CLAIM") {
                     ABURISK.game.initClaim();
                 }
@@ -169,24 +174,23 @@ if (GameManager::getGame())
                             <div id='player_list'>
                             </div>
                         </li>
-<!--                        --><?php //if (!GameManager::needsMorePlayers()) { ?>
-<!--                            --><?php //if (GameManager::isLoggedInPlayersTurn()) { ?>
-                                <li>
-                                    <h3>
-                                        Actions
-                                    </h3>
+                        <!--                        --><?php //if (!GameManager::needsMorePlayers()) { ?>
+                        <!--                            --><?php //if (GameManager::isLoggedInPlayersTurn()) { ?>
+                        <li id="actions">
+                            <h3>
+                                Actions
+                            </h3>
 
-                                    <div>
-                                        <p id="ship_placer">
-                                            <?php
-                                            //                                            if (GameManager::getGame()->state == 'SHIP_PLACING') {
-
-                                            require_once dirname(__FILE__) . "/partials/ship-placer.php";
-                                            //                                            }
-                                            ?>
-                                        </p>
-                                    </div>
-                                </li>
+                            <div>
+                                <p>
+                                    <a href="javascript:void(0);" class="button-style"
+                                       onclick="ABURISK.game.changeInnerState();"
+                                        >
+                                        <!--                                       style="margin-top: 0 !important;"-->
+                                        &gt;&gt;Change inner turn</a>
+                                </p>
+                            </div>
+                        </li>
 
                     </ul>
                 <?php } ?>
