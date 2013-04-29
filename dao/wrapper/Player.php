@@ -12,6 +12,9 @@
 class Player implements JsonSerializable
 {
     private $user;
+    private $ships;
+    private $planets;
+    private $score = -1;
 
     function __construct($user)
     {
@@ -28,6 +31,27 @@ class Player implements JsonSerializable
         return $this->user->username;
     }
 
+    public function setScore($score)
+    {
+        $this->score = $score;
+    }
+
+    public function setShips($ships)
+    {
+        $this->ships = $ships;
+    }
+
+    public function setPlanets($planets)
+    {
+        $this->planets = $planets;
+    }
+
+    public function getScore()
+    {
+        return $this->score;
+    }
+
+
     /**
      * (PHP 5 &gt;= 5.4.0)<br/>
      * Specify data which should be serialized to JSON
@@ -37,6 +61,11 @@ class Player implements JsonSerializable
      */
     public function jsonSerialize()
     {
-        return ['username' => $this->getUsername(), 'id' => $this->getId()];
+        return ['username' => $this->getUsername(),
+            'id' => $this->getId(),
+            "score" => $this->score,
+            'planets' => $this->planets,
+            'ships' => $this->ships
+        ];
     }
 }

@@ -203,7 +203,6 @@ ABURISK.map = function () {
             console.log("Uplating planet info");
             var success = function (data) {
                 var planetsJSON = JSON.parse(data.responseText);
-                console.log(planetsJSON);
                 for (var i in planetsJSON) {
                     ABURISK.players.index(planetsJSON.owner_id);
                     var shipNumber = createShipNo(planetsJSON[i]);

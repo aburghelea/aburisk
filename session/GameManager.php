@@ -186,11 +186,31 @@ class GameManager
     {
         $users = self::getGameEngine()->getPlayers();
         $players = array();
-        foreach ($users as $player)
-            $players[] = new Player($player);
+        $planetGameDao = new Planet_Game();
+        foreach ($users as $player) {
+            $ships = 0;
+            $planetGames = $planetGameDao->getRowsByArray(array('owner_id' => $player->getId(), "game_id" => self::getGame()->getId()));
+            foreach ($planetGames as $planetGame){
+                $ships += $planetGame->noships;
+            }
+             $playerHolder = new Player($player);
+            $playerHolder->setPlanets(count($planetGames));
+            $playerHolder->setShips($ships);
+            $score = floor($ships / count($planetGames) * 0.7 + $ships * 0.3);
+            $playerHolder->setScore($score);
+            $players[] = $playerHolder;
+        }
+        usort($players, "self::sortPlayer");
         return $players;
     }
 
+    private static function sortPlayer($a, $b) {
+        if ($a->getScore() == $b->getScore())
+            return 0;
+        if ($a->getScore() > $b->getScore)
+            return -1;
+        return 1;
+    }
     public static function getRemainingShips()
     {
         return unserialize($_SESSION['ships']);

@@ -23,6 +23,25 @@ if (GameManager::getGame())
 
 <script>
 
+    function makePlayerName(player) {
+        var anchor = document.createElement("a");
+        anchor.setAttribute("target", "_black");
+        anchor.setAttribute("href", "profile.php?id=" + player.id);
+        anchor.appendChild(document.createTextNode(player.username));
+        return anchor;
+    }
+    function makePlayerFleet(player) {
+        var planetsShips = document.createElement("span");
+        planetsShips.appendChild(document.createTextNode(player.ships + " ships on " + player.planets + " planets"));
+        planetsShips.setAttribute("style", "float:right;");
+        return planetsShips;
+    }
+
+    function makePlayerScore(player) {
+        var score = document.createElement("span");
+        score.appendChild(document.createTextNode("(" + player.score + ")"));
+        return score;
+    }
     function updatePlayerList(responseJSON) {
         var list = document.getElementById("player_list");
         var parent = list.parentNode;
@@ -35,12 +54,13 @@ if (GameManager::getGame())
             ptag.setAttribute('name', player.id);
             ptag.classList.add("player_" + ABURISK.players.index(player.id));
 
-            var anchor = document.createElement("a");
-            anchor.setAttribute("target", "_black");
-            anchor.setAttribute("href", "profile.php?id=" + player.id);
-            anchor.appendChild(document.createTextNode(player.username));
+            var score = makePlayerScore(player);
+            var anchor = makePlayerName(player);
+            var planetsShips = makePlayerFleet(player);
 
+            ptag.appendChild(score);
             ptag.appendChild(anchor);
+            ptag.appendChild(planetsShips);
             newlist.appendChild(ptag);
         }
         parent.replaceChild(newlist, list);
@@ -76,6 +96,7 @@ if (GameManager::getGame())
         source.addEventListener('message', function (e) {
             var actions = document.getElementById("actions");
 
+            console.log(e.data);
             var responseJSON = JSON.parse(e.data);
             if (responseJSON.status == "NONE") {
                 ABURISK.game.resetPlanets();

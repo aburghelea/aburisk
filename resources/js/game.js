@@ -248,6 +248,7 @@ ABURISK.game = function () {
         changeInnerState: function () {
             var url = "scripts/change-inner-state.php";
             var success = function (data) {
+                console.log(data.responseText);
                 var json = JSON.parse(data.responseText);
                 console.log("Changed turn");
                 console.log(json);
