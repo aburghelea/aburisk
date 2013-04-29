@@ -213,9 +213,7 @@ class GameEngine implements IGameEngine
             return -2;
         }
 
-        print_r($verdict);
         $firstPlanet->noships = $verdict['A'];
-
         if ($verdict['D'] == 0) {
             $secondPlanet->noships = $verdict['C'];
             $secondPlanet->owner_id = $firstPlanet->owner_id;

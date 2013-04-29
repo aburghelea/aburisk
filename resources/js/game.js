@@ -10,7 +10,8 @@ ABURISK.game = function () {
         svgDocument,
         defenderPlaner,
         attackerPlanet,
-        connections;
+        connections,
+        arrowDelimiter;
 
     function selectPlanet(e, inputId) {
         var planetId = e.target.getAttribute("id");
@@ -59,25 +60,33 @@ ABURISK.game = function () {
         var planetId = e.target.getAttribute("id");
         var shipsId = "ships_" + planetId;
         var noShips = svgDocument.getElementById(shipsId).textContent;
+        noShips = Math.min(noShips, 3);
         shipsInput.setAttribute("value", noShips);
     }
 
     function resetPlanets() {
-        svgRoot = document.getElementById("mapContainer").contentDocument;
-        svgDocument = svgRoot.documentElement;
+        if (svgDocument == undefined) {
+            svgRoot = document.getElementById("mapContainer").contentDocument;
+            svgDocument = svgRoot.documentElement;
+            arrowDelimiter = svgDocument.getElementById("arrow-route");
+        }
+
         var planets = svgDocument.getElementsByClassName("planet");
         for (var i = 0; i < planets.length; i++) {
             var clone = planets[i].cloneNode();
             planets[i].parentNode.replaceChild(clone, planets[i]);
             planets[i] = clone;
         }
+        var arrow = svgDocument.getElementById("arrow_attack");
+        if (arrow != undefined)
+            svgDocument.removeChild(arrow);
     }
 
     function init() {
-        if (svgDocument == undefined) {
-            svgRoot = document.getElementById("mapContainer").contentDocument;
-            svgDocument = svgRoot.documentElement;
-        }
+        svgRoot = document.getElementById("mapContainer").contentDocument;
+        svgDocument = svgRoot.documentElement;
+        arrowDelimiter = svgDocument.getElementById("arrow-route");
+
         resetPlanets();
     }
 
@@ -92,21 +101,61 @@ ABURISK.game = function () {
         return false;
     }
 
-    function selectDefendingPlanet(e, inputId) {
-        var claimInput = document.getElementById(inputId);
-        var defender = e.target.getAttribute("id");
-        if (canBeAttacked(defender)) {
-            defenderPlaner = defender;
-            claimInput.setAttribute("value", defenderPlaner);
+
+    function updateArrow(e) {
+        console.log(e);
+        var arrow = svgDocument.getElementById("arrow_attack");
+        arrow.setAttribute("x2", e.clientX);
+        arrow.setAttribute("y2", e.clientY);
+    }
+
+    function initArrow(e) {
+        var circle = svgDocument.getElementById("circle_" + attackerPlanet);
+        var cx = circle.getAttribute("cx");
+        var cy = circle.getAttribute("cy");
+        console.log(circle.getAttribute("cy"));
+        var arrow = svgDocument.getElementById("arrow_attack");
+        if (arrow == undefined) {
+            arrow = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            arrow.setAttribute("id", "arrow_attack");
+            arrow.setAttribute("class", "arrow");
+            svgDocument.insertBefore(arrow, arrowDelimiter);
         }
+
+        arrow.setAttribute("x1", cx);
+        arrow.setAttribute("y1", cy);
+
+
+        updateArrow(e);
+        svgDocument.addEventListener("mousemove", updateArrow);
 
     }
 
     function selectAttackerPlanet(e, inputId) {
         var claimInput = document.getElementById(inputId);
         attackerPlanet = e.target.getAttribute("id");
+        var shipsNo = parseInt(svgDocument.getElementById("ships_" + attackerPlanet).textContent);
+        if (shipsNo < 2)
+            return;
 
         claimInput.setAttribute("value", attackerPlanet);
+        selectMaxShips(e, "noShips");
+
+        console.log(e);
+        initArrow(e);
+    }
+
+    function selectDefendingPlanet(e, inputId) {
+        var claimInput = document.getElementById(inputId);
+        var defender = e.target.getAttribute("id");
+        if (canBeAttacked(defender)) {
+            defenderPlaner = defender;
+            claimInput.setAttribute("value", defenderPlaner);
+
+            updateArrow(e);
+            svgDocument.removeEventListener("mousemove", updateArrow);
+        }
+
     }
 
     return {
@@ -146,6 +195,7 @@ ABURISK.game = function () {
 
         initAttack: function () {
             init();
+
             console.log('Initializing attack');
             url = 'scripts/get-info.php?about=all';
             success = function (data) {
@@ -158,7 +208,7 @@ ABURISK.game = function () {
                     if (planetsGamesJSON[i].owner_id == ABURISK.players.getCurrent()) {
                         planet.addEventListener('click', function (e) {
                             selectAttackerPlanet(e, "idPlanet1");
-                            selectMaxShips(e, "noShips");
+
                         }, true);
                     } else {
                         planet.addEventListener('click', function (e) {

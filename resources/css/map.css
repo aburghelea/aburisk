@@ -41,13 +41,11 @@
     font: 20px 'Yanone Kaffeesatz', 'Segoe UI', Arial, sans-serif;
 }
 
-[class^='player'] a, [class^='player']
-{
+[class^='player'] a, [class^='player'] {
     color: #000000 !important;
     font: 20px 'Yanone Kaffeesatz', 'Segoe UI', Arial, sans-serif;
     padding-left: 5px;
 }
-
 
 .player_4 {
     fill: rgb(158, 238, 235);
@@ -89,7 +87,7 @@
     background-color: rgb(55, 238, 45);
 }
 
-.player_9 {
-    fill: rgb(33, 51, 238);
-    background-color: rgb(33, 51, 238);
+.arrow {
+    stroke: rgb(238, 72, 94);
+    stroke-width: 6
 }

@@ -7,8 +7,9 @@
      xsi:schemaLocation="http://www.w3.org/2000/xlink ">
     <image class="background" id="background" width="750" height="421"
            xlink:href="../resources/background/warp.jpg" preserveAspectRatio="none"/>
-    <div id='galaxies' />
-    <div id='routes' />
-    <div id='atmospheres' />
-    <div id='planets' />
+    <div id='galaxies'/>
+    <div id='routes'/>
+    <div id='atmospheres'/>
+    <div id='arrow-route'/>
+    <div id='planets'/>
 </svg>

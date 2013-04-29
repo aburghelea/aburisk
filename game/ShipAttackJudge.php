@@ -18,7 +18,7 @@ class ShipAttackJudge
     {
         $no_att_dice = self::attacking(min($attacker_ships, $total_atacking+1));
         $no_def_dice = self::defending($defender_ships);
-        echo "INP " . $attacker_ships . " " . $defender_ships ." ".$total_atacking. "\n";
+
         $dice = min($no_att_dice, $no_def_dice);
         if ($dice <= 0)
             return -1;
@@ -35,16 +35,14 @@ class ShipAttackJudge
         $attack_casualties = 0;
         $defend_casualties = 0;
         for ($i = 0; $i < $dice; $i++) {
-            echo "Dice ".$attacking_dice[$i]." ".$defending_dice[$i]."\n";
+
             if ($attacking_dice[$i] > $defending_dice[$i])
                 $defend_casualties++;
             else
                 $attack_casualties++;
         }
-        echo "casualties ".$attack_casualties." ".$defend_casualties."\n";
         $attacker_ships = max(1, ($attacker_ships - $attack_casualties));
         $defender_ships = max(0, ($defender_ships - $defend_casualties));
-        echo 'MIN '. min($total_atacking, ($no_att_dice - $attack_casualties))."\n";
         $conquering_ships = $defender_ships == 0 ? min($total_atacking, ($no_att_dice - $attack_casualties)) : 0;
         if ($conquering_ships > 0) {
             $conquering_ships = $conquering_ships < $attacker_ships ? $conquering_ships : ($attacker_ships - 1);
