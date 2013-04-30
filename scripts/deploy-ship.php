@@ -23,7 +23,7 @@ if (areParamsSet($_POST)) {
     if ($deploy > 0) {
         $rtn['status'] = 'SUCCESS';
         echo json_encode($rtn);
-        $gameEngine->signalUpdate($_POST[S_IDUSER]);
+        $gameEngine->signalUpdate();
         GameManager::decreaseShips();
         GameManager::advanceStageIfNecessary();
 

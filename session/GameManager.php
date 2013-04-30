@@ -103,9 +103,9 @@ class GameManager
         $userGameDao = new User_Game();
         $userGames = $userGameDao->getRowsByField('user_id', $userId);
         if (is_array($userGames)) {
-            if (count($userGames) > 1) {
-                //TODO: should clean some of them;
-            }
+//            if (count($userGames) > 1) {
+//                //TODO: should clean some of them;
+//            }
             $game = current($userGames)->game_id;
             self::setGameId(new GameEngine($game));
         } else {
@@ -127,16 +127,24 @@ class GameManager
         return $needed > $joined;
     }
 
+    public static function advanceStage()
+    {
+        self::updateEngagedGame(AuthManager::getLoggedInUserId());
+        $state = GameManager::getGame()->state;
+        if ($state == GameState::SHIP_PLACING || $state == GameState::ATTACK)
+            GameManager::getGameEngine()->changeState(GameState::SHIP_PLACING);
+        GameManager::getGameEngine()->changeTurn(GameManager::getNextPlayer(GameManager::getCurrentPlayerId()));
+    }
+
     public static function advanceStageIfNecessary($necessary = false)
     {
         self::updateEngagedGame(AuthManager::getLoggedInUserId());
         if ($necessary != false) {
             if (strcmp(self::getGame()->state, 'ATTACK') == 0) {
-                //TODO: check if end
                 $bonus = self::getGameEngine()->getShipBonus(self::getCurrentPlayerId());
                 self::increaseShips(6);
                 self::increaseShips($bonus);
-                self::getGameEngine()->changeTurn(GameManager::getNextPlayer(self::getCurrentPlayerId()));
+                GameManager::getGameEngine()->changeTurn(GameManager::getNextPlayer(self::getCurrentPlayerId()));
 
 
             }

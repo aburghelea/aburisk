@@ -23,7 +23,7 @@ if (areParamsSet($_POST)) {
         $rtn['owner'] = AuthManager::getLoggedInUserId();
         echo json_encode($rtn);
         $gameEngine->changeTurn(GameManager::getNextPlayer($_POST[S_IDUSER]));
-        $gameEngine->signalUpdate($_POST[S_IDUSER]);
+        $gameEngine->signalUpdate();
         GameManager::decreaseShips();
         GameManager::advanceStageIfNecessary();
     } else {

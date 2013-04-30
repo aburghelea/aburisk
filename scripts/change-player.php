@@ -6,10 +6,11 @@
 
 require_once dirname(__FILE__) . "/../session/GameManager.php";
 require_once dirname(__FILE__) . "/../game/GameEngine.php";
-GameManager::advanceStageIfNecessary(true);
-GameManager::getGameEngine()->signalUpdate();
+
 $rtn['status'] = 'SUCCESS';
 $rtn['owner'] = AuthManager::getLoggedInUserId();
+GameManager::advanceStage();
+GameManager::getGameEngine()->signalUpdate();
 echo json_encode($rtn);
 
 ?>

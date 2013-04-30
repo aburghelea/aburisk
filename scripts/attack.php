@@ -22,7 +22,7 @@ if (areParamsSet($_POST)) {
         $rtn['status'] = 'SUCCESS';
         $rtn['owner'] = AuthManager::getLoggedInUserId();
 
-        $gameEngine->signalUpdate($_POST[S_IDUSER]);
+        $gameEngine->signalUpdate();
         if (GameManager::getGameEngine()->isGameOver(GameManager::getCurrentPlayerId())) {
             $gameEngine->endGame(GameManager::getCurrentPlayerId());
         }

@@ -92,7 +92,7 @@ class GameEngine implements IGameEngine
         $this->game->updateRows(array("state" => $state), 'id', $this->game->getId());
     }
 
-    public function signalUpdate($exceptUserId)
+    public function signalUpdate()
     {
         $userGameDao = new User_Game();
         $userGameDao->updateRows(array("dirty" => "true"), 'game_id', $this->game->getId());
