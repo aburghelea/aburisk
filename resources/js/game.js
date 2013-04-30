@@ -39,9 +39,7 @@ ABURISK.game = function () {
     }
 
     function placeShip(e, inputId) {
-//        var claimInput = document.getElementById(inputId);
         var planetId = e.target.getAttribute("id");
-//        claimInput.setAttribute("value", planetId);
         var url = "scripts/deploy-ship.php";
         var success = function (xhr) {
             console.log(xhr.responseText);
@@ -64,7 +62,6 @@ ABURISK.game = function () {
         var shipsId = "ships_" + planetId;
         noShips = svgDocument.getElementById(shipsId).textContent;
         noShips = Math.min(noShips, 3);
-//        shipsInput.setAttribute("value", noShips);
     }
 
     function resetPlanets() {
@@ -147,12 +144,71 @@ ABURISK.game = function () {
         initArrow(e);
     }
 
+    var STEPS = 10;
+    var MILIS = 1000;
+
+    function moveAnimation(dx, dy, ex, ey) {
+        var text = svgDocument.getElementById("animation");
+        var circle = svgDocument.getElementById("circle_animation");
+        var cx = text.getAttribute("x");
+        var cy = text.getAttribute("y");
+        var xx = parseInt(ex) - parseInt(cx);
+        var yy = parseInt(ey) - parseInt(cy);
+        var dist = Math.sqrt(xx * xx + yy * yy);
+        if (dist < 10) {
+            svgDocument.removeChild(text);
+            svgDocument.removeChild(circle);
+        } else {
+            text.setAttribute("x", parseInt(cx) + parseInt(dx));
+            text.setAttribute("y", parseInt(cy) + parseInt(dy));
+            circle.setAttribute("cx",parseInt(cx) + parseInt(dx));
+            circle.setAttribute("cy",parseInt(cy) + parseInt(dy));
+            setTimeout(function () {
+                moveAnimation(dx, dy, ex, ey)
+            }, MILIS/STEPS);
+        }
+
+    }
+
+    function doAnimation() {
+        var start = svgDocument.getElementById("circle_" + attackerPlanet);
+        var end = svgDocument.getElementById("circle_" + defenderPlanet);
+
+        var sx = start.getAttribute('cx');
+        var sy = start.getAttribute('cy');
+        var ex = end.getAttribute('cx');
+        var ey = end.getAttribute('cy');
+
+        var dx = (ex - sx) / STEPS;
+        var dy = (ey - sy) / STEPS;
+        console.log("Animating from " + dx + "  " + dy);
+        var text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+
+        text.setAttribute('x', sx);
+        text.setAttribute('y', sy);
+        text.setAttribute('id', "animation");
+        text.setAttribute('class', "player_6");
+        text.textContent = noShips;
+
+        var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+
+        circle.setAttribute('cx', sx);
+        circle.setAttribute('cy', sy);
+        circle.setAttribute('r', 20);
+        circle.setAttribute('id', "circle_animation");
+        circle.setAttribute('class', "galaxy_5");
+        svgDocument.appendChild(circle);
+        svgDocument.appendChild(text);
+
+        moveAnimation(dx, dy, ex, ey);
+    }
+
     function selectDefendingPlanet(e, inputId) {
         var defender = e.target.getAttribute("id");
         if (canBeAttacked(defender)) {
             defenderPlanet = defender;
-//            updateArrow(e);
             svgDocument.removeEventListener("mousemove", updateArrow);
+            doAnimation();
             doAttack();
         }
 

@@ -220,7 +220,7 @@ function initSSE() {
         var actions = document.getElementById("actions");
 
         var responseJSON = JSON.parse(e.data);
-        console.log(responseJSON);
+//        console.log(responseJSON);
         if (responseJSON.status == "HALT") {
 
         }
