@@ -11,6 +11,7 @@ header('Cache-Control: no-cache');
 function sendData($id)
 {
     $return = array("status" => "UPDATE");
+    $return['animation_info'] = GameManager::getAnimationData();
     $return['player_list'] = GameManager::getPlayers();
     $return['action']  = !GameManager::isLoggedInPlayersTurn() ? 'NONE' : GameManager::getGame()->state;
     $return['state']  = GameManager::getGame()->state;

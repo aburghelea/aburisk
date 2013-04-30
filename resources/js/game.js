@@ -304,7 +304,7 @@ ABURISK.game = function () {
         },
 
         doAttack: doAttack,
-
+        doAnimation: doAnimation,
         changeInnerState: function () {
             var url = "scripts/change-inner-state.php";
             var success = function (data) {

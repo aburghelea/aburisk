@@ -181,12 +181,12 @@ function timeSignaler() {
 
 function gameMapInit(responseJSON, actions) {
     if (responseJSON.action == "NONE")
-    ABURISK.timer.disarm();
+        ABURISK.timer.disarm();
     if (responseJSON.action == "PLANET_CLAIM") {
         ABURISK.game.initClaim();
         ABURISK.timer.disarm();
 
-            ABURISK.timer.init(timeDisplayer, timeSignaler);
+        ABURISK.timer.init(timeDisplayer, timeSignaler);
 
     }
     if (responseJSON.action == "SHIP_PLACING") {
@@ -204,10 +204,17 @@ function gameMapInit(responseJSON, actions) {
         ABURISK.timer.init(timeDisplayer, timeSignaler);
     }
 }
+function updateAnimation(responseJSON) {
+    var info = responseJSON.animation_info;
+    if (info.to != 0)
+        ABURISK.game.doAnimation(info.to, info.from, info.with);
+}
 function updateInterface(responseJSON) {
+
     if (responseJSON.winner != undefined && responseJSON.winner != null) {
         manageWinner(responseJSON);
     }
+    updateAnimation(responseJSON);
     updatePlayerList(responseJSON);
     updateState(responseJSON);
     updateCurrentPlayer(responseJSON);
@@ -220,7 +227,7 @@ function initSSE() {
         var actions = document.getElementById("actions");
 
         var responseJSON = JSON.parse(e.data);
-//        console.log(responseJSON);
+        console.log(responseJSON);
         if (responseJSON.status == "HALT") {
 
         }

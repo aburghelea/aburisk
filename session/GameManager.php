@@ -74,6 +74,20 @@ class GameManager
         return false;
     }
 
+    public static function getAnimationData() {
+        $gameId = self::getGameId();
+
+        if ($gameId != false) {
+            $userGameDao = new User_Game();
+            $userGame = $userGameDao->getRowsByArray(array("user_id" => AuthManager::getLoggedInUserId(), "game_id" => $gameId))[0];
+
+            $rtn = array("to"=>$userGame->rto, "from"=>$userGame->rfrom, "with"=>$userGame->rwith);
+            return $userGame->dirty == "true" ? $rtn : false;
+        }
+
+        return false;
+    }
+
     public static function setModified($dirty = false)
     {
         $dirty = $dirty == true ? "true" : "false";
@@ -144,13 +158,13 @@ class GameManager
         self::updateEngagedGame(AuthManager::getLoggedInUserId());
         if ($necessary != false) {
             if (strcmp(self::getGame()->state, 'ATTACK') == 0) {
+                GameManager::getGameEngine()->changeTurn(GameManager::getNextPlayer(self::getCurrentPlayerId()));
+            } else if (strcmp(self::getGame()->state, 'SHIP_PLACING') == 0) {
                 $bonus = self::getGameEngine()->getShipBonus(self::getCurrentPlayerId());
                 self::increaseShips(6);
                 self::increaseShips($bonus);
-                GameManager::getGameEngine()->changeTurn(GameManager::getNextPlayer(self::getCurrentPlayerId()));
-
-
             }
+
             $nextState = self::getGameEngine()->getNextState();
             self::getGameEngine()->changeState($nextState);
 
