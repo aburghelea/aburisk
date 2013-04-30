@@ -190,13 +190,13 @@ class GameManager
         foreach ($users as $player) {
             $ships = 0;
             $planetGames = $planetGameDao->getRowsByArray(array('owner_id' => $player->getId(), "game_id" => self::getGame()->getId()));
-            foreach ($planetGames as $planetGame){
-                $ships += $planetGame->noships;
+            for ($i = count($planetGames) - 1; $i >= 0; --$i) {
+                $ships += $planetGames[$i]->noships;
             }
-             $playerHolder = new Player($player);
+            $playerHolder = new Player($player);
             $playerHolder->setPlanets(count($planetGames));
             $playerHolder->setShips($ships);
-            $score = floor($ships / count($planetGames) * 0.7 + $ships * 0.3);
+            $score = floor($ships / (count($planetGames) + 1) * 0.7 + $ships * 0.3);
             $playerHolder->setScore($score);
             $players[] = $playerHolder;
         }
@@ -204,13 +204,15 @@ class GameManager
         return $players;
     }
 
-    private static function sortPlayer($a, $b) {
+    private static function sortPlayer($a, $b)
+    {
         if ($a->getScore() == $b->getScore())
             return 0;
-        if ($a->getScore() > $b->getScore)
+        if ($a->getScore() > $b->getScore())
             return -1;
         return 1;
     }
+
     public static function getRemainingShips()
     {
         return unserialize($_SESSION['ships']);

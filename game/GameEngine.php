@@ -204,7 +204,6 @@ class GameEngine implements IGameEngine
         $sp = $this->planetIsClaimed($idPlanet2, '%');
 
         $pg_finder = new Planet_Game();
-        $ug_finder = new User_Game;
 
         $firstPlanet = current($pg_finder->getRowsByField('id', $fp));
         $secondPlanet = current($pg_finder->getRowsByField('id', $sp));
@@ -226,12 +225,6 @@ class GameEngine implements IGameEngine
         $pg_finder->updateRows(array("noships" => $firstPlanet->noships, 'owner_id' => $firstPlanet->owner_id), 'id', $firstPlanet->getId());
         $pg_finder->updateRows(array("noships" => $secondPlanet->noships, 'owner_id' => $secondPlanet->owner_id), 'id', $secondPlanet->getId());
 
-//        $firstScore = current($ug_finder->getRowsByField('user_id', $fp))->score;
-//        $secondScore = current($ug_finder->getRowsByField('user_id', $sp))->score;
-
-//        $ug_finder->updateRows(array("score" => $firstPlanet->noships, 'owner_id' => $firstPlanet->owner_id), 'id', $firstPlanet->getId());
-//        $ug_finder->updateRows(array("noships" => $secondPlanet->noships, 'owner_id' => $secondPlanet->owner_id), 'id', $secondPlanet->getId());
-//        $this->signalUpdate($idUser);
         return array($firstPlanet->owner_id, $secondPlanet->owner_id);
     }
 

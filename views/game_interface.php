@@ -82,47 +82,59 @@ if (GameManager::getGame())
         anchor.setAttribute("href", "profile.php?id=" + jsonCurrent.id);
         anchor.appendChild(document.createTextNode(jsonCurrent.username));
         currentPlayer.appendChild(anchor);
-        currentPlayer.parentNode.setAttribute("class", "player_" + ABURISK.players.index(jsonCurrent.id))
+        currentPlayer.parentNode.setAttribute("class", "player_" + ABURISK.players.index(jsonCurrent.id));
+    }
+
+    function updateRemainingShips(responseJSON) {
+        var remainingShips = document.getElementById("remainingShips");
+        clearContent(remainingShips);
+        remainingShips.appendChild(document.createTextNode(responseJSON.ships));
+    }
+    function updatePlayersNo(responseJSON) {
+        var container = document.getElementById("neededPlayers");
+        clearContent(container);
+        container.appendChild(document.createTextNode(responseJSON.neededPlayers));
+
+        container = document.getElementById("joinedPlayers");
+        clearContent(container);
+        container.appendChild(document.createTextNode(responseJSON.joinedPlayers));
     }
     function initGame() {
-//        var handler = function () {
-//            ABURISK.game.initClaim();
-//            initSSE();
-//        };
         ABURISK.map.init(initSSE);
     }
+
     function initSSE() {
         source = new EventSource('sse/sse.php');
         source.addEventListener('message', function (e) {
             var actions = document.getElementById("actions");
 
-            console.log(e.data);
             var responseJSON = JSON.parse(e.data);
+            console.log(responseJSON);
             if (responseJSON.status == "NONE") {
                 ABURISK.game.resetPlanets();
             }
             if (responseJSON.status == "UPDATE") {
                 ABURISK.game.resetPlanets();
-                if (responseJSON.action != "NONE")
-                    actions.style.display = 'block';
-                else
-                    actions.style.display = 'none';
+                actions.style.display = 'none';
+
                 if (responseJSON.action == "PLANET_CLAIM") {
                     ABURISK.game.initClaim();
                 }
                 if (responseJSON.action == "SHIP_PLACING") {
                     ABURISK.game.initPlacing();
+                    actions.style.display = 'block';
                 }
                 if (responseJSON.action == "ATTACK") {
 
-                    console.log("preparring attack");
                     ABURISK.game.initAttack();
+                    actions.style.display = 'block';
                 }
 
-                console.log(e.data);
                 updatePlayerList(responseJSON);
                 updateState(responseJSON);
                 updateCurrentPlayer(responseJSON);
+                updateRemainingShips(responseJSON);
+                updatePlayersNo(responseJSON);
                 ABURISK.map.setPlanetInfo();
 
             }
@@ -160,26 +172,42 @@ if (GameManager::getGame())
                 <?php if (isset($game)) { ?>
 
                     <ul class="style2">
-                        <li class="first">
-                            <p>State: <span id='state'></span></p>
+                        <li id="actions" class="first">
+                            <h3>
+                                Actions
+                            </h3>
 
+                            <div>
+                                <p>
+                                    <a href="javascript:void(0);" class="button-style"
+                                       onclick="ABURISK.game.changeInnerState();">
+                                        Change Stage</a>
+                                </p>
+                            </div>
+                        </li>
+
+                        <li>
                             <p> Current player: <span id="currentPlayer"></span></p>
 
-                            <p>
-                                <?php if (!GameManager::needsMorePlayers()) { ?>
-                                Is your turn?  <?php echo GameManager::isLoggedInPlayersTurn() ? "Yes" : "No" ?>
-                            </p>
+                            <p>State: <span id='state'></span></p>
 
                             <p>
-                                <?php echo GameManager::getRemainingShips() ?> ship(s) left
+                                Available ships: <span id="remainingShips"></span>
                             </p>
-                            <?php } else { ?>
-                                <p>Needed players: <a href="javascript:void(0)"> <?php echo $game->noplayers ?></a></p>
 
-                                <p>Joined players: <a href="javascript:void(0)">
-                                        <?php echo GameManager::getJoinedPlayersNumber(); ?></a></p>
+                            <p>Needed players:
+                                <a href="javascript:void(0)" id="neededPlayers">
 
-                            <?php }  ?>
+                                </a>
+                            </p>
+
+                            <p>Joined players:
+                                <a href="javascript:void(0)" id="joinedPlayers">
+
+
+                                </a>
+                            </p>
+
                             <form action="scripts/end-game.php" method="post">
                                 <input type="hidden" name='idGame' value="<?php echo $game->id ?>"/>
                                 <a href="javascript:void(0);" class="button-style" onclick="submitForm(this)">End
@@ -195,23 +223,7 @@ if (GameManager::getGame())
                             <div id='player_list'>
                             </div>
                         </li>
-                        <!--                        --><?php //if (!GameManager::needsMorePlayers()) { ?>
-                        <!--                            --><?php //if (GameManager::isLoggedInPlayersTurn()) { ?>
-                        <li id="actions">
-                            <h3>
-                                Actions
-                            </h3>
 
-                            <div>
-                                <p>
-                                    <a href="javascript:void(0);" class="button-style"
-                                       onclick="ABURISK.game.changeInnerState();"
-                                        >
-                                        <!--                                       style="margin-top: 0 !important;"-->
-                                        &gt;&gt;Change inner turn</a>
-                                </p>
-                            </div>
-                        </li>
 
                     </ul>
                 <?php } ?>

@@ -14,6 +14,10 @@ function sendData($id)
     $return['player_list'] = GameManager::getPlayers();
     $return['action']  = !GameManager::isLoggedInPlayersTurn() ? 'NONE' : GameManager::getGame()->state;
     $return['state']  = GameManager::getGame()->state;
+    $return['ships'] = GameManager::getRemainingShips();
+    $return['neededPlayers'] = GameManager::getGame()->noplayers;
+    $return['joinedPlayers'] = GameManager::getJoinedPlayersNumber();
+
     $currentPlayer = array("id"=>GameManager::getCurrentPlayerId(), "username"=>GameManager::getCurrentPlayerUsername());
     $return['currentPlayer'] = $currentPlayer;
     echo "id: $id" . PHP_EOL;
