@@ -206,7 +206,7 @@ function gameMapInit(responseJSON, actions) {
 }
 function updateAnimation(responseJSON) {
     var info = responseJSON.animation_info;
-    if (info.to != 0)
+    if (info.to != 0 && info.to != undefined && info.to != null)
         ABURISK.game.doAnimation(info.to, info.from, info.with);
 }
 function updateInterface(responseJSON) {
