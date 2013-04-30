@@ -18,6 +18,9 @@ class User_Game extends GenericDao
     public $score;
     public $game_id;
     public  $dirty;
+    public  $ato;
+    public  $afrom;
+    public  $rwith;
 
     function __construct()
     {

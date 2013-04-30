@@ -81,6 +81,9 @@ class GameManager
         if ($gameId != false) {
             $userGameDao = new User_Game();
             $userGameDao->updateRows(array("dirty" => $dirty), "user_id", AuthManager::getLoggedInUserId());
+            if ($dirty == "false") {
+                $userGameDao->updateRows(array("rto" => 0, "rfrom" => 0, "rwith" => 0), "user_id", AuthManager::getLoggedInUserId());
+            }
         }
     }
 

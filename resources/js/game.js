@@ -161,18 +161,22 @@ ABURISK.game = function () {
         } else {
             text.setAttribute("x", parseInt(cx) + parseInt(dx));
             text.setAttribute("y", parseInt(cy) + parseInt(dy));
-            circle.setAttribute("cx",parseInt(cx) + parseInt(dx));
-            circle.setAttribute("cy",parseInt(cy) + parseInt(dy));
+            circle.setAttribute("cx", parseInt(cx) + parseInt(dx));
+            circle.setAttribute("cy", parseInt(cy) + parseInt(dy));
             setTimeout(function () {
                 moveAnimation(dx, dy, ex, ey)
-            }, MILIS/STEPS);
+            }, MILIS / STEPS);
         }
 
     }
 
-    function doAnimation() {
-        var start = svgDocument.getElementById("circle_" + attackerPlanet);
-        var end = svgDocument.getElementById("circle_" + defenderPlanet);
+    function doAnimation(ap, dp, ns) {
+        ap = ap == undefined ? attackerPlanet : ap;
+        dp = dp == undefined ? defenderPlanet : dp;
+        ns = ns == undefined ? noShips : ns;
+
+        var start = svgDocument.getElementById("circle_" + ap);
+        var end = svgDocument.getElementById("circle_" + dp);
 
         var sx = start.getAttribute('cx');
         var sy = start.getAttribute('cy');
@@ -188,7 +192,7 @@ ABURISK.game = function () {
         text.setAttribute('y', sy);
         text.setAttribute('id', "animation");
         text.setAttribute('class', "player_6");
-        text.textContent = noShips;
+        text.textContent = ns;
 
         var circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 

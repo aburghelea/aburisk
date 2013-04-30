@@ -227,6 +227,8 @@ class GameEngine implements IGameEngine
         $pg_finder->updateRows(array("noships" => $firstPlanet->noships, 'owner_id' => $firstPlanet->owner_id), 'id', $firstPlanet->getId());
         $pg_finder->updateRows(array("noships" => $secondPlanet->noships, 'owner_id' => $secondPlanet->owner_id), 'id', $secondPlanet->getId());
 
+        $userGameDao = new User_Game();
+        $userGameDao->updateRows(array("rto"=>$idPlanet1, "rfrom"=>$idPlanet2, "rwith"=>$noShips), "game_id", $this->game->getId());
         return array($firstPlanet->owner_id, $secondPlanet->owner_id);
     }
 
