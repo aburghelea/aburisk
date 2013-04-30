@@ -13,6 +13,7 @@ class GameState
     const PLANET_CLAIM = 'PLANET_CLAIM';
     const SHIP_PLACING = 'SHIP_PLACING';
     const ATTACK = 'ATTACK';
+    const FINISHED = 'FINISHED';
     const GAME_END = 'GAME_END';
 }
 

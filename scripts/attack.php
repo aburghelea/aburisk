@@ -22,10 +22,10 @@ if (areParamsSet($_POST)) {
         $rtn['status'] = 'SUCCESS';
         $rtn['owner'] = AuthManager::getLoggedInUserId();
 
+        $gameEngine->signalUpdate($_POST[S_IDUSER]);
         if (GameManager::getGameEngine()->isGameOver(GameManager::getCurrentPlayerId())) {
             $gameEngine->endGame(GameManager::getCurrentPlayerId());
         }
-        $gameEngine->signalUpdate($_POST[S_IDUSER]);
         $rtn['winner'] = AuthManager::getLoggedInUserId();
         echo json_encode($rtn);
     } else {

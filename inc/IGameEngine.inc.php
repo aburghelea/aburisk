@@ -42,9 +42,10 @@ interface IGameEngine
     /**
      * Ends the game and declares the winner
      * @param int $idUser the winner
+     * @param int $clean the winner
      * @return int the winners id if the operation succeded, -1 otherwise
      */
-    public function endGame($idUser);
+    public function endGame($idUser, $clean);
 
     /**
      * Claims an unocupied planet

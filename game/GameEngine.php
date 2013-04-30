@@ -110,7 +110,6 @@ class GameEngine implements IGameEngine
 
         $this->game->current_player_id = $idUser;
         $this->game->updateRows(array("current_player_id" => $idUser), 'id', $this->game->getId());
-//        $this->signalUpdate($idUser);
 
         return $idUser;
     }
@@ -118,16 +117,20 @@ class GameEngine implements IGameEngine
     /**
      * Ends the game and declares the winner
      * @param int $idUser the winner
-     * @return boolean if the operation succeded
+     * @param bool $clean the winner
+     * @return boolean if the operation succeeded
      */
-    public function endGame($idUser = null)
+    public function endGame($idUser = null, $clean = false)
     {
-        $this->game->updateRows(array("current_player_id" => $idUser, 'state' => GameState::GAME_END), 'id', $this->game->getId());
+        $state = $clean == true ? GameState::GAME_END : GameState::FINISHED;
+        $this->game->updateRows(array("current_player_id" => $idUser, 'state' => $state), 'id', $this->game->getId());
         $this->game->current_player_id = $idUser;
-        $planetGamesDao = new Planet_Game();
-        $userGameDao = new User_Game();
-        $userGameDao->deleteRowsByField('game_id', $this->game->getId());
-        $planetGamesDao->deleteRowsByField('game_id', $this->game->getId());
+        if ($clean) {
+            $planetGamesDao = new Planet_Game();
+            $userGameDao = new User_Game();
+            $userGameDao->deleteRowsByField('game_id', $this->game->getId());
+            $planetGamesDao->deleteRowsByField('game_id', $this->game->getId());
+        }
         if ($idUser) {
             if (!$this->isUserInThisGame($idUser))
                 return -1;
@@ -138,7 +141,6 @@ class GameEngine implements IGameEngine
             $user->won_games++;
             $user->updateRows(array("won_games" => $user->won_games), "id", $idUser);
 
-//            $this->signalUpdate($idUser);
             return $user->getId() != null;
         }
 
@@ -422,10 +424,13 @@ class GameEngine implements IGameEngine
 
     public function getWinner()
     {
+        if ($this->game->state == 'GAME_END' || $this->game->state == 'FINISHED') {
+            $userDao = new User();
+            $user = $userDao->getRowsByField("id", $this->game->current_player_id);
+            return current($user);
+        }
 
-        $userDao = new User();
-        $user = $userDao->getRowsByField("id", $this->game->current_player_id);
-        return current($user);
+        return NULL;
     }
 
 

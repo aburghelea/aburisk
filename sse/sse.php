@@ -17,6 +17,10 @@ function sendData($id)
     $return['ships'] = GameManager::getRemainingShips();
     $return['neededPlayers'] = GameManager::getGame()->noplayers;
     $return['joinedPlayers'] = GameManager::getJoinedPlayersNumber();
+    $winner = GameManager::getWinner();
+    if ($winner != NULL)
+        $winner = new Player($winner);
+    $return['winner'] = $winner;
 
     $currentPlayer = array("id"=>GameManager::getCurrentPlayerId(), "username"=>GameManager::getCurrentPlayerUsername());
     $return['currentPlayer'] = $currentPlayer;

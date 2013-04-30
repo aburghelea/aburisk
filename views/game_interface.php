@@ -3,15 +3,6 @@
 <?php
 
 require_once "head.php";
-require_once dirname(__FILE__) . "/../dao/actual/Planet_Neighbour.php";
-require_once dirname(__FILE__) . "/../dao/actual/Planet.php";
-require_once dirname(__FILE__) . "/../dao/actual/User_Game.php";
-
-$planetDao = new Planet();
-$planetNeighboursDao = new Planet_Neighbour();
-$userGameDao = new User_Game();
-$planetsJSON = json_encode($planetDao->getRowsByField('"1"', '1'));
-$connectiosJSON = json_encode($planetNeighboursDao->getRowsByField('"1"', '1'));
 
 GameManager::updateEngagedGame(AuthManager::getLoggedInUserId());
 GameManager::setModified(true);
@@ -103,6 +94,17 @@ if (GameManager::getGame())
         ABURISK.map.init(initSSE);
     }
 
+    function manageWinner(responseJSON) {
+        var mapcontainer = document.getElementById("mapContainer");
+        mapcontainer.parentNode.removeChild(mapcontainer);
+        alert("Game won by " + responseJSON.winner.username);
+        window.location = "/aburisk/games_list.php";
+        var url = "scripts/end-game.php";
+        var callback;
+        callback = function () {
+        };
+        postCall(url, callback, callback);
+    }
     function initSSE() {
         source = new EventSource('sse/sse.php');
         source.addEventListener('message', function (e) {
@@ -123,11 +125,19 @@ if (GameManager::getGame())
                 if (responseJSON.action == "SHIP_PLACING") {
                     ABURISK.game.initPlacing();
                     actions.style.display = 'block';
+                    clearContent(actions);
+                    actions.appendChild(document.createTextNode("Start attacking"));
                 }
                 if (responseJSON.action == "ATTACK") {
 
                     ABURISK.game.initAttack();
                     actions.style.display = 'block';
+                    clearContent(actions);
+                    actions.appendChild(document.createTextNode("Next player"));
+                }
+
+                if (responseJSON.winner != undefined && responseJSON.winner != null) {
+                    manageWinner(responseJSON);
                 }
 
                 updatePlayerList(responseJSON);
@@ -135,6 +145,7 @@ if (GameManager::getGame())
                 updateCurrentPlayer(responseJSON);
                 updateRemainingShips(responseJSON);
                 updatePlayersNo(responseJSON);
+
                 ABURISK.map.setPlanetInfo();
 
             }
@@ -149,17 +160,7 @@ if (GameManager::getGame())
     <?php require_once "header.php" ?>
     <div id="page">
         <div id="content">
-            <?php
-            if (GameManager::getGame() && GameManager::getGame()->state === 'FINISHED') {
-                ?>
-                <h2>Game over</h2>
-                <h3>Winner is
-                    <a target="_blank"
-                       href="/aburisk/profile.php?id=<?php echo $winner->getId() ?>">
-                        <?php echo $winner->username ?>
-                    </a>
-                </h3>
-            <?php } else if (isset($game)) { ?>
+            <?php if (isset($game)) { ?>
                 <object id='mapContainer'
                         onload='initGame()'
                         type="image/svg+xml" width="750" height="421" data="views/map.svg"></object>
@@ -172,21 +173,28 @@ if (GameManager::getGame())
                 <?php if (isset($game)) { ?>
 
                     <ul class="style2">
-                        <li id="actions" class="first">
-                            <h3>
-                                Actions
-                            </h3>
+                        <li class="first">
+                            <a id="actions"
+                               href="javascript:void(0);" class="button-style"
+                               onclick="ABURISK.game.changeInnerState();"
+                               style=" float:left">
+                                Change Stage
+                            </a>
 
-                            <div>
-                                <p>
-                                    <a href="javascript:void(0);" class="button-style"
-                                       onclick="ABURISK.game.changeInnerState();">
-                                        Change Stage</a>
-                                </p>
-                            </div>
+                            <form action="scripts/end-game.php" method="post" style=" float:right">
+                                <input type="hidden" name='idGame' value="<?php echo $game->id ?>"/>
+                                <a href="javascript:void(0);" class="button-style" onclick="submitForm(this)">End
+                                    game <?php echo $game->id ?></a>
+                            </form>
+                            <div class="clearfix"></div>
+
                         </li>
 
                         <li>
+                            <h3>
+                                Statistics
+                            </h3>
+
                             <p> Current player: <span id="currentPlayer"></span></p>
 
                             <p>State: <span id='state'></span></p>
@@ -196,23 +204,13 @@ if (GameManager::getGame())
                             </p>
 
                             <p>Needed players:
-                                <a href="javascript:void(0)" id="neededPlayers">
-
-                                </a>
+                                <a href="javascript:void(0)" id="neededPlayers"></a>
                             </p>
 
                             <p>Joined players:
-                                <a href="javascript:void(0)" id="joinedPlayers">
-
-
-                                </a>
+                                <a href="javascript:void(0)" id="joinedPlayers"></a>
                             </p>
 
-                            <form action="scripts/end-game.php" method="post">
-                                <input type="hidden" name='idGame' value="<?php echo $game->id ?>"/>
-                                <a href="javascript:void(0);" class="button-style" onclick="submitForm(this)">End
-                                    game <?php echo $game->id ?></a>
-                            </form>
 
                         </li>
                         <li id="userlist">
@@ -220,8 +218,7 @@ if (GameManager::getGame())
                                 Players
                             </h3>
 
-                            <div id='player_list'>
-                            </div>
+                            <div id='player_list'></div>
                         </li>
 
 
