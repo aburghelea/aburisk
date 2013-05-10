@@ -11,6 +11,11 @@
             if (isset($_GET["login_error"])) {
                 ?>
                 <div id="error_msg" class="error_msg">User or password do not exist</div>
+            <?php
+            }
+            else if (isset($_GET["registered"]) && $_GET["registered"] == "false") {
+                ?>
+                <div id="error_msg" class="error_msg">Username taken</div>
                 <script>
                     removeAfterTime("error_msg");
                 </script>

@@ -22,11 +22,11 @@ if (areParamsSet($_POST)) {
         exit();
     } else {
 
-        header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php?registered=1');
+        header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php?registered=false');
         exit();
     }
 } else {
-    header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php?registered=2');
+    header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php?registered=false');
     exit();
 }
 
