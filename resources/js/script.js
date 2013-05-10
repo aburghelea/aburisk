@@ -228,8 +228,8 @@ function initSSE() {
 
         var responseJSON = JSON.parse(e.data);
         console.log(responseJSON);
-        if (responseJSON.status == "HALT") {
-
+        if (responseJSON.status == "EXIT") {
+            window.location = "/aburisk/games_list.php";
         }
         if (responseJSON.status == "UPDATE") {
 

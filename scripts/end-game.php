@@ -11,10 +11,10 @@ require_once dirname(__FILE__) . "/../logger/Aburlog.php";
 if (areParamsSet($_POST)) {
     $gameEngine = new GameEngine($_POST[S_IDGAME]);
 
-    $gameEngine->signalUpdate();
     $end_status = $gameEngine->endGame(null, true);
     if ($end_status == 1) {
         GameManager::setGameId(null);
+        $gameEngine->signalUpdate();
         Aburlog::getInstance("Game ended", $gameEngine);
     }
 

@@ -68,10 +68,13 @@ class GameManager
             $userGameDao = new User_Game();
             $userGames = $userGameDao->getRowsByArray(array("user_id" => AuthManager::getLoggedInUserId(), "game_id" => $gameId));
 
-            return ($userGames == null || $userGames[0]->dirty == "true" )? true : false;
+            if ($userGames == null || empty($userGames))
+                return "EXIT";
+
+            return $userGames[0]->dirty == "true" ? true : false;
         }
 
-        return false;
+        return "NU";
     }
 
     public static function getAnimationData() {
@@ -192,11 +195,15 @@ class GameManager
 
     public static function getCurrentPlayerUsername()
     {
+        if (self::getGameEngine() == null)
+            return null;
         return self::getGameEngine()->getCurrentPlayerUsername();
     }
 
     public static function getCurrentPlayerId()
     {
+        if (self::getGameEngine() == null)
+            return null;
         return self::getGameEngine()->getGame()->current_player_id;
     }
 
@@ -207,6 +214,9 @@ class GameManager
 
     public static function getPlayers()
     {
+        if (self::getGameEngine() == null)
+            return null;
+
         $users = self::getGameEngine()->getPlayers();
         $players = array();
         $planetGameDao = new Planet_Game();
@@ -260,6 +270,8 @@ class GameManager
 
     public static function getWinner()
     {
+        if (self::getGameEngine() == null)
+            return null;
         return self::getGameEngine()->getWinner();
     }
 }
