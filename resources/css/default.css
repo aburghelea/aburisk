@@ -59,8 +59,11 @@ img.alignright {
     float: right;
 }
 
-img.aligncenter {
-    margin: 0 auto;
+.aligncenter {
+    margin: 3px auto !important;
+    position: relative !important;
+    margin-bottom: 30px;
+    width: 234px;
 }
 
 hr {
@@ -292,7 +295,7 @@ ul.style2 a:hover {
     border-radius: 4px;
 }
 #formContainer, .error_msg {
-    width: 288px;
+    width: 333px;
 
     margin: 0 auto;
     position: relative;
@@ -301,7 +304,7 @@ ul.style2 a:hover {
 }
 
 #formContainer {
-    height: 321px;
+    height: 425px;
 }
 
 #formContainer form {
@@ -405,32 +408,11 @@ input[type=text], input[type=password], input[type=email], input[type=number] {
     border-radius: 5px;
 }
 
-#formContainer #loginPass {
-    top: 215px;
-}
 
-#formContainer #registerEmail {
-    top: 215px;
-}
-
-#formContainer #registerUsername {
-    top: 137px;
-}
-
-#formContainer input[type=text],
-#formContainer input[type=password],
-#formContainer input[type=email] {
-    position: absolute;
-    left: 26px;
-    top: 176px;
-}
 
 .submit {
     opacity: 0.9;
-    position: absolute;
-    top: 262px;
-    left: 25px;
-    width: 239px;
+    width: 234px;
     height: 36px;
     cursor: pointer;
     border-radius: 6px;
@@ -453,7 +435,7 @@ input[type=text], input[type=password], input[type=email], input[type=number] {
     border: none;
     width: 50%;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
-    color: #eee;
+    color: #1b1b1b;
     outline: none;
     text-align: center;
 }

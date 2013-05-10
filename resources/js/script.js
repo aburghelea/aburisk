@@ -4,11 +4,19 @@ function init() {
     var containers = document.getElementsByClassName('flipLink');
     for (var i = 0; i < containers.length; i++) {
         containers[i].addEventListener('click', function () {
+            var captcha = document.getElementById("recaptcha_container");
+            var captcha_flipped = document.getElementById("captcha_flipped");
+            var captcha_unflipped = document.getElementById("captcha_unflipped");
+            debugger;
 
+//            clearContent(captcha_flipped);
+//            clearContent(captcha_unflipped);
             if (formContainer.classList.contains('flipped')) {
                 formContainer.classList.remove('flipped');
+                captcha_unflipped.appendChild(captcha);
             } else {
                 formContainer.classList.add('flipped');
+                captcha_flipped.appendChild(captcha);
             }
         }, true);
 
@@ -246,7 +254,7 @@ function initSSE() {
 
 
 function removeAfterTime(id, time) {
-    time = time == undefined ? 1000 : time;
+    time = time == undefined ? 3000 : time;
     function remove() {
         var element = document.getElementById(id);
         console.log(element);
