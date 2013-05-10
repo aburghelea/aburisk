@@ -244,5 +244,17 @@ function initSSE() {
     }, false);
 }
 
+
+function removeAfterTime(id, time) {
+    time = time == undefined ? 1000 : time;
+    function remove() {
+        var element = document.getElementById(id);
+        console.log(element);
+        if (element != undefined && element != null)
+            element.parentNode.removeChild(element);
+    }
+
+    setTimeout(remove, time);
+}
 ABURISK = {};
 

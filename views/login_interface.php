@@ -10,7 +10,10 @@
             <?php
             if (isset($_GET["login_error"])) {
                 ?>
-                <div class="error_msg">User or password do not exist</div>
+                <div id="error_msg" class="error_msg">User or password do not exist</div>
+                <script>
+                    removeAfterTime("error_msg");
+                </script>
             <?php
             }
             ?>
