@@ -6,33 +6,34 @@
  * For : PWeb 2013
  */
 
-require_once dirname(__FILE__)."/script-constants.php";
-require_once dirname(__FILE__)."/../game/GameEngine.php";
+require_once dirname(__FILE__) . "/script-constants.php";
+require_once dirname(__FILE__) . "/../game/GameEngine.php";
+require_once dirname(__FILE__) . "/../logger/Aburlog.php";
 
-if (areParamsSet($_GET)) {
-    $gameEngine = new GameEngine($_GET[S_IDGAME]);
+if (areParamsSet($_POST)) {
+    $gameEngine = new GameEngine($_POST[S_IDGAME]);
     if ($gameEngine->getGame() != null)
-        echo "Moving ships on game with id " . $gameEngine->getGame()->getId() . "<br/>";
+        Aburlog::getInstance()->logInfo("Moving ships on game with id", $_POST[S_IDGAME]);
     else
-        echo "Game was not retrieved<br/>";
+        Aburlog::getInstance()->logInfo("Game retrive fail", $_POST[S_IDGAME]);
 
-    $move_status = $gameEngine->move($_GET[S_IDPLANET1], $_GET[S_IDPLANET2], $_GET[S_NOSHIPS], $_GET[S_IDUSER]);
-    if (!($move_status < 0)) {
-        echo "Move successfull<br/>";
-    } else
-        echo "Could not move<br/>";
+    $move_status = $gameEngine->move($_POST[S_IDPLANET1], $_POST[S_IDPLANET2], $_POST[S_NOSHIPS], $_POST[S_IDUSER]);
+    if ($move_status < 0) {
+        Aburlog::getInstance()->logInfo("Move fail", $_POST[S_IDGAME]);
 
-} else {
-    echo "Use all the necessary params<br/>";
+    } else {
+        Aburlog::getInstance()->logError("Game idiotic call to move", $_POST);
+    }
 }
-function areParamsSet($_GET)
+function areParamsSet()
 {
     return
-        isset($_GET[S_IDGAME]) &&
-        isset($_GET[S_IDUSER]) &&
-        isset($_GET[S_IDPLANET1]) &&
-        isset($_GET[S_IDPLANET2]) &&
-        isset($_GET[S_NOSHIPS]);
+        isset($_POST[S_IDGAME]) &&
+        isset($_POST[S_IDUSER]) &&
+        isset($_POST[S_IDPLANET1]) &&
+        isset($_POST[S_IDPLANET2]) &&
+        isset($_POST[S_NOSHIPS]);
 }
+
 
 ?>

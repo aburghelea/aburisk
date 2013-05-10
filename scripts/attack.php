@@ -9,12 +9,14 @@
 require_once dirname(__FILE__) . "/script-constants.php";
 require_once dirname(__FILE__) . "/../game/GameEngine.php";
 require_once dirname(__FILE__) . "/../session/GameManager.php";
+require_once dirname(__FILE__) . "/../logger/Aburlog.php";
 
 if (areParamsSet($_POST)) {
     $gameEngine = new GameEngine($_POST[S_IDGAME]);
     if ($gameEngine->getGame() == null) {
         $rtn['status'] = 'GAME_RETRIVE_FAIL';
         echo json_encode($rtn);
+        Aburlog::getInstance()->logInfo("Game retrive fail", $_POST[S_IDGAME]);
     }
 
     $attack_status = $gameEngine->attack($_POST[S_IDPLANET1], $_POST[S_IDPLANET2], $_POST[S_NOSHIPS], $_POST[S_IDUSER]);
@@ -35,10 +37,8 @@ if (areParamsSet($_POST)) {
 } else {
     $rtn['status'] = 'INSUFICIENT_PARAMS';
     echo json_encode($rtn);
+    Aburlog::getInstance()->logError("Game idiotic call to attack",$_POST);
 }
-
-//header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/game.php');
-//exit();
 
 function areParamsSet()
 {

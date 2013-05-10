@@ -26,6 +26,7 @@ function sendData($id)
     $currentPlayer = array("id"=>GameManager::getCurrentPlayerId(), "username"=>GameManager::getCurrentPlayerUsername());
     $return['currentPlayer'] = $currentPlayer;
     echo "id: $id" . PHP_EOL;
+    echo "retry: 1200" . PHP_EOL;
     echo "data: ".json_encode($return). PHP_EOL;
     echo PHP_EOL;
     ob_flush();
@@ -36,6 +37,7 @@ function sendNo($id)
 {
     $return = array("status" => "HALT");
     echo "id: $id" . PHP_EOL;
+    echo "retry: 1200" . PHP_EOL;
     echo "data: ".json_encode($return). PHP_EOL;
     echo PHP_EOL;
     ob_flush();

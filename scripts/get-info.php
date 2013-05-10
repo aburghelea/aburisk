@@ -7,6 +7,8 @@
 require_once dirname(__FILE__) . "/../session/GameManager.php";
 require_once dirname(__FILE__) . "/../dao/actual/Planet.php";
 require_once dirname(__FILE__) . "/../dao/actual/Planet_Neighbour.php";
+require_once dirname(__FILE__) . "/../logger/Aburlog.php";
+
 if (!isset($_GET['about']) && !isset($_POST['about']))
     exit;
 $about = isset($_GET['about']) ? $_GET['about'] : $_POST['about'];

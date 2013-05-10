@@ -66,9 +66,9 @@ class GameManager
         $gameId = self::getGameId();
         if ($gameId != false) {
             $userGameDao = new User_Game();
-            $userGame = $userGameDao->getRowsByArray(array("user_id" => AuthManager::getLoggedInUserId(), "game_id" => $gameId))[0];
+            $userGames = $userGameDao->getRowsByArray(array("user_id" => AuthManager::getLoggedInUserId(), "game_id" => $gameId));
 
-            return $userGame->dirty == "true" ? true : false;
+            return ($userGames == null || $userGames[0]->dirty == "true" )? true : false;
         }
 
         return false;
@@ -108,6 +108,7 @@ class GameManager
 
     public static function getGameEngine()
     {
+        self::updateEngagedGame(AuthManager::getLoggedInUserId());
         if (isset($_SESSION['game_engine'])) {
             return $_SESSION['game_engine'];
         }
@@ -120,9 +121,6 @@ class GameManager
         $userGameDao = new User_Game();
         $userGames = $userGameDao->getRowsByField('user_id', $userId);
         if (is_array($userGames)) {
-//            if (count($userGames) > 1) {
-//                //TODO: should clean some of them;
-//            }
             $game = current($userGames)->game_id;
             self::setGameId(new GameEngine($game));
         } else {

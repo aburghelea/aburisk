@@ -8,18 +8,19 @@
 
 require_once dirname(__FILE__)."/script-constants.php";
 require_once dirname(__FILE__)."/../game/GameEngine.php";
+require_once dirname(__FILE__) . "/../logger/Aburlog.php";
 
 if (areParamsSet($_GET)) {
     $gameEngine = new GameEngine($_GET[S_IDGAME]);
     if ($gameEngine->getGame() != null)
         echo "Changing state of game with the id " . $gameEngine->getGame()->getId() . "<br/>";
     else
-        echo "Game was not retrieved<br/>";
+        Aburlog::getInstance()->logInfo("Game retrive fail", $_POST[S_IDGAME]);
 
     $gameEngine->changeState(GameState::PLANET_CLAIM);
 
 } else {
-    echo "Use all the necessary params<br/>";
+    Aburlog::getInstance()->logError("Game idiotic call to game-begin", $_POST);
 }
 function areParamsSet($_GET)
 {

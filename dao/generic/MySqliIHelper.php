@@ -1,4 +1,7 @@
 <?php
+
+require_once dirname(__FILE__) . "/../../logger/Aburlog.php";
+
 /**
  * User: Alexandru George Burghelea
  * Date: 03.03.2013
@@ -38,6 +41,7 @@ class MySqliIHelper
     protected function prepare_and_execute($query, $format = array(), $value = array(), $needs_preparation = 'false')
     {
         $stmt = $this->db->prepare($query);
+        $params = null;
         if ($needs_preparation == 'true') {
             if (!is_array($value))
                 $value = array($value);
@@ -51,7 +55,9 @@ class MySqliIHelper
 
         $stmt->execute();
         $stmt->store_result();
+        Aburlog::getInstance()->logDebug("Query for", array("query"=> $query, "params"=>$value));
         return $stmt;
+
     }
 
     /**
@@ -59,7 +65,8 @@ class MySqliIHelper
      * @param mysqli_stmt $stmt for query execution
      * @return array (hashtable) for storing a database line
      */
-    protected function bind_table_header($stmt)
+    protected
+    function bind_table_header($stmt)
     {
         $row = array();
         $parameters = array();
@@ -77,7 +84,8 @@ class MySqliIHelper
      * @param array $row where to temporary store the result
      * @return array|null Array of rows or null if they don't exist
      */
-    protected function bind_results($stmt, $row)
+    protected
+    function bind_results($stmt, $row)
     {
         $results = null;
         while ($stmt->fetch()) {
@@ -97,7 +105,8 @@ class MySqliIHelper
      * @param array $arr with the constraints
      * @return string representing the where clause
      */
-    protected function build_where_clause($arr)
+    protected
+    function build_where_clause($arr)
     {
         if (is_array($arr))
             return implode(self::C_LIKE . self::C_AND, array_keys($arr)) . self::C_LIKE;
@@ -105,7 +114,8 @@ class MySqliIHelper
         return $arr . self::C_LIKE;
     }
 
-    protected function build_set_clause($arr)
+    protected
+    function build_set_clause($arr)
     {
         if (is_array($arr))
             return implode(self::C_EQUAL . self::C_PERIOD, array_keys($arr)) . self::C_EQUAL;
@@ -117,7 +127,8 @@ class MySqliIHelper
      * @param array $arr  of words
      * @return string The words merged with <i>period</i>
      */
-    protected function merge_with_period($arr)
+    protected
+    function merge_with_period($arr)
     {
         if (is_array($arr))
             return implode(", ", $arr);
@@ -133,7 +144,8 @@ class MySqliIHelper
      * @param string $show value
      * @return array with parameters formed for strings
      */
-    protected function build_aditional_params($orderby = '', $direction = '', $limit = '', $show = '')
+    protected
+    function build_aditional_params($orderby = '', $direction = '', $limit = '', $show = '')
     {
         if ($orderby != '') {
             if (strcasecmp($direction, 'ASC') != 0 && strcasecmp($direction, 'DESC') != 0)
@@ -154,7 +166,8 @@ class MySqliIHelper
      * @param $arr
      * @return array
      */
-    protected function ref_values(&$arr)
+    protected
+    function ref_values(&$arr)
     {
         //Reference is required for PHP 5.3+
         if (strnatcmp(phpversion(), '5.3') >= 0) {

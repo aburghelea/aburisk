@@ -11,6 +11,7 @@ require_once dirname(__FILE__) . "/../dao/actual/User.php";
 require_once dirname(__FILE__) . "/../dao/actual/User_Game.php";
 require_once dirname(__FILE__) . "/../session/AuthManager.php";
 require_once dirname(__FILE__) . "/../session/GameManager.php";
+require_once dirname(__FILE__) . "/../logger/Aburlog.php";
 
 if (session_status() == PHP_SESSION_NONE)
     session_start();
@@ -19,13 +20,12 @@ if (session_status() == PHP_SESSION_NONE)
 if (areParamsSet()) {
     $userId = User::login($_POST[S_USERNAME], $_POST[S_PASSWORD]);
     if ($userId > 0) {
-        echo "User exists in database <br/>";
         setSessionDetalils($userId);
     }
     else
-        echo "User doesn't exists in the database<br/>";
+        Aburlog::getInstance()->logInfo("User does not exists",$_POST[S_USERNAME]);
 } else {
-    echo "Use all the necessary params<br/>";
+    Aburlog::getInstance()->logError("Game idiotic call to login",$_POST);
 }
 
 header('Location: ' . $_SERVER['CONTEXT_PREFIX'] .'/login.php?login_error=true');

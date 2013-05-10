@@ -6,36 +6,34 @@
  * For : PWeb 2013
  */
 
-require_once dirname(__FILE__)."/script-constants.php";
-require_once dirname(__FILE__)."/../game/GameEngine.php";
-require_once dirname(__FILE__)."/../session/GameManager.php";
+require_once dirname(__FILE__) . "/script-constants.php";
+require_once dirname(__FILE__) . "/../game/GameEngine.php";
+require_once dirname(__FILE__) . "/../session/GameManager.php";
+require_once dirname(__FILE__) . "/../logger/Aburlog.php";
 
 if (areParamsSet($_POST)) {
     $gameEngine = new GameEngine($_POST[S_IDGAME]);
     if ($gameEngine->getGame() != null)
-        echo "Joining game with the id " . $gameEngine->getGame()->getId() . "<br/>";
+        Aburlog::getInstance()->logInfo("Joining game with id", $_POST[S_IDGAME]);
     else
-        echo "Game was not retrieved<br/>";
+        Aburlog::getInstance()->logInfo("Game retrive fail", $_POST[S_IDGAME]);
 
     $join_status = $gameEngine->joinGame($_POST[S_IDUSER]);
     if ($join_status == 1) {
-        echo "Successfully joined game<br/>";
         GameManager::setGameId($gameEngine);
         GameManager::initShips();
         GameManager::advanceStageIfNecessary();
         header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/game.php');
         exit();
-    }
-    else{
-        echo "Could not join game <br/>";
-        header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/games_list.php');
-        exit();
+    } else {
+        Aburlog::getInstance()->logWarn("Can not join game",$_POST);
     }
 } else {
-    echo "Use all the necessary params<br/>";
-    header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/games_list.php');
-    exit();
+    Aburlog::getInstance()->logError("Game idiotic call to join-game",$_POST);
 }
+header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/games_list.php');
+exit();
+
 function areParamsSet()
 {
     return isset($_POST[S_IDGAME]) && isset($_POST[S_IDUSER]);

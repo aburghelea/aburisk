@@ -9,6 +9,7 @@
 require_once dirname(__FILE__) . "/script-constants.php";
 require_once dirname(__FILE__) . "/../dao/actual/User.php";
 require_once dirname(__FILE__) . "/../session/AuthManager.php";
+require_once dirname(__FILE__) . "/../logger/Aburlog.php";
 
 if (session_status() == PHP_SESSION_NONE)
     session_start();
@@ -21,7 +22,6 @@ if (areParamsSet($_POST)) {
         header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php?registered=true');
         exit();
     } else {
-
         header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php?registered=false');
         exit();
     }

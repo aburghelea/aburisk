@@ -6,24 +6,24 @@
 require_once dirname(__FILE__) . "/script-constants.php";
 require_once dirname(__FILE__) . "/../game/GameEngine.php";
 require_once dirname(__FILE__) . "/../session/GameManager.php";
+require_once dirname(__FILE__) . "/../logger/Aburlog.php";
 
 if (areParamsSet($_POST)) {
     $gameEngine = new GameEngine($_POST[S_IDGAME]);
 
+    $gameEngine->signalUpdate();
     $end_status = $gameEngine->endGame(null, true);
     if ($end_status == 1) {
         GameManager::setGameId(null);
-        header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/games_list.php');
-        exit();
-    } else {
-        header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/games_list.php');
-        exit();
+        Aburlog::getInstance("Game ended", $gameEngine);
     }
+
 } else {
-    echo "Use all the necessary params<br/>";
-    header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/games_list.php');
-    exit();
+    Aburlog::getInstance()->logError("Game idiotic call to end-game", $_POST);
 }
+header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/games_list.php');
+exit();
+
 
 function areParamsSet()
 {

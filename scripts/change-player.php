@@ -6,7 +6,6 @@
 
 require_once dirname(__FILE__) . "/../session/GameManager.php";
 require_once dirname(__FILE__) . "/../game/GameEngine.php";
-
 $rtn['status'] = 'SUCCESS';
 $rtn['owner'] = AuthManager::getLoggedInUserId();
 GameManager::advanceStage();
