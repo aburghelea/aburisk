@@ -18,9 +18,12 @@ class User extends GenericDao
     public $username;
     public $email;
     protected $password;
+    protected $salt;
     public $played_games;
     public $won_games;
 
+    const usersInGame = "select * from %s where id in (select user_id from users_games where game_id = %s)";
+    const cost = 10;
 
     function __construct()
     {
@@ -30,7 +33,7 @@ class User extends GenericDao
 
     function __toString()
     {
-        return "USER: " . $this->id . " - " . $this->username . " - " . $this->email . " - " . $this->played_games . " - " . $this->won_games. " ** ";
+        return "USER: " . $this->id . " - " . $this->username . " - " . $this->email . " - " . $this->played_games . " - " . $this->won_games . " ** ";
     }
 
     /**
@@ -46,6 +49,7 @@ class User extends GenericDao
         if ($user_exists)
             return -1;
         $inserter = new User();
+        $password = self::getSaltedPassword($password);
         return $inserter->insertRow(array('username' => $username, 'password' => $password, 'email' => $email));
     }
 
@@ -55,21 +59,23 @@ class User extends GenericDao
      * @param string $password
      * @return int Id-ul din baza a userului daca exista, -1 in caz contrar
      */
-    public static function login ($username, $password)
+    public static function login($username, $password)
     {
         $finder = new User();
-        $users = $finder->getRowsByArray(array('username' => $username, "password" => $password),'id','ASC',1);
+//        $users = $finder->getRowsByArray(array('username' => $username, "password" => $password), 'id', 'ASC', 1);
+        $users = $finder->getRowsByField("username", $username,'id', 'ASC', 1);
         if (empty($users))
             return -1;
         $users = current($users);
 
-        return $users->id;
+        $validPass = self::getSaltedPassword($password, $users->password) == $users->password;
+        return $validPass ? $users->id : -1;
     }
 
     /**
      * @return int -1
      */
-    public static function logout ()
+    public static function logout()
     {
         return -1;
     }
@@ -92,8 +98,6 @@ class User extends GenericDao
     }
 
 
-    const usersInGame = "select * from %s where id in (select user_id from users_games where game_id = %s)";
-
     function getUsersFromGame($gid)
     {
         $userDao = new User();
@@ -102,6 +106,20 @@ class User extends GenericDao
         return $userDao->getCustomRows($query);
     }
 
+    private static function  getRandomSalt()
+    {
+        return strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+    }
+
+    private static function getRandomBlowfishSalt() {
+        return sprintf('$2a$%02d', self::cost).self::getRandomSalt();
+    }
+
+    private static function getSaltedPassword($password, $salt = null) {
+        $salt = $salt == null ? self::getRandomBlowfishSalt() : self::getRandomBlowfishSalt();
+        $password = str_replace("+", ".", $password);
+        return crypt($password, $salt);
+    }
 }
 
 ?>

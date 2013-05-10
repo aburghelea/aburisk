@@ -18,4 +18,4 @@ Am adaugat coloane in tablea user_games dirty (daca sunt necesare moficari in in
 ato, afrom, awith pentru animatia ultimului atac(nu fac mai multe animatii). Iar navele
 sunt cercuri cu numarul de nave care ataca.
 
-Fisierul config.php se gaseste in dao/database/config.php 
+Fisierul config.php se gaseste in dao/database/config.php

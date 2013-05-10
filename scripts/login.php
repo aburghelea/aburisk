@@ -28,7 +28,7 @@ if (areParamsSet()) {
     echo "Use all the necessary params<br/>";
 }
 
-header('Location: ' . $_SERVER['CONTEXT_PREFIX'] .'/login.php');
+header('Location: ' . $_SERVER['CONTEXT_PREFIX'] .'/login.php?login_error=true');
 
 function areParamsSet()
 {

@@ -7,6 +7,13 @@
     <?php require_once dirname(__FILE__) . "/header.php" ?>
     <div id="page">
         <div id="content-center">
+            <?php
+            if (isset($_GET["login_error"])) {
+                ?>
+                <div class="error_msg">User or password do not exist</div>
+            <?php
+            }
+            ?>
             <div id="formContainer">
                 <form id="login" method="post" action="scripts/login.php">
                     <div class='formTitle'>Login</div>

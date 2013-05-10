@@ -31,12 +31,12 @@ function redirectHome()
 
 function doLogin()
 {
-    require_once "login.php";
+    require_once dirname(__FILE__) . "/login.php";
 }
 
 function showLogin()
 {
-    require_once "views/login_interface.php";
+    require_once dirname(__FILE__) . "/views/login_interface.php";
 }
 
 ?>
