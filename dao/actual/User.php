@@ -16,7 +16,6 @@ class User extends GenericDao
 {
     protected $id;
     public $username;
-    public $email;
     protected $password;
     protected $salt;
     public $played_games;
@@ -33,16 +32,15 @@ class User extends GenericDao
 
     function __toString()
     {
-        return "USER: " . $this->id . " - " . $this->username . " - " . $this->email . " - " . $this->played_games . " - " . $this->won_games . " ** ";
+        return "USER: " . $this->id . " - " . $this->username .  " - " . $this->played_games . " - " . $this->won_games . " ** ";
     }
 
     /**
      * @param string $username Numele de utilizator dorit
-     * @param string $email Emailul dorit
      * @param string $password Parola dorita
      * @return int Id-ul inregistrarii daca s-a realizat insertul cu scucces, -1 altfel
      */
-    public static function register($username, $email, $password)
+    public static function register($username, $password)
     {
         $user_exists = self::alreadyExists($username);
 
@@ -50,7 +48,7 @@ class User extends GenericDao
             return -1;
         $inserter = new User();
         $password = self::getSaltedPassword($password);
-        return $inserter->insertRow(array('username' => $username, 'password' => $password, 'email' => $email));
+        return $inserter->insertRow(array('username' => $username, 'password' => $password));
     }
 
     /**
@@ -81,9 +79,9 @@ class User extends GenericDao
     }
 
     /**
-     * Checks if a user with same username or email exist
+     * Checks if a user with same username  exist
      * @param $username
-     * @return bool true if the username or email are already used, false otherwise
+     * @return bool true if the username  are already used, false otherwise
      */
     public static function alreadyExists($username)
     {

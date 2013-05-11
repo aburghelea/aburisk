@@ -28,7 +28,10 @@ class Player implements JsonSerializable
 
     public function getUsername()
     {
-        return $this->user->username;
+        $username = $this->user->username;
+        $pos = strpos($username, "@");
+        $username = substr($username, 0, $pos);
+        return $username;
     }
 
     public function setScore($score)

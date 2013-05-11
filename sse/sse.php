@@ -25,7 +25,9 @@ function sendData($id)
             if ($winner != NULL)
                 $winner = new Player($winner);
             $return['winner'] = $winner;
-            $currentPlayer = array("id" => GameManager::getCurrentPlayerId(), "username" => GameManager::getCurrentPlayerUsername());
+            $username = GameManager::getCurrentPlayerUsername();
+            $username = substr($username, 0, strpos($username, "@"));
+            $currentPlayer = array("id" => GameManager::getCurrentPlayerId(), "username" => $username);
             $return['currentPlayer'] = $currentPlayer;
         } else {
             $return = array("status" => "EXIT");

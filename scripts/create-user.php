@@ -22,7 +22,7 @@ if (areParamsSet($_POST)) {
         header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php?captcha=captcha');
         exit();
     }
-    $userId = User::register($_POST[S_USERNAME], $_POST[S_USERNAME], $_POST[S_PASSWORD]);
+    $userId = User::register($_POST[S_USERNAME], $_POST[S_PASSWORD]);
     if ($userId > 0) {
         AuthManager::userId($userId);
 

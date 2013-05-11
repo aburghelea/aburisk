@@ -38,30 +38,30 @@ function handleLogin()
             exit();
         } elseif ($openid->validate()) {
             $data = $openid->getAttributes();
-            $email = $data['contact/email'];
-            echo "Email : $email <br>";
-            $user = new User();
-            $exists = User::alreadyExists($email);
+            $username = $data['contact/email'];
+            echo "Email : $username <br>";
+            $exists = User::alreadyExists($username);
             if (!$exists) {
-                $exists = User::register($email, $email, $email);
-            } else {
-                loginUserByEmail($email);
-                header('Location: ' . $_SERVER['CONTEXT_PREFIX'] );
-                exit();
+                User::register($username, $username);
             }
+            loginUserByEmail($username);
+            header('Location: ' . $_SERVER['CONTEXT_PREFIX']);
+            exit();
+
         } else {
             header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php?login_error=true');
             exit();
         }
-    } else {
-        header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php');
-        exit();
     }
+    header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php');
+    exit();
+
 }
 
-function loginUserByEmail($email) {
+function loginUserByEmail($username)
+{
     $userDao = new User();
-    $user = $userDao->getRowsByField("email",$email);
+    $user = $userDao->getRowsByField("username", $username);
     if (!$user)
         return;
     $user = $user[0];

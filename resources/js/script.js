@@ -7,10 +7,7 @@ function init() {
             var captcha = document.getElementById("recaptcha_container");
             var captcha_flipped = document.getElementById("captcha_flipped");
             var captcha_unflipped = document.getElementById("captcha_unflipped");
-            debugger;
 
-//            clearContent(captcha_flipped);
-//            clearContent(captcha_unflipped);
             if (formContainer.classList.contains('flipped')) {
                 formContainer.classList.remove('flipped');
                 captcha_unflipped.appendChild(captcha);
@@ -82,12 +79,12 @@ function makePlayerName(player) {
     var anchor = document.createElement("a");
     anchor.setAttribute("target", "_black");
     anchor.setAttribute("href", "profile.php?id=" + player.id);
-    anchor.appendChild(document.createTextNode(player.username));
+    anchor.appendChild(document.createTextNode("["+ player.username +"] "));
     return anchor;
 }
 function makePlayerFleet(player) {
     var planetsShips = document.createElement("span");
-    planetsShips.appendChild(document.createTextNode(player.ships + " ships on " + player.planets + " planets"));
+    planetsShips.appendChild(document.createTextNode(player.ships + " ships / " + player.planets + " planets"));
     planetsShips.setAttribute("style", "float:right;");
     return planetsShips;
 }
