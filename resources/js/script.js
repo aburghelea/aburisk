@@ -226,8 +226,8 @@ function updateInterface(responseJSON) {
     updateRemainingShips(responseJSON);
     updatePlayersNo(responseJSON);
 }
-function initSSE() {
-    source = new EventSource('sse/sse.php');
+function initGameSSE() {
+    source = new EventSource('sse/GameSSE.php');
     source.addEventListener('message', function (e) {
         var actions = document.getElementById("actions");
 
