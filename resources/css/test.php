@@ -6,12 +6,6 @@ require_once dirname(__FILE__) . "/../resources/libs/recaptcha/aburiskcaptcha.ph
 require_once dirname(__FILE__) . "/../resources/libs/lightopenid/aburiskopenid.php";
 
 ?>
-<script>
-    var RecaptchaOptions = {
-        theme: 'white',
-        tabindex: 2
-    };
-</script>
 
 <body onload="init()">
 <div id="wrapper">
@@ -43,67 +37,62 @@ require_once dirname(__FILE__) . "/../resources/libs/lightopenid/aburiskopenid.p
             <?php
             }
             ?>
-
+            <?php getOpenIdButton() ?>
             <div id="formContainer">
-                <form id="login" class="login" method="post" action="scripts/login.php">
+                <form id="login" method="post" class="login" action="scripts/login.php">
                     <div class='formTitle'>Login</div>
-                    <div id="captcha_unflipped">
+                    <a href="javascript:void(0);" id="flipToRegister" class="flipLink">
+                        Register?
+                        <span class="icon-user"></span>
+                    </a>
 
-                        <div id="recaptcha_container">
+                    <div>
+                        <label class="label" for="username">Email:</label>
+                        <input type="email" name="username" placeholder="Email"/>
+                    </div>
+
+                    <div>
+                        <label class="label" for="password">Password:</label>
+                        <input type="password" name="password" placeholder="Password"/>
+                    </div>
+
+                    <div id="captcha_unflipped" style="padding-left: 100px">
+
+                        <div style="float: right">
                             <?php echo recaptcha_get_html(publickey); ?>
                         </div>
                     </div>
-                    <p>
-                        <input type="email" name="username" placeholder="Email"/>
-                    </p>
-
-                    <p>
-                        <input type="password" name="password" placeholder="Password"/>
-                    </p>
-
-
+                    <div class="clearfix"/>
                     <div class="login-submit">
                         <button type="submit" class="login-button">Login</button>
                     </div>
-                    <div>
-                        <div class="googleLogin" style="float: left">
-
-                            <?php getOpenIdButton() ?>
-                        </div>
-                        <a href="javascript:void(0);" id="flipToRegister" class="flipLink">
-                            Register?
-                        </a>
-                    </div>
+                    <!--                    <div class="aligncenter">-->
+                    <!--                        <input type="submit" class="submit" name="submit" value="Login"/>-->
+                    <!--                    </div>-->
                 </form>
-                <form id="register" class="login" method="post" action="scripts/create-user.php">
+                <form id="register" method="post" action="scripts/create-user.php">
                     <div class='formTitle'>Register</div>
+                    <a href="javascript:void(0);" id="flipToLogin" class="flipLink">
+                        Login?
+                        <span class=" icon-arrow-left"></span>
+                    </a>
+
+                    <p>
+
+                        <input type="email" name="username" id="registerUsername" placeholder="Email"/>
+                    </p>
+
+                    <p>
+                        <input type="password" name="password" id="RegisterPassword" placeholder="Password"/>
+                    </p>
+
 
                     <div id="captcha_flipped">
 
                     </div>
-
-                    <p>
-                        <input type="email" name="username" placeholder="Email"/>
-                    </p>
-
-                    <p>
-                        <input type="password" name="password" placeholder="Password"/>
-                    </p>
-
-                    <div class="login-submit">
-                        <button type="submit" class="login-button">Register</button>
+                    <div class="aligncenter">
+                        <input type="submit" class="submit" name="submit" value="Register"/>
                     </div>
-                    <div>
-                        <div class="googleLogin" style="float: left">
-
-                            <?php getOpenIdButton() ?>
-                        </div>
-                        <a href="javascript:void(0);" id="flipToLogin" class="flipLink">
-                            Login?
-                        </a>
-                    </div>
-
-
                 </form>
             </div>
         </div>

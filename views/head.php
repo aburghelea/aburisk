@@ -7,6 +7,7 @@
 
 
     <link href="resources/css/default.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="resources/css/login.css" rel="stylesheet" type="text/css" media="all"/>
     <link href="resources/css/map.css" rel="stylesheet" type="text/css" media="all"/>
     <script src="resources/js/script.js"></script>
     <script src="resources/js/players.js"></script>

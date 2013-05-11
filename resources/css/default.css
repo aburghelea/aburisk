@@ -296,7 +296,7 @@ ul.style2 a:hover {
     border-radius: 4px;
 }
 #formContainer, .error_msg {
-    width: 333px;
+    width: 320px;
 
     margin: 0 auto;
     position: relative;
@@ -305,7 +305,7 @@ ul.style2 a:hover {
 }
 
 #formContainer {
-    height: 425px;
+    height: 375px;
 }
 
 #formContainer form {
@@ -317,33 +317,10 @@ ul.style2 a:hover {
     -webkit-transform-style: preserve-3d;
     -webkit-backface-visibility: hidden;
     -webkit-transition: 0.8s;
-    -webkit-animation: pulse 2s infinite;
-    background-image: -webkit-radial-gradient(center center, farthest-corner circle, rgba(244, 230, 254, 0.49) 0%, rgba(158, 158, 158, 0.63) 100%);
+    /*background: #373737  0 0 repeat;*/
+    /*background-image: -webkit-radial-gradient(center center, farthest-corner circle, rgba(244, 230, 254, 0.49) 0%, rgba(158, 158, 158, 0.63) 100%);*/
 }
 
-@-webkit-keyframes pulse {
-    0% {
-        box-shadow: 0 0 1px #008aff;
-    }
-    50% {
-        box-shadow: 0 0 10px #008aff;
-    }
-    100% {
-        box-shadow: 0 0 1px #008aff;
-    }
-}
-
-@-webkit-keyframes pulse-link {
-    0% {
-        box-shadow: 0 0 1px #ffae02;
-    }
-    50% {
-        box-shadow: 0 0 5px #ffae02;
-    }
-    100% {
-        box-shadow: 0 0 1px #ffae02;
-    }
-}
 
 #login {
     z-index: 100;
@@ -352,7 +329,6 @@ ul.style2 a:hover {
 #register {
     z-index: 1;
     opacity: 0;
-
     -webkit-transform: rotateY(180deg);
 }
 
@@ -363,53 +339,37 @@ ul.style2 a:hover {
 }
 
 #formContainer.flipped #register {
-
     opacity: 1;
-
     -webkit-transform: rotateY(0deg);
+}
+
+.googleLogin {
+    overflow: hidden;
+    position: absolute;
+    left: 10px;
+    bottom: 5px;
+    /*font: 20px 'Yanone Kaffeesatz', 'Segoe UI', Arial, sans-serif;*/
+    /*color: #545454;*/
+    margin: 2px;
+    padding-right: 3px;
 }
 
 .flipLink {
     overflow: hidden;
     position: absolute;
     right: 10px;
-    top: 5px;
+    bottom: 5px;
     font: 20px 'Yanone Kaffeesatz', 'Segoe UI', Arial, sans-serif;
-    color: #eee;
+    color: #545454;
     margin: 2px;
     padding-right: 3px;
-    -webkit-box-shadow: -3px 3px 5px #50455e;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -webkit-border-bottom-left-radius: 5px;
-    -webkit-border-bottom-right-radius: 5px;
-    -webkit-animation: pulse-link 5s infinite;
 }
 
 .flipLink:visited {
-    color: #eee;
+    color: #545454;
     text-decoration: none;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    /*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);*/
 }
-
-input[type=text], input[type=password], input[type=email], input[type=number] {
-    font: 15px 'Segoe UI', Arial, sans-serif;
-    border: none;
-    background: none;
-    height: 36px;
-
-    width: 234px;
-    text-indent: 8px;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
-    color: #eee;
-    background-color: rgba(128, 129, 133, 1);
-    outline: none;
-
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-}
-
-
 
 .submit {
     opacity: 0.9;
@@ -432,11 +392,11 @@ input[type=text], input[type=password], input[type=email], input[type=number] {
 
 .formTitle {
     font: 50px 'Lobster', 'Segoe UI', Arial, sans-serif;
-    margin: 30px auto;
+    margin: 20px auto;
     border: none;
     width: 50%;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
-    color: #1b1b1b;
+    color: #545454;
     outline: none;
     text-align: center;
 }
