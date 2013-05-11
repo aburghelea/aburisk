@@ -12,7 +12,7 @@ class Aburlog
     const NO_ARGUMENTS = 'Aburlog::NO_ARGUMENTS';
 
     private $_logFilePath = null;
-    private $_severityThreshold = self::INFO;
+    private $_severityThreshold = self::OFF;
     private $_fileHandle = null;
 
 
@@ -23,7 +23,7 @@ class Aburlog
     private static $instance = null;
     private static $instanceDate = null;
 
-    public static function getInstance($logDirectory = false, $severity = self::DEBUG)
+    public static function getInstance($logDirectory = false, $severity = self::OFF)
     {
         if (self::$instanceDate != date("Y-m-d")) {
             self::$instance = null;

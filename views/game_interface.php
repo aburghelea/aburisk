@@ -24,7 +24,7 @@ $game = GameManager::getGame();
             <?php if (isset($game)) { ?>
                 <object id='mapContainer'
                         onload='ABURISK.map.init(initGameSSE)'
-                        type="image/svg+xml" width="750" height="421" data="views/map.svg"></object>
+                        type="image/svg+xml" width="750" height="421" data="resources/map.svg"></object>
             <?php } else { ?>
                 <h2>Nu esti angajat in nici un joc</h2>
             <?php } ?>
