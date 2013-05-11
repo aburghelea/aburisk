@@ -44,7 +44,7 @@ class User extends GenericDao
      */
     public static function register($username, $email, $password)
     {
-        $user_exists = self::alreadyExists($username, $email);
+        $user_exists = self::alreadyExists($username);
 
         if ($user_exists)
             return -1;
@@ -63,7 +63,7 @@ class User extends GenericDao
     {
         $finder = new User();
 //        $users = $finder->getRowsByArray(array('username' => $username, "password" => $password), 'id', 'ASC', 1);
-        $users = $finder->getRowsByField("username", $username,'id', 'ASC', 1);
+        $users = $finder->getRowsByField("username", $username, 'id', 'ASC', 1);
         if (empty($users))
             return -1;
         $users = current($users);
@@ -83,13 +83,13 @@ class User extends GenericDao
     /**
      * Checks if a user with same username or email exist
      * @param $username
-     * @param $email
      * @return bool true if the username or email are already used, false otherwise
      */
-    protected static function alreadyExists($username, $email)
+    public static function alreadyExists($username)
     {
         $finder = new User();
-        return $finder->getRowsByField('username', $username) || $finder->getRowsByField('email', $email);
+        $users = $finder->getRowsByField('username', $username);
+        return $users != null && !empty($users);
     }
 
     public function getId()
@@ -111,11 +111,13 @@ class User extends GenericDao
         return strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
     }
 
-    private static function getRandomBlowfishSalt() {
-        return sprintf('$2a$%02d', self::cost).self::getRandomSalt();
+    private static function getRandomBlowfishSalt()
+    {
+        return sprintf('$2a$%02d', self::cost) . self::getRandomSalt();
     }
 
-    private static function getSaltedPassword($password, $salt = null) {
+    private static function getSaltedPassword($password, $salt = null)
+    {
         $salt = $salt == null ? self::getRandomBlowfishSalt() : self::getRandomBlowfishSalt();
         $password = str_replace("+", ".", $password);
         return crypt($password, $salt);

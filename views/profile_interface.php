@@ -49,17 +49,6 @@ if ($user == null) {
                     <li>
                         <h3>
                             <a href="javascript:void(0);">
-                                Email:
-                            </a>
-                        </h3>
-
-                        <p>
-                            <?php echo $user->email ?>
-                        </p>
-                    </li>
-                    <li>
-                        <h3>
-                            <a href="javascript:void(0);">
                                 Games Played:
                             </a>
                         </h3>

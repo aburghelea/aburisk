@@ -22,7 +22,7 @@ if (areParamsSet($_POST)) {
         header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/login.php?captcha=captcha');
         exit();
     }
-    $userId = User::register($_POST[S_USERNAME], $_POST[S_EMAIL], $_POST[S_PASSWORD]);
+    $userId = User::register($_POST[S_USERNAME], $_POST[S_USERNAME], $_POST[S_PASSWORD]);
     if ($userId > 0) {
         AuthManager::userId($userId);
 
@@ -38,11 +38,11 @@ exit();
 function areParamsSet()
 {
 
-    if (!isset($_POST[S_USERNAME]) || !isset($_POST[S_EMAIL]) || !isset($_POST[S_PASSWORD])) {
+    if (!isset($_POST[S_USERNAME]) || !isset($_POST[S_PASSWORD])) {
         return false;
     }
 
-    if (!strlen($_POST[S_USERNAME]) || !strlen($_POST[S_EMAIL]) || !strlen($_POST[S_PASSWORD])) {
+    if (!strlen($_POST[S_USERNAME]) || !strlen($_POST[S_PASSWORD])) {
         return false;
     }
 

@@ -1,0 +1,114 @@
+[2013-05-11 10:15:41][ABURISK:DEBUG][127.0.0.1] Query for;
+array (
+  'query' => 'SELECT * FROM users WHERE username LIKE ?   ',
+  'params' => 
+  array (
+    0 => 'iceman.ftg@gmail.com',
+  ),
+)
+[2013-05-11 10:15:41][ABURISK:DEBUG][127.0.0.1] Query for;
+array (
+  'query' => 'SELECT * FROM users WHERE username LIKE ?   ',
+  'params' => 
+  array (
+    0 => 'iceman.ftg@gmail.com',
+  ),
+)
+[2013-05-11 10:15:41][ABURISK:DEBUG][127.0.0.1] Query for;
+array (
+  'query' => 'INSERT INTO users (username, password, email) VALUES (?, ?, ?)',
+  'params' => 
+  array (
+    0 => 'iceman.ftg@gmail.com',
+    1 => '$2nEwt8F4nl7M',
+    2 => 'iceman.ftg@gmail.com',
+  ),
+)
+[2013-05-11 10:16:05][ABURISK:DEBUG][127.0.0.1] Query for;
+array (
+  'query' => 'SELECT * FROM users WHERE username LIKE ?   ',
+  'params' => 
+  array (
+    0 => 'iceman.ftg@gmail.com',
+  ),
+)
+[2013-05-11 10:16:05][ABURISK:DEBUG][127.0.0.1] Query for;
+array (
+  'query' => 'SELECT * FROM users WHERE username LIKE ?   ',
+  'params' => 
+  array (
+    0 => 'iceman.ftg@gmail.com',
+  ),
+)
+[2013-05-11 10:16:59][ABURISK:DEBUG][127.0.0.1] Query for;
+array (
+  'query' => 'SELECT * FROM users WHERE username LIKE ?  ORDER BY id ASC LIMIT 1',
+  'params' => 
+  array (
+    0 => 'iceman.ftg@gmail.com',
+  ),
+)
+[2013-05-11 10:16:59][ABURISK:DEBUG][127.0.0.1] Query for;
+array (
+  'query' => 'SELECT * FROM users_games WHERE user_id LIKE ?   ',
+  'params' => 
+  array (
+    0 => 14,
+  ),
+)
+[2013-05-11 10:16:59][ABURISK:DEBUG][127.0.0.1] Query for;
+array (
+  'query' => 'SELECT * FROM users WHERE id LIKE ?   ',
+  'params' => 
+  array (
+    0 => 14,
+  ),
+)
+[2013-05-11 10:17:02][ABURISK:DEBUG][127.0.0.1] Query for;
+array (
+  'query' => 'SELECT * FROM users WHERE id LIKE ?   ',
+  'params' => 
+  array (
+    0 => 14,
+  ),
+)
+[2013-05-11 10:17:02][ABURISK:DEBUG][127.0.0.1] Query for;
+array (
+  'query' => 'SELECT * FROM users WHERE id LIKE ?   ',
+  'params' => 
+  array (
+    0 => 14,
+  ),
+)
+[2013-05-11 10:23:25][ABURISK:DEBUG][127.0.0.1] Query for;
+array (
+  'query' => 'SELECT * FROM users WHERE username LIKE ?   ',
+  'params' => 
+  array (
+    0 => 'iceman.ftg@gmail.com',
+  ),
+)
+[2013-05-11 10:23:25][ABURISK:DEBUG][127.0.0.1] Query for;
+array (
+  'query' => 'SELECT * FROM users WHERE email LIKE ?   ',
+  'params' => 
+  array (
+    0 => 'iceman.ftg@gmail.com',
+  ),
+)
+[2013-05-11 10:23:25][ABURISK:DEBUG][127.0.0.1] Query for;
+array (
+  'query' => 'SELECT * FROM users_games WHERE user_id LIKE ?   ',
+  'params' => 
+  array (
+    0 => 14,
+  ),
+)
+[2013-05-11 10:23:25][ABURISK:DEBUG][127.0.0.1] Query for;
+array (
+  'query' => 'SELECT * FROM users WHERE id LIKE ?   ',
+  'params' => 
+  array (
+    0 => 14,
+  ),
+)

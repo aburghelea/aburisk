@@ -2,8 +2,9 @@
 <html>
 <?php require_once dirname(__FILE__) . "/head.php";
 
-require_once dirname(__FILE__) . "/../resources/libs/recaptcha/recaptchalib.php";
-$publickey = "6Lc-C-ESAAAAABlMt1Kx1c5UasGReB0jiOScaeMj";
+require_once dirname(__FILE__) . "/../resources/libs/recaptcha/aburiskcaptcha.php";
+require_once dirname(__FILE__) . "/../resources/libs/lightopenid/aburiskopenid.php";
+
 ?>
 
 <body onload="init()">
@@ -36,6 +37,7 @@ $publickey = "6Lc-C-ESAAAAABlMt1Kx1c5UasGReB0jiOScaeMj";
             <?php
             }
             ?>
+            <?php getOpenIdButton() ?>
             <div id="formContainer">
                 <form id="login" method="post" action="scripts/login.php">
                     <div class='formTitle'>Login</div>
@@ -45,7 +47,7 @@ $publickey = "6Lc-C-ESAAAAABlMt1Kx1c5UasGReB0jiOScaeMj";
                     </a>
 
                     <div class="aligncenter">
-                        <input type="text" name="username" placeholder="Username"/>
+                        <input type="email" name="username" placeholder="Email"/>
                     </div>
                     <div class="aligncenter">
                         <input type="password" name="password" placeholder="Password"/>
@@ -53,7 +55,7 @@ $publickey = "6Lc-C-ESAAAAABlMt1Kx1c5UasGReB0jiOScaeMj";
                     <div id="captcha_unflipped">
 
                         <div class="aligncenter" style="width: 318px !important;" id="recaptcha_container">
-                            <?php echo recaptcha_get_html($publickey); ?>
+                            <?php echo recaptcha_get_html(publickey); ?>
                         </div>
                     </div>
                     <div class="aligncenter">
@@ -68,13 +70,10 @@ $publickey = "6Lc-C-ESAAAAABlMt1Kx1c5UasGReB0jiOScaeMj";
                     </a>
 
                     <div class="aligncenter">
-                        <input type="text" name="username" id="registerUsername" placeholder="Username"/>
+                        <input type="email" name="username" id="registerUsername" placeholder="Email"/>
                     </div>
                     <div class="aligncenter">
                         <input type="password" name="password" id="RegisterPassword" placeholder="Password"/>
-                    </div>
-                    <div class="aligncenter">
-                        <input type="email" name="email" id="registerEmail" placeholder="Email"/>
                     </div>
                     <div id="captcha_flipped">
 
