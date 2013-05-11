@@ -21,7 +21,7 @@ if (areParamsSet($_POST)) {
 } else {
     Aburlog::getInstance()->logError("Game idiotic call to end-game", $_POST);
 }
-header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/games_list.php');
+header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/gameslist.php');
 exit();
 
 

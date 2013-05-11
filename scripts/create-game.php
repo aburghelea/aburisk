@@ -25,7 +25,7 @@ if (areParamsSet()) {
     Aburlog::getInstance()->logError("Game idiotic call to create-game",$_POST);
 }
 
-header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/games_list.php');
+header('Location: ' . $_SERVER['CONTEXT_PREFIX'] . '/gameslist.php');
 exit();
 function areParamsSet()
 {

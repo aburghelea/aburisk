@@ -51,6 +51,18 @@ class User extends GenericDao
         return $inserter->insertRow(array('username' => $username, 'password' => $password));
     }
 
+    public static function changePassword($username, $password) {
+        $user_exists = self::alreadyExists($username);
+
+        if (!$user_exists)
+            return false;
+        $inserter = new User();
+        $password = self::getSaltedPassword($password);
+        $inserter->updateRows(array("password"=>$password),"username", $username);
+
+        return true;
+    }
+
     /**
      * Verifica daca userul exista in baza de date.
      * @param string $username

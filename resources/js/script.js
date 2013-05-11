@@ -156,7 +156,7 @@ function manageWinner(responseJSON) {
     var mapcontainer = document.getElementById("mapContainer");
     mapcontainer.parentNode.removeChild(mapcontainer);
     alert("Game won by " + responseJSON.winner.username);
-    window.location = "/aburisk/games_list.php";
+    window.location = "/aburisk/gameslist.php";
     var url = "scripts/end-game.php";
     var callback;
     callback = function () {
@@ -234,7 +234,7 @@ function initGameSSE() {
         var responseJSON = JSON.parse(e.data);
         console.log(responseJSON);
         if (responseJSON.status == "EXIT") {
-            window.location = "/aburisk/games_list.php";
+            window.location = "/aburisk/gameslist.php";
         }
         if (responseJSON.status == "UPDATE") {
 

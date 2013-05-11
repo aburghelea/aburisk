@@ -45,7 +45,7 @@ function handleLogin()
                 User::register($username, $username);
             }
             loginUserByEmail($username);
-            header('Location: ' . $_SERVER['CONTEXT_PREFIX']);
+            header('Location: ' . $_SERVER['CONTEXT_PREFIX']."/profile.php");
             exit();
 
         } else {

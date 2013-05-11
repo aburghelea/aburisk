@@ -33,9 +33,16 @@ if ($user == null) {
     <div id="page">
         <div id="content-center" style="width: 300px">
             <div id="profile">
-                <h1>Profile info</h1>
+                <h1>
+                    Profile info
+                </h1>
                 <ul class="style2">
-                    <li class="">
+                    <li class="error_msg" style="width: auto !important; padding: 5px">
+                            If you have just created the profile via Google Accounts, please change your password,
+                            otherwise it will be the same with your email.
+
+                    </li>
+                    <li>
                         <h3>
                             <a href="javascript:void(0);">
                                 Username:
@@ -69,7 +76,9 @@ if ($user == null) {
 
                         </p>
                     </li>
-
+                    <li>
+                        <a href="profileupdate.php" class="button-style">Update password</a>
+                    </li>
                 </ul>
             </div>
         </div>

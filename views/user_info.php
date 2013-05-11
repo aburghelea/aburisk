@@ -22,18 +22,21 @@ function profileLink()
 {
     $username = AuthManager::getLoggedInUserName();
     ?>
-    <a href="/aburisk/profile.php" accesskey="p">[ <?php echo $username ?> ]</a>
+    <li>
+        <a href="/aburisk/profile.php" accesskey="p">[ <?php echo $username ?> ]</a>
     </li>
     <li>
-    <a href="/aburisk/scripts/logout.php" accesskey="l">Logout</a>
-
+        <a href="/aburisk/scripts/logout.php" accesskey="l">Logout</a>
+    <li>
 <?php
 }
 
 function loginLink()
 {
     ?>
-    <a href="/aburisk/login.php" accesskey="l">Login/Register</a>
+    <li>
+        <a href="/aburisk/login.php" accesskey="l">Login/Register</a>
+    </li>
 <?php
 }
 
