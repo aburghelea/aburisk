@@ -53,7 +53,7 @@ if ($user == null) {
                         <li>
 
                             <h3>
-                                <input type="text" name="password" placeholder="New Password">
+                                <input type="password" name="password" placeholder="New Password">
                             </h3>
                             <div class="clearfix"/>
                         </li>

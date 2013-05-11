@@ -91,13 +91,14 @@ ABURISK.map = function () {
     }
 
     var enlargeAtmosphere = function enlargeAtmosphere(e) {
+        console.log("enlarge");
         var owner_id = e.target.getAttribute('id');
         id = 'circle_' + owner_id;
         var circle = svgDocument.getElementById(id);
 
         if (isOwnerByCurrentPlayer(circle)) {
             var radius = circle.getAttribute('r');
-            circle.setAttribute('r', Number(radius) + 5);
+            circle.setAttribute('r', Number(radius) * 1.1);
         }
     };
 
@@ -106,7 +107,7 @@ ABURISK.map = function () {
         var circle = svgDocument.getElementById(id);
         if (isOwnerByCurrentPlayer(circle)) {
             var radius = circle.getAttribute('r');
-            circle.setAttribute('r', Number(radius) - 5);
+            circle.setAttribute('r', Number(radius) / 1.1);
         }
     };
 
@@ -116,7 +117,7 @@ ABURISK.map = function () {
         circle.setAttribute('class', "galaxy_" + planetJSON.containing_galaxy_id);
         circle.setAttribute('cx', planetJSON.x_pos + planetJSON.radius);
         circle.setAttribute('cy', planetJSON.y_pos + +planetJSON.radius);
-        circle.setAttribute('r', planetJSON.radius * 1.2);
+        circle.setAttribute('r', planetJSON.radius * 1.1);
         circle.setAttribute('id', 'circle_' + planetJSON.id);
 
         return circle;
@@ -131,7 +132,8 @@ ABURISK.map = function () {
         planet.setAttribute('height', planetJSON.radius * 2);
         planet.setAttribute('id', planetJSON.id);
         planet.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "/aburisk/resources/plantes/" + planetJSON.image);
-
+        planet.addEventListener("mouseover", enlargeAtmosphere, false);
+        planet.addEventListener("mouseout", shrinkAtmoshpere, false);
         return planet;
     };
 
@@ -173,6 +175,8 @@ ABURISK.map = function () {
     };
 
     return {
+        enlarge: enlargeAtmosphere,
+        shrink: shrinkAtmoshpere,
         init: function (planetHandler) {
             var url = 'scripts/get-info.php?about=planet_connections';
             var _this = this;
@@ -229,8 +233,6 @@ ABURISK.map = function () {
                 var planet = createPlanet(planets[i]);
                 svgDocument.insertBefore(atmosphere, atmospheresDelimiter);
                 svgDocument.appendChild(planet, planetsDelimiter);
-                planet.addEventListener("mouseover", enlargeAtmosphere, false);
-                planet.addEventListener("mouseout", shrinkAtmoshpere, false);
             }
 
             return galaxies;

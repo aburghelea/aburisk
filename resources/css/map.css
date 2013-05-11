@@ -8,11 +8,12 @@
     left: 0;
     height: 100%;
     width: 100%;
+    background: url("../background/destiny.png");
 }
 
 .connection {
     stroke: rgba(244, 164, 51, 0.15);
-    stroke-width: 6
+    stroke-width: 3px;
 }
 
 .galaxy_5 {
@@ -47,9 +48,9 @@
     padding-left: 5px;
 }
 
-.player_4 {
-    fill: rgb(158, 238, 235);
-    background-color: rgb(158, 238, 235);
+.player_1 {
+    fill: rgb(108, 238, 159);
+    background-color: rgb(108, 238, 159);
 }
 
 .player_2 {
@@ -62,9 +63,9 @@
     background-color: rgb(102, 79, 144);
 }
 
-.player_1 {
-    fill: rgb(108, 238, 159);
-    background-color: rgb(108, 238, 159);
+.player_4 {
+    fill: rgb(158, 238, 235);
+    background-color: rgb(158, 238, 235);
 }
 
 .player_5 {

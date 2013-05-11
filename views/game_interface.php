@@ -42,7 +42,6 @@ $game = GameManager::getGame();
                             </a>
 
                             <form action="scripts/end-game.php" method="post" style=" float:right">
-                                <input type="hidden" name='idGame' value="<?php echo $game->id ?>"/>
                                 <a href="javascript:void(0);" class="button-style" onclick="submitForm(this)">End
                                     game <?php echo $game->id ?></a>
                             </form>

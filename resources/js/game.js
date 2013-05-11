@@ -73,6 +73,8 @@ ABURISK.game = function () {
         var planets = svgDocument.getElementsByClassName("planet");
         for (var i = 0; i < planets.length; i++) {
             var clone = planets[i].cloneNode();
+            clone.addEventListener("mouseover", ABURISK.map.enlarge, false);
+            clone.addEventListener("mouseout", ABURISK.map.shrink, false);
             planets[i].parentNode.replaceChild(clone, planets[i]);
             planets[i] = clone;
         }

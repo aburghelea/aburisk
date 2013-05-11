@@ -6,7 +6,7 @@
      preserveAspectRatio="none" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xsi:schemaLocation="http://www.w3.org/2000/xlink ">
     <image class="background" id="background" width="750" height="421"
-           xlink:href="../resources/background/warp.jpg" preserveAspectRatio="none"/>
+           xlink:href="../resources/background/destiny.png" preserveAspectRatio="none"/>
     <div id='galaxies'/>
     <div id='routes'/>
     <div id='atmospheres'/>
