@@ -137,7 +137,11 @@ ABURISK.map = function () {
 
     var createShipNo = function (planplanetJSON) {
         var circle = svgDocument.getElementById("circle_" + planplanetJSON.planet_id);
-        circle.className = "";
+        circle.className = "player_" + ABURISK.players.index(planplanetJSON.owner_id);
+        for (var i = 0; i < 10; i++) {
+            if (circle.classList.contains("player_" + i))
+                circle.classList.remove("player_" + i);
+        }
         circle.classList.add("player_" + ABURISK.players.index(planplanetJSON.owner_id));
 
         var x = circle.getAttribute('cx');

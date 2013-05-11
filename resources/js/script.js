@@ -79,7 +79,7 @@ function makePlayerName(player) {
     var anchor = document.createElement("a");
     anchor.setAttribute("target", "_black");
     anchor.setAttribute("href", "profile.php?id=" + player.id);
-    anchor.appendChild(document.createTextNode("["+ player.username +"] "));
+    anchor.appendChild(document.createTextNode("[" + player.username + "] "));
     return anchor;
 }
 function makePlayerFleet(player) {
@@ -104,7 +104,7 @@ function updatePlayerList(responseJSON) {
         var player = responseJSON.player_list[i];
         var ptag = document.createElement("p");
         ptag.setAttribute('name', player.id);
-        ptag.classList.add("player_" + ABURISK.players.index(player.id));
+        ptag.className = "player_" + ABURISK.players.index(player.id);
 
         var score = makePlayerScore(player);
         var anchor = makePlayerName(player);
